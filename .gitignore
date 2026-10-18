@@ -1,0 +1,11 @@
+# Files Git should never add to the repository
+
+# macOS service files
+.DS_Store
+
+# Local preview settings (Claude Code)
+.claude/
+
+# Old copies of the Legal cover, not used by the site
+Description 2.jpg
+.Thumbnail & Description 2.jpg

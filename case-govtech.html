@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Redesign for Public Services — Anastasiia Sira</title>
+  <meta name="description" content="Case study by Anastasiia Sira: Redesign for Public Services (GovTech · Full Redesign).">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body id="top">
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- ================= HEADER ================= -->
+  <header class="site-header">
+    <div class="container header__inner">
+      <a class="logo" href="index.html" aria-label="Anastasiia Sira, home page">
+        <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path class="logo__star" d="M24 1C26 14 34 22 47 24C34 26 26 34 24 47C22 34 14 26 1 24C14 22 22 14 24 1Z"/><text class="logo__text" x="24" y="28.6" text-anchor="middle" font-family="Onest, Arial, sans-serif" font-size="13" font-weight="800">AS</text></svg>
+      </a>
+
+      <nav class="nav" aria-label="Main">
+        <ul class="nav__list">
+          <li><a class="nav__link link-underline" href="index.html#work">My Cases</a></li>
+          <li><a class="nav__link link-underline" href="index.html#about">About me</a></li>
+          <li><a class="nav__link link-underline" href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <a class="btn btn--secondary header__cv" href="assets/cv.pdf" target="_blank" rel="noopener">Download CV<span class="sr-only"> (opens in new tab)</span></a>
+
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+        <svg class="icon-burger" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M5 10h18M5 18h18"/></svg>
+        <svg class="icon-close" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M7 7l14 14M21 7L7 21"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ================= MOBILE MENU ================= -->
+  <div class="mobile-menu" id="mobile-menu" hidden>
+    <div class="container">
+      <nav aria-label="Mobile">
+        <ul class="mobile-menu__nav">
+          <li><a class="mobile-menu__link" href="index.html#work">My Cases <span class="circle-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>
+          <li><a class="mobile-menu__link" href="index.html#about">About me <span class="circle-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>
+          <li><a class="mobile-menu__link" href="#contact">Contact <span class="circle-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>
+        </ul>
+      </nav>
+
+      <ul class="mobile-menu__contacts">
+        <li>
+          <a class="contact__link" href="mailto:sira.anastasiia@gmail.com">
+            <span class="contact__label">Email <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
+            <span class="contact__value">sira.anastasiia@gmail.com</span>
+          </a>
+        </li>
+        <li>
+          <a class="contact__link" href="https://t.me/Nastia2323" target="_blank" rel="noopener">
+            <span class="contact__label">Telegram <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
+            <span class="contact__value">@Nastia2323</span><span class="sr-only"> (opens in new tab)</span>
+          </a>
+        </li>
+        <li>
+          <a class="contact__link" href="https://www.linkedin.com/in/anastasiiasira" target="_blank" rel="noopener">
+            <span class="contact__label">LinkedIn <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
+            <span class="contact__value">linkedin.com/in/anastasiiasira</span><span class="sr-only"> (opens in new tab)</span>
+          </a>
+        </li>
+      </ul>
+
+      <a class="btn btn--primary btn--block" href="assets/cv.pdf" target="_blank" rel="noopener">Download CV<span class="sr-only"> (opens in new tab)</span></a>
+    </div>
+  </div>
+
+  <main id="main">
+
+    <!-- ================= CASE HERO ================= -->
+    <section class="case-hero container" aria-labelledby="case-title">
+      <a class="back-link link-underline" href="index.html#work"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M19 12H5M11 6l-6 6 6 6"/></svg> Back</a>
+
+      <h1 class="case-hero__title" id="case-title">Redesign for Public Services</h1>
+      <p class="case-hero__eyebrow"><span class="accent" aria-hidden="true">✦</span> GovTech · Full Redesign</p>
+
+      <dl class="case-meta">
+        <div>
+          <dt class="case-meta__label">Period</dt>
+          <dd class="case-meta__value">2025–2026</dd>
+        </div>
+        <div>
+          <dt class="case-meta__label">My Role</dt>
+          <dd class="case-meta__value">Key Designer</dd>
+        </div>
+        <div>
+          <dt class="case-meta__label">Tags</dt>
+          <dd><ul class="chips">
+            <li class="chip">GovTech</li>
+            <li class="chip">Design Library</li>
+            <li class="chip">Style Guide</li>
+            <li class="chip">UI design</li>
+            <li class="chip">Prototyping</li>
+            <li class="chip">Stakeholder management</li>
+            <li class="chip">Cross-collaboration</li>
+            <li class="chip">Visual strategy</li>
+            <li class="chip">Accessibility</li>
+          </ul></dd>
+        </div>
+      </dl>
+    </section>
+
+    <!-- ================= COVER IMAGE ================= -->
+    <div class="case-cover media media--cover">
+      <img src="assets/govtech-cover.jpeg" alt="" width="1920" height="1080" loading="lazy">
+    </div>
+
+    <!-- ================= PROJECT GOALS ================= -->
+    <section class="section container split" aria-labelledby="goals-title">
+      <h2 class="section-title" id="goals-title">Project goals</h2>
+      <div class="prose prose--flush">
+          <p>The platform enables users to explore public services, read articles and news, and access their accounts to complete government-related actions.</p>
+          <p>The project goal was redesigning the public web platform in line with brand guidelines within ServiceNow constraints, as well as creating sign-up flows and the after-login experience from scratch.</p>
+      </div>
+    </section>
+
+    <!-- ================= MY ROLE ================= -->
+    <section class="section container split" aria-labelledby="role-title">
+      <h2 class="section-title" id="role-title">My role</h2>
+      <ul class="star-list">
+        <li>Led UX/UI design for a large-scale public services platform, covering both public and authenticated user experiences</li>
+        <li>Designed end-to-end user flows within ServiceNow technical constraints</li>
+        <li>Established and maintained a scalable Design System aligned with accessibility (WCAG 2.2 AA) standards</li>
+        <li>Collaborated with cross-functional stakeholders to align product, business, and technical requirements</li>
+        <li>Acted as a key driver of accessibility standards across the product</li>
+        <li>Conducted Visual QA to ensure the design was implemented properly</li>
+      </ul>
+    </section>
+
+    <!-- ================= CASE IMAGE (one wide, full screen width) ================= -->
+    <figure class="case-wide media media--wide" style="--ratio: 3440 / 1778">
+      <img src="assets/govtech-1.jpg" alt="Public services platform shown on a laptop, home page with a list of services." width="3440" height="1778" loading="lazy">
+    </figure>
+
+    <!-- ================= RESULT ================= -->
+    <section class="section container split" aria-labelledby="result-title">
+      <h2 class="section-title" id="result-title">Result</h2>
+      <ul class="star-list">
+        <li>Delivered a full redesign of the platform, improving usability, accessibility, and consistency across all user journeys</li>
+        <li>A Design System that improved development efficiency and ensured UI consistency</li>
+        <li>All design is compliant with WCAG 2.2 AA accessibility standards</li>
+        <li>Simplified complex government workflows, improving clarity and user guidance</li>
+      </ul>
+    </section>
+
+    <!-- ================= MORE CASES ================= -->
+    <section class="section container" aria-labelledby="more-title">
+      <h2 class="section-title" id="more-title">More cases</h2>
+      <ul class="cards">
+        <li>
+          <a class="case-card" href="case-tickets.html">
+            <div class="case-card__media media media--card">
+              <img src="assets/tickets-cover.jpg" alt="" width="800" height="400" loading="lazy">
+            </div>
+            <div class="case-card__body">
+              <p class="case-card__label">E-commerce · Research</p>
+              <h3 class="case-card__title">Redesigning the Ticket Purchase Flow</h3>
+              <div class="case-card__footer">
+                <p class="case-card__meta">2024 · UX Designer / Researcher</p>
+                <span class="circle-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+              </div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a class="case-card" href="case-legal.html">
+            <div class="case-card__media media media--card">
+              <img src="assets/legal-cover.jpg" alt="" width="3600" height="1851" loading="lazy">
+            </div>
+            <div class="case-card__body">
+              <p class="case-card__label">SaaS</p>
+              <h3 class="case-card__title">Improvements for Legal Practice Management App</h3>
+              <div class="case-card__footer">
+                <p class="case-card__meta">2025 · UX/UI Designer</p>
+                <span class="circle-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+              </div>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ================= CONTACT ================= -->
+    <section class="contact" id="contact" aria-labelledby="contact-title">
+      <div class="container contact__inner">
+        <div class="section-heading">
+          <h2 class="section-title" id="contact-title">Let’s connect to discuss more <span class="accent" aria-hidden="true">✦</span></h2>
+        </div>
+
+        <ul class="contact__list">
+          <li class="contact__email">
+            <a class="contact__link" href="mailto:sira.anastasiia@gmail.com">
+              <span class="contact__label">Email <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
+              <span class="contact__value">sira.anastasiia@gmail.com</span>
+            </a>
+            <button class="copy-btn" type="button" data-copy="sira.anastasiia@gmail.com" aria-label="Copy email address">
+              <!-- MUI ContentCopyOutlined icon -->
+              <svg class="copy-btn__icon copy-btn__icon--copy" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+              <!-- MUI ContentCopy (filled) icon, shown on hover/focus -->
+              <svg class="copy-btn__icon copy-btn__icon--hover" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2z"/></svg>
+              <!-- MUI CheckOutlined icon, shown after copying -->
+              <svg class="copy-btn__icon copy-btn__icon--done" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+              <span class="copy-btn__label" aria-hidden="true">Copied</span>
+            </button>
+          </li>
+          <li>
+            <a class="contact__link" href="https://t.me/Nastia2323" target="_blank" rel="noopener">
+              <span class="contact__label">Telegram <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
+              <span class="contact__value">@Nastia2323</span><span class="sr-only"> (opens in new tab)</span>
+            </a>
+          </li>
+          <li>
+            <a class="contact__link" href="https://www.linkedin.com/in/anastasiiasira" target="_blank" rel="noopener">
+              <span class="contact__label">LinkedIn <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
+              <span class="contact__value">linkedin.com/in/anastasiiasira</span><span class="sr-only"> (opens in new tab)</span>
+            </a>
+          </li>
+        </ul>
+
+        <a class="btn btn--secondary" href="assets/cv.pdf" target="_blank" rel="noopener">Download CV<span class="sr-only"> (opens in new tab)</span></a>
+        <p class="sr-only" id="copy-status" aria-live="polite"></p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="site-footer">
+    <div class="container footer__inner">
+      <p class="footer__copy">© 2026 Anastasiia Sira · Kyiv, Ukraine</p>
+      <a class="footer__top link-underline" href="#top">
+        Back to top
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
+      </a>
+    </div>
+  </footer>
+
+</body>
+</html>

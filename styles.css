@@ -1,0 +1,898 @@
+/* =========================================================
+   Portfolio — Anastasiia Sira
+   One shared stylesheet for all pages. Dark theme.
+   Mobile-first: base styles are for phones, wider screens
+   are added in the @media blocks further down.
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   1. DESIGN TOKENS — change colours, spacing and type here
+   --------------------------------------------------------- */
+:root {
+  /* Colours */
+  --color-bg: #222222;            /* page background */
+  --color-bg-deep: #1b1b1b;       /* header, footer */
+  --color-surface: #262626;       /* cards */
+  --color-placeholder: #2b2b2b;   /* grey box when an image is missing */
+  --color-text: #f2f2f2;          /* main text */
+  --color-text-muted: #a8a8a8;    /* labels, meta (7:1 on bg) */
+  --color-accent: #ffd60a;        /* yellow */
+  --color-on-accent: #1a1a1a;     /* text on yellow */
+  --color-border: rgba(255, 255, 255, 0.14);
+  --color-border-strong: rgba(255, 255, 255, 0.32);
+
+  /* Typography */
+  --font-sans: "Onest", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --fs-xs: 0.8125rem;   /* 13px */
+  --fs-sm: 0.9375rem;   /* 15px */
+  --fs-base: 1.0625rem; /* 17px */
+  --fs-md: 1.25rem;     /* 20px */
+  --fs-lg: 1.5rem;      /* 24px — section titles */
+  --fs-xl: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem); /* card titles */
+  --fs-hero: clamp(2.375rem, 1.4rem + 4.2vw, 4.25rem);
+  --fs-case-title: clamp(2.375rem, 1.3rem + 4.8vw, 4.75rem);
+  --lh-tight: 1.08;
+  --lh-body: 1.6;
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-section: clamp(6rem, 4.5rem + 7.5vw, 11.25rem); /* gap between sections (+50%: was 4rem / 3rem + 5vw / 7.5rem) */
+
+  /* Layout */
+  --container: 75rem;        /* 1200px */
+  --gutter: 1.25rem;         /* side padding on phones */
+  --header-h: 4.5rem;        /* sticky header height */
+  --radius-sm: 0.75rem;
+  --radius-md: 1.25rem;
+  --radius-pill: 999px;
+
+  /* Motion */
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --dur: 220ms;
+  --star-spin-duration: 2.4s; /* hero star: how long one turn takes */
+}
+
+/* ---------------------------------------------------------
+   2. RESET & BASE
+   --------------------------------------------------------- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  /* Sticky header must not cover a section after an anchor jump */
+  scroll-padding-top: calc(var(--header-h) + var(--space-5));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  line-height: var(--lh-body);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  /* Subtle film grain, like in the design */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+body.menu-open { overflow: hidden; }
+
+h1, h2, h3, p, ul, figure { margin: 0; }
+ul { padding: 0; list-style: none; }
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a { color: inherit; text-decoration: none; }
+
+button { font: inherit; color: inherit; }
+
+svg { flex-shrink: 0; }
+
+/* Visible keyboard focus everywhere: yellow outline */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* Text only for screen readers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* "Skip to content" link — appears on first Tab press */
+.skip-link {
+  position: absolute;
+  left: var(--space-4);
+  top: -100px;
+  z-index: 100;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-pill);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  font-weight: 600;
+}
+.skip-link:focus { top: var(--space-3); }
+
+/* ---------------------------------------------------------
+   3. LAYOUT HELPERS
+   --------------------------------------------------------- */
+.container {
+  width: 100%;
+  max-width: calc(var(--container) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section { padding-block: var(--space-section) 0; }
+
+.section-title {
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.eyebrow {
+  margin-bottom: var(--space-3);
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+}
+
+.accent { color: var(--color-accent); }
+
+/* Two-column block used in About and on case pages:
+   title on the left, content on the right (desktop) */
+.split {
+  display: grid;
+  gap: var(--space-5);
+}
+
+/* ---------------------------------------------------------
+   4. BUTTONS & LINKS
+   --------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 3rem;
+  padding: var(--space-2) var(--space-5);
+  border: 1.5px solid var(--color-accent);
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-base);
+  font-weight: 500;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+
+/* Primary: yellow fill → outlined on hover/focus */
+.btn--primary {
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+}
+.btn--primary:hover,
+.btn--primary:focus-visible {
+  background: transparent;
+  color: var(--color-accent);
+}
+
+/* Secondary: yellow outline → filled on hover/focus */
+.btn--secondary {
+  background: transparent;
+  color: var(--color-accent);
+}
+.btn--secondary:hover,
+.btn--secondary:focus-visible {
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+.btn--block { width: 100%; }
+
+/* Text link with yellow underline on hover/focus */
+.link-underline {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background-image: linear-gradient(var(--color-accent), var(--color-accent));
+  background-size: 0 2px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size var(--dur) var(--ease);
+}
+.link-underline:hover,
+.link-underline:focus-visible { background-size: 100% 2px; }
+
+/* ---------------------------------------------------------
+   5. HEADER & DESKTOP NAV
+   --------------------------------------------------------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  height: var(--header-h);
+  background: var(--color-bg-deep);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  height: 100%;
+}
+
+/* Logo: links to the main page.
+   Hover/focus: yellow outline star, no fill */
+.logo {
+  display: block;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+}
+.logo svg { width: 100%; height: 100%; overflow: visible; }
+.logo__star {
+  fill: var(--color-accent);
+  stroke: var(--color-accent);
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+  transition: fill var(--dur) var(--ease);
+}
+.logo__text {
+  fill: var(--color-on-accent);
+  transition: fill var(--dur) var(--ease);
+}
+.logo:focus-visible .logo__star { fill: transparent; }
+.logo:focus-visible .logo__text { fill: var(--color-accent); }
+/* Hover only on devices with a mouse, so a tap on a phone
+   doesn't leave the logo stuck in its hover look */
+@media (hover: hover) {
+  .logo:hover .logo__star { fill: transparent; }
+  .logo:hover .logo__text { fill: var(--color-accent); }
+}
+
+.nav,
+.header__cv { display: none; }   /* shown from tablet up */
+
+.nav__list {
+  display: flex;
+  gap: var(--space-6);
+}
+
+.nav__link {
+  padding-block: var(--space-1);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+}
+
+.header__cv { min-height: 2.75rem; font-size: var(--fs-sm); }
+
+/* Burger / close button (phones only) */
+.menu-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  margin-right: calc(var(--space-2) * -1);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  cursor: pointer;
+}
+.menu-toggle svg { width: 1.75rem; height: 1.75rem; }
+.menu-toggle .icon-close { display: none; }
+.menu-toggle[aria-expanded="true"] .icon-burger { display: none; }
+.menu-toggle[aria-expanded="true"] .icon-close { display: block; }
+
+/* ---------------------------------------------------------
+   6. MOBILE MENU (full-screen panel under the header)
+   --------------------------------------------------------- */
+.mobile-menu {
+  position: fixed;
+  inset: var(--header-h) 0 0 0;
+  z-index: 40;
+  overflow-y: auto;
+  padding-block: var(--space-6) var(--space-7);
+  background-color: var(--color-bg);
+  background-image: inherit;
+}
+.mobile-menu[hidden] { display: none; }
+
+.mobile-menu__nav li + li { margin-top: var(--space-3); }
+
+.mobile-menu__link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding-block: var(--space-3);
+  font-size: clamp(2rem, 1.4rem + 3vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+}
+
+.mobile-menu__contacts {
+  display: grid;
+  gap: var(--space-5);
+  margin-block: var(--space-7) var(--space-6);
+}
+
+/* ---------------------------------------------------------
+   7. CIRCLE ARROW (cards, mobile menu)
+   --------------------------------------------------------- */
+.circle-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1.5px solid var(--color-border-strong);
+  border-radius: 50%;
+  transition: background-color var(--dur) var(--ease), border-color var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.circle-arrow svg { width: 1.125rem; height: 1.125rem; }
+
+.mobile-menu__link .circle-arrow { width: 3rem; height: 3rem; }
+
+.mobile-menu__link:hover .circle-arrow,
+.mobile-menu__link:focus-visible .circle-arrow {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+/* ---------------------------------------------------------
+   8. HERO (main page)
+   --------------------------------------------------------- */
+.hero {
+  position: relative;
+  padding-block: var(--space-7) 0;
+}
+
+.hero__intro {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+
+.hero__avatar {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--color-placeholder);
+  filter: grayscale(1);
+}
+
+.hero__label {
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-xs);
+  line-height: 1.4;
+}
+
+.hero__title {
+  max-width: 15em;
+  font-size: var(--fs-hero);
+  font-weight: 700;
+  line-height: var(--lh-tight);
+  letter-spacing: -0.045em;
+}
+
+.hero__text {
+  max-width: 43rem;   /* wide enough for 3 lines on desktop */
+  margin-block: var(--space-5) var(--space-6);
+  color: var(--color-text);
+  opacity: 0.88;
+}
+
+.hero__cta { width: 100%; }
+
+/* Decorative yellow star with rings (desktop only) */
+.hero__decor { display: none; }
+
+/* Star animation: one full turn, fast start, soft stop.
+   The dashed yellow ring turns together with the star.
+   script.js adds .is-spinning to both every time the star scrolls into view */
+.hero__star,
+.hero__ring {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.hero__star.is-spinning,
+.hero__ring.is-spinning {
+  animation: star-spin var(--star-spin-duration) cubic-bezier(0.2, 0.8, 0.2, 1) 1;
+}
+
+@keyframes star-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* No spinning for people who turned on "Reduce motion" */
+@media (prefers-reduced-motion: reduce) {
+  .hero__star.is-spinning,
+  .hero__ring.is-spinning { animation: none; }
+}
+
+/* ---------------------------------------------------------
+   9. CASE CARDS (main page + "More cases")
+   --------------------------------------------------------- */
+.cards {
+  display: grid;
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+}
+
+.case-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  transition: transform var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+
+.case-card__media {
+  border-radius: calc(var(--radius-md) - 0.375rem);
+}
+.case-card__media img { transition: transform 400ms var(--ease); }
+
+.case-card__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: var(--space-4) var(--space-3) var(--space-3);
+}
+
+.case-card__label {
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+}
+.case-card__num {
+  margin-right: var(--space-2);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.case-card__title {
+  margin-top: var(--space-2);
+  margin-bottom: var(--space-6);
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+.case-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-top: auto;
+}
+
+.case-card__meta {
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+}
+
+/* Hover/focus: lift, yellow border, cover zoom, arrow fills yellow */
+.case-card:hover,
+.case-card:focus-visible {
+  transform: translateY(-4px);
+  border-color: var(--color-accent);
+  box-shadow: 0 12px 40px -12px rgba(255, 214, 10, 0.35);
+}
+.case-card:hover .case-card__media img,
+.case-card:focus-visible .case-card__media img { transform: scale(1.04); }
+.case-card:hover .circle-arrow,
+.case-card:focus-visible .circle-arrow {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+/* ---------------------------------------------------------
+   10. IMAGE BOXES & PLACEHOLDERS
+   The box keeps its size even if the image file is missing.
+   script.js adds .is-missing and the file name is shown.
+   --------------------------------------------------------- */
+.media {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-placeholder);
+}
+.media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.media--card  { aspect-ratio: 2 / 1; }
+.media--cover { aspect-ratio: 16 / 9; }
+/* Case screenshots: width = the column, height = the image's own shape.
+   Set the shape in the HTML with style="--ratio: width / height" (default 4:3) */
+.media--shot  { aspect-ratio: var(--ratio, 4 / 3); border-radius: var(--radius-md); }
+
+.media.is-missing img { visibility: hidden; }
+.media.is-missing::before {
+  content: attr(data-file);
+  position: absolute;
+  top: var(--space-4);
+  left: var(--space-4);
+  font-size: var(--fs-xs);
+  color: var(--color-text-muted);
+}
+
+/* ---------------------------------------------------------
+   11. ABOUT (main page)
+   --------------------------------------------------------- */
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4) var(--space-6);
+  padding-block: var(--space-4);
+  border-block: 1px solid var(--color-border);
+}
+.stats__label {
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+}
+.stats dd { margin: 0; }
+.stats__value {
+  font-size: var(--fs-md);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.prose p + p { margin-top: var(--space-4); }
+.prose { margin-top: var(--space-5); }
+.prose--flush { margin-top: 0; }  /* when the text is the first thing in a column */
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-5);
+}
+.chip {
+  padding: var(--space-1) var(--space-4);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-sm);
+  line-height: 1.8;
+}
+
+/* ---------------------------------------------------------
+   12. CONTACT BLOCK (all pages)
+   --------------------------------------------------------- */
+.contact {
+  margin-top: var(--space-section);
+  padding-block: var(--space-8);
+  border-top: 1px solid var(--color-border);
+  /* soft yellow glow in the top-right corner */
+  background: radial-gradient(60% 80% at 100% 0%, rgba(255, 214, 10, 0.08), transparent 70%);
+}
+
+.contact__list {
+  display: grid;
+  gap: var(--space-5);
+  margin-block: var(--space-6);
+}
+
+.contact__label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+}
+.contact__label svg { width: 1rem; height: 1rem; }
+
+.contact__value {
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+/* Whole block is the link; the value gets the yellow underline */
+.contact__link {
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+.contact__link .contact__value {
+  justify-self: start;
+  background-image: linear-gradient(var(--color-accent), var(--color-accent));
+  background-size: 0 2px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size var(--dur) var(--ease);
+}
+.contact__link:hover .contact__value,
+.contact__link:focus-visible .contact__value { background-size: 100% 2px; }
+
+.contact__email {
+  display: flex;
+  flex-wrap: nowrap;   /* keep the copy icon next to the email */
+  align-items: flex-end;
+  /* Visible space between the email and the copy icon = 6px.
+     The icon already has ~1.67px of built-in margin, so we add the rest. */
+  gap: calc(6px - 1.67px);
+}
+
+/* Copy-to-clipboard button: yellow icon only (MUI outlined icons) */
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;   /* icon hugs the email; extra click area is on the right */
+  gap: var(--space-1);
+  min-width: 2.75rem;
+  /* Same height as the email's text line, so the icon lines up with it
+     (still above the 24px minimum target size in WCAG 2.2) */
+  height: calc(var(--fs-base) * var(--lh-body));
+  /* No left padding, so the icon sits right after the email
+     (the spacing is set by gap in .contact__email) */
+  padding: 0 var(--space-2) 0 0;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--color-accent);
+  font-size: var(--fs-sm);
+  cursor: pointer;
+}
+
+.copy-btn__icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: currentColor;
+}
+
+/* Hover/focus: outlined icon swaps to the filled one (no background) */
+.copy-btn__icon--hover { display: none; }
+.copy-btn:focus-visible .copy-btn__icon--copy { display: none; }
+.copy-btn:focus-visible .copy-btn__icon--hover { display: inline; }
+@media (hover: hover) {   /* mouse only, same reason as the logo */
+  .copy-btn:hover .copy-btn__icon--copy { display: none; }
+  .copy-btn:hover .copy-btn__icon--hover { display: inline; }
+}
+
+/* After copying: check icon + "Copied" for 2 seconds */
+.copy-btn__icon--done,
+.copy-btn__label { display: none; }
+.copy-btn.is-copied .copy-btn__icon--copy,
+.copy-btn.is-copied .copy-btn__icon--hover { display: none; }
+.copy-btn.is-copied .copy-btn__icon--done,
+.copy-btn.is-copied .copy-btn__label { display: inline; }
+
+/* ---------------------------------------------------------
+   13. FOOTER
+   --------------------------------------------------------- */
+.site-footer {
+  padding-block: var(--space-5);
+  border-top: 1px solid var(--color-border);
+  background: var(--color-bg-deep);
+  font-size: var(--fs-sm);
+}
+.footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3) var(--space-5);
+}
+.footer__copy { color: var(--color-text-muted); }
+.footer__top svg { width: 0.875rem; height: 0.875rem; }
+
+/* ---------------------------------------------------------
+   14. CASE PAGES
+   --------------------------------------------------------- */
+.case-hero { padding-top: var(--space-6); }
+
+.back-link {
+  font-weight: 500;
+}
+.back-link svg { width: 1rem; height: 1rem; }
+
+.case-hero__title {
+  margin-top: var(--space-6);
+  font-size: var(--fs-case-title);
+  font-weight: 700;
+  line-height: var(--lh-tight);
+  letter-spacing: -0.045em;
+}
+
+.case-hero__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+  color: var(--color-text-muted);
+}
+
+.case-meta {
+  display: grid;
+  gap: var(--space-5);
+  margin-top: var(--space-6);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-border);   /* line above Period / My Role / Tags only */
+}
+.case-meta dd { margin: 0; }
+.case-meta__label {
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+}
+.case-meta__value {
+  margin-top: var(--space-1);
+  font-size: var(--fs-md);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.case-meta .chips { margin-top: var(--space-2); }
+
+.case-cover { margin-top: var(--space-7); }
+
+/* Star bullet list (My Role, Result) */
+.star-list li {
+  position: relative;
+  padding-left: 2rem;
+}
+.star-list li + li { margin-top: var(--space-4); }
+.star-list li::before {
+  content: "✦";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--color-accent);
+}
+
+/* Pair of case screenshots */
+.shots {
+  display: grid;
+  gap: var(--space-5);
+}
+
+/* One wide case image across the full screen width.
+   The frame takes the image's own shape, so nothing is cropped.
+   Set the shape in the HTML: style="--ratio: width / height" */
+.case-wide { margin-top: var(--space-section); }
+.media--wide {
+  width: 100%;
+  aspect-ratio: var(--ratio, 2 / 1);
+}
+
+/* Heuristic findings cards (Legal) */
+.mini-cards {
+  display: grid;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+.mini-card {
+  padding: var(--space-4) var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+}
+.mini-card__title { font-weight: 700; }
+.mini-card__text {
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+}
+
+/* ---------------------------------------------------------
+   15. RESPONSIVE — small phones (≤ 360px)
+   --------------------------------------------------------- */
+@media (max-width: 22.5em) {
+  :root { --gutter: 1rem; }
+
+  /* Hero label wraps onto two lines, no middle dot */
+  .hero__label-sep { display: none; }
+  .hero__label-part { display: block; }
+  .hero__label { border-radius: var(--radius-md); }
+}
+
+/* ---------------------------------------------------------
+   16. RESPONSIVE — tablet (≥ 768px)
+   --------------------------------------------------------- */
+@media (min-width: 48em) {
+  :root {
+    --gutter: 2rem;
+    --header-h: 5rem;
+  }
+
+  .nav,
+  .header__cv { display: inline-flex; }
+  .header__inner > .nav { margin-left: auto; }
+  .menu-toggle,
+  .mobile-menu { display: none !important; }
+
+  .hero { padding-top: var(--space-8); }
+  .hero__cta { width: auto; }
+
+  .cards { grid-template-columns: repeat(2, 1fr); }
+
+  /* Contacts sit in a row and move to a new line when space runs out,
+     instead of breaking the email or link in the middle */
+  .contact__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-6) var(--space-8);
+  }
+  .contact__value { white-space: nowrap; }
+
+  .shots { grid-template-columns: repeat(2, 1fr); }
+  .mini-cards { grid-template-columns: repeat(3, 1fr); }
+
+  .case-meta { grid-template-columns: 10rem 12rem 1fr; }
+
+  .media--cover { aspect-ratio: 21 / 9; }
+}
+
+/* ---------------------------------------------------------
+   17. RESPONSIVE — desktop (≥ 1024px)
+   --------------------------------------------------------- */
+@media (min-width: 64em) {
+  .cards--three { grid-template-columns: repeat(3, 1fr); }
+
+  .split {
+    grid-template-columns: 5fr 7fr;
+    gap: var(--space-6);
+  }
+
+  /* Extra top space so the star sits above the headline, as in the design */
+  .hero { padding-top: 7.5rem; }
+
+  .hero__decor {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: calc(var(--gutter) - 2rem);
+    width: 15.75rem;   /* 252px, same as the design */
+    height: 15.75rem;
+    pointer-events: none;
+  }
+
+  .contact__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-6);
+  }
+  .contact__inner .section-heading { flex-basis: 100%; }
+  .contact__list { margin-block: 0; }
+}

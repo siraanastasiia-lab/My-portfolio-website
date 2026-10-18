@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Redesigning the Ticket Purchase Flow — Anastasiia Sira</title>
+  <meta name="description" content="Case study by Anastasiia Sira: Redesigning the Ticket Purchase Flow (E-commerce · Research).">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body id="top">
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- ================= HEADER ================= -->
+  <header class="site-header">
+    <div class="container header__inner">
+      <a class="logo" href="index.html" aria-label="Anastasiia Sira, home page">
+        <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path class="logo__star" d="M24 1C26 14 34 22 47 24C34 26 26 34 24 47C22 34 14 26 1 24C14 22 22 14 24 1Z"/><text class="logo__text" x="24" y="28.6" text-anchor="middle" font-family="Onest, Arial, sans-serif" font-size="13" font-weight="800">AS</text></svg>
+      </a>
+
+      <nav class="nav" aria-label="Main">
+        <ul class="nav__list">
+          <li><a class="nav__link link-underline" href="index.html#work">My Cases</a></li>
+          <li><a class="nav__link link-underline" href="index.html#about">About me</a></li>
+          <li><a class="nav__link link-underline" href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <a class="btn btn--secondary header__cv" href="assets/cv.pdf" target="_blank" rel="noopener">Download CV<span class="sr-only"> (opens in new tab)</span></a>
+
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+        <svg class="icon-burger" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M5 10h18M5 18h18"/></svg>
+        <svg class="icon-close" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M7 7l14 14M21 7L7 21"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ================= MOBILE MENU ================= -->
+  <div class="mobile-menu" id="mobile-menu" hidden>
+    <div class="container">
+      <nav aria-label="Mobile">
+        <ul class="mobile-menu__nav">
+          <li><a class="mobile-menu__link" href="index.html#work">My Cases <span class="circle-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>
+          <li><a class="mobile-menu__link" href="index.html#about">About me <span class="circle-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>
+          <li><a class="mobile-menu__link" href="#contact">Contact <span class="circle-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>
+        </ul>
+      </nav>
+
+      <ul class="mobile-menu__contacts">
+        <li>
+          <a class="contact__link" href="mailto:sira.anastasiia@gmail.com">
+            <span class="contact__label">Email <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
+            <span class="contact__value">sira.anastasiia@gmail.com</span>
+          </a>
+        </li>
+        <li>
+          <a class="contact__link" href="https://t.me/Nastia2323" target="_blank" rel="noopener">
+            <span class="contact__label">Telegram <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
+            <span class="contact__value">@Nastia2323</span><span class="sr-only"> (opens in new tab)</span>
+          </a>
+        </li>
+        <li>
+          <a class="contact__link" href="https://www.linkedin.com/in/anastasiiasira" target="_blank" rel="noopener">
+            <span class="contact__label">LinkedIn <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
+            <span class="contact__value">linkedin.com/in/anastasiiasira</span><span class="sr-only"> (opens in new tab)</span>
+          </a>
+        </li>
+      </ul>
+
+      <a class="btn btn--primary btn--block" href="assets/cv.pdf" target="_blank" rel="noopener">Download CV<span class="sr-only"> (opens in new tab)</span></a>
+    </div>
+  </div>
+
+  <main id="main">
+
+    <!-- ================= CASE HERO ================= -->
+    <section class="case-hero container" aria-labelledby="case-title">
+      <a class="back-link link-underline" href="index.html#work"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M19 12H5M11 6l-6 6 6 6"/></svg> Back</a>
+
+      <h1 class="case-hero__title" id="case-title">Redesigning the Ticket Purchase Flow</h1>
+      <p class="case-hero__eyebrow"><span class="accent" aria-hidden="true">✦</span> E-commerce · Research</p>
+
+      <dl class="case-meta">
+        <div>
+          <dt class="case-meta__label">Period</dt>
+          <dd class="case-meta__value">2024</dd>
+        </div>
+        <div>
+          <dt class="case-meta__label">My Role</dt>
+          <dd class="case-meta__value">UX Designer / Researcher</dd>
+        </div>
+        <div>
+          <dt class="case-meta__label">Tags</dt>
+          <dd><ul class="chips">
+            <li class="chip">E-commerce</li>
+            <li class="chip">Research</li>
+            <li class="chip">Improving conversion</li>
+            <li class="chip">UX Audit</li>
+            <li class="chip">Usability testing</li>
+            <li class="chip">Interviews</li>
+            <li class="chip">Prototyping</li>
+            <li class="chip">Research Report</li>
+            <li class="chip">Collaboration with Client’s product team</li>
+          </ul></dd>
+        </div>
+      </dl>
+    </section>
+
+    <!-- ================= COVER IMAGE ================= -->
+    <div class="case-cover media media--cover">
+      <img src="assets/tickets-cover.jpg" alt="" width="1440" height="810" loading="lazy">
+    </div>
+
+    <!-- ================= PROJECT GOALS ================= -->
+    <section class="section container split" aria-labelledby="goals-title">
+      <h2 class="section-title" id="goals-title">Project goals</h2>
+      <div class="prose prose--flush">
+          <p>This project focused on improving the user experience of a worldwide transportation company’s e-commerce site, where users can buy tickets online for rides.</p>
+          <p>The main goals of this project were to enhance usability, increase user satisfaction, and boost conversion rates for the web e-commerce site through research-based changes.</p>
+      </div>
+    </section>
+
+    <!-- ================= MY ROLE ================= -->
+    <section class="section container split" aria-labelledby="role-title">
+      <h2 class="section-title" id="role-title">My role</h2>
+      <ul class="star-list">
+        <li>UX: from discovery to validated design solutions, with a strong focus on conversion optimization</li>
+        <li>Defined research strategy, participated in user interviews and usability testing, and translated insights into actionable product decisions</li>
+        <li>Identified key friction points in the purchase flow and prioritized improvements based on impact vs effort</li>
+        <li>Designed and validated new user purchase flow and interaction patterns, collaborating closely with product and engineering teams</li>
+        <li>Facilitated stakeholder alignment by presenting research insights and design rationale</li>
+      </ul>
+    </section>
+
+    <!-- ================= CASE IMAGES ================= -->
+    <div class="section container shots">
+      <figure class="media media--shot" style="--ratio: 3858 / 2388">
+        <img src="assets/tickets-1.jpg" alt="Ticket purchase flow shown on phones and a laptop." width="3858" height="2388" loading="lazy">
+      </figure>
+      <figure class="media media--shot" style="--ratio: 3858 / 2388">
+        <img src="assets/tickets-2.jpg" alt="Four mobile screens of the redesigned ticket purchase flow." width="3858" height="2388" loading="lazy">
+      </figure>
+    </div>
+
+    <!-- ================= RESULT ================= -->
+    <section class="section container split" aria-labelledby="result-title">
+      <h2 class="section-title" id="result-title">Result</h2>
+      <ul class="star-list">
+        <li>Reduced friction in the ticket purchase flow by simplifying key steps and improving clarity of actions</li>
+        <li>Increased conversion by addressing critical drop-off points identified during usability testing</li>
+        <li>Improved mobile experience through a mobile-first redesign approach</li>
+        <li>Delivered validated, development-ready design for purchase flow</li>
+      </ul>
+    </section>
+
+    <!-- ================= MORE CASES ================= -->
+    <section class="section container" aria-labelledby="more-title">
+      <h2 class="section-title" id="more-title">More cases</h2>
+      <ul class="cards">
+        <li>
+          <a class="case-card" href="case-govtech.html">
+            <div class="case-card__media media media--card">
+              <img src="assets/govtech-cover.jpeg" alt="" width="1920" height="1080" loading="lazy">
+            </div>
+            <div class="case-card__body">
+              <p class="case-card__label">GovTech · Full Redesign</p>
+              <h3 class="case-card__title">Redesign for Public Services</h3>
+              <div class="case-card__footer">
+                <p class="case-card__meta">2025–2026 · Key Designer</p>
+                <span class="circle-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+              </div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a class="case-card" href="case-legal.html">
+            <div class="case-card__media media media--card">
+              <img src="assets/legal-cover.jpg" alt="" width="3600" height="1851" loading="lazy">
+            </div>
+            <div class="case-card__body">
+              <p class="case-card__label">SaaS</p>
+              <h3 class="case-card__title">Improvements for Legal Practice Management App</h3>
+              <div class="case-card__footer">
+                <p class="case-card__meta">2025 · UX/UI Designer</p>
+                <span class="circle-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+              </div>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ================= CONTACT ================= -->
+    <section class="contact" id="contact" aria-labelledby="contact-title">
+      <div class="container contact__inner">
+        <div class="section-heading">
+          <h2 class="section-title" id="contact-title">Let’s connect to discuss more <span class="accent" aria-hidden="true">✦</span></h2>
+        </div>
+
+        <ul class="contact__list">
+          <li class="contact__email">
+            <a class="contact__link" href="mailto:sira.anastasiia@gmail.com">
+              <span class="contact__label">Email <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
+              <span class="contact__value">sira.anastasiia@gmail.com</span>
+            </a>
+            <button class="copy-btn" type="button" data-copy="sira.anastasiia@gmail.com" aria-label="Copy email address">
+              <!-- MUI ContentCopyOutlined icon -->
+              <svg class="copy-btn__icon copy-btn__icon--copy" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+              <!-- MUI ContentCopy (filled) icon, shown on hover/focus -->
+              <svg class="copy-btn__icon copy-btn__icon--hover" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2z"/></svg>
+              <!-- MUI CheckOutlined icon, shown after copying -->
+              <svg class="copy-btn__icon copy-btn__icon--done" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+              <span class="copy-btn__label" aria-hidden="true">Copied</span>
+            </button>
+          </li>
+          <li>
+            <a class="contact__link" href="https://t.me/Nastia2323" target="_blank" rel="noopener">
+              <span class="contact__label">Telegram <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
+              <span class="contact__value">@Nastia2323</span><span class="sr-only"> (opens in new tab)</span>
+            </a>
+          </li>
+          <li>
+            <a class="contact__link" href="https://www.linkedin.com/in/anastasiiasira" target="_blank" rel="noopener">
+              <span class="contact__label">LinkedIn <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
+              <span class="contact__value">linkedin.com/in/anastasiiasira</span><span class="sr-only"> (opens in new tab)</span>
+            </a>
+          </li>
+        </ul>
+
+        <a class="btn btn--secondary" href="assets/cv.pdf" target="_blank" rel="noopener">Download CV<span class="sr-only"> (opens in new tab)</span></a>
+        <p class="sr-only" id="copy-status" aria-live="polite"></p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="site-footer">
+    <div class="container footer__inner">
+      <p class="footer__copy">© 2026 Anastasiia Sira · Kyiv, Ukraine</p>
+      <a class="footer__top link-underline" href="#top">
+        Back to top
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
+      </a>
+    </div>
+  </footer>
+
+</body>
+</html>
