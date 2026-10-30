@@ -4,14 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Anastasiia Sira — Senior UX/Product Designer</title>
-  <meta name="description" content="Portfolio of Anastasiia Sira, Senior UX/Product Designer with 5+ years of experience in SaaS, E-commerce, Marketplace, FinTech and GovTech.">
+  <meta name="description" content="Portfolio of Anastasiia Sira, Senior UX/Product Designer with 6+ years of experience in SaaS, E-commerce, Marketplace, FinTech and GovTech.">
   <!-- Social share preview (Open Graph). Links must be absolute (full https:// address).
        If the site gets another address, replace https://siraanastasiiaportfolio.vercel.app/
        in og:url and og:image below. -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Anastasiia Sira">
   <meta property="og:title" content="Anastasiia Sira — Senior UX/Product Designer">
-  <meta property="og:description" content="Portfolio of Anastasiia Sira, Senior UX/Product Designer with 5+ years of experience in SaaS, E-commerce, Marketplace, FinTech and GovTech.">
+  <meta property="og:description" content="Portfolio of Anastasiia Sira, Senior UX/Product Designer with 6+ years of experience in SaaS, E-commerce, Marketplace, FinTech and GovTech.">
   <meta property="og:url" content="https://siraanastasiiaportfolio.vercel.app/">
   <meta property="og:image" content="https://siraanastasiiaportfolio.vercel.app/assets/og-image.jpg">
   <meta property="og:image:width" content="1200">
@@ -99,24 +99,24 @@
     <section class="hero container" aria-labelledby="hero-title">
       <!-- Decorative star: big star spins once on page load (see .hero__star in styles.css) -->
       <svg class="hero__decor" viewBox="0 0 360 360" fill="none" aria-hidden="true" focusable="false">
-        <circle cx="180" cy="180" r="179.5" stroke="rgba(255,255,255,0.08)"/>
-        <circle class="hero__ring" cx="180" cy="180" r="120" stroke="rgba(255,214,10,0.25)" stroke-dasharray="3 9"/>
+        <circle cx="180" cy="180" r="224" stroke="rgba(255,255,255,0.08)"/><!-- outer ring, 25% bigger, may overflow the box -->
+        <circle class="hero__ring" cx="180" cy="180" r="120" stroke="#ffd60a" stroke-opacity="0.5" stroke-width="2" stroke-dasharray="8 18"/>
         <g class="hero__star">
           <path fill="#ffd60a" transform="translate(110 110) scale(5.8333)" d="M12 0C12.8 7.2 16.8 11.2 24 12C16.8 12.8 12.8 16.8 12 24C11.2 16.8 7.2 12.8 0 12C7.2 11.2 11.2 7.2 12 0Z"/>
         </g>
-        <path fill="rgba(255,214,10,0.7)" transform="translate(262 44) rotate(-41 9 9) scale(0.75)" d="M12 0C12.8 7.2 16.8 11.2 24 12C16.8 12.8 12.8 16.8 12 24C11.2 16.8 7.2 12.8 0 12C7.2 11.2 11.2 7.2 12 0Z"/>
+        <g class="hero__sparkle"><!-- small star: orbits the centre once while the big star spins -->
+          <path fill="rgba(255,214,10,0.7)" transform="translate(262 44) rotate(-41 9 9) scale(0.75)" d="M12 0C12.8 7.2 16.8 11.2 24 12C16.8 12.8 12.8 16.8 12 24C11.2 16.8 7.2 12.8 0 12C7.2 11.2 11.2 7.2 12 0Z"/>
+        </g>
       </svg>
 
       <div class="hero__intro">
         <img class="hero__avatar" src="assets/avatar.png" alt="Portrait of Anastasiia Sira" width="56" height="56" loading="lazy">
-        <p class="hero__label">
-          <span class="hero__label-part">Senior UX/Product Designer</span><span class="hero__label-sep" aria-hidden="true"> · </span><span class="hero__label-part">5+ years experience</span>
-        </p>
+        <p class="hero__label">Senior UX/Product Designer</p>
       </div>
 
-      <h1 class="hero__title" id="hero-title">I’m Anastasiia, a product designer who <span class="accent">simplifies complexity</span>.</h1>
+      <h1 class="hero__title" id="hero-title">Hello, I’m Anastasiia. I design with <span class="accent">curiosity</span> and a reason behind every pixel<span class="accent">.</span></h1>
 
-      <p class="hero__text">5+ years designing complex digital products across SaaS, E-commerce, Marketplace, FinTech and GovTech. I improve user journeys and business metrics through research and hypothesis-driven design.</p>
+      <p class="hero__text">6+ years designing complex digital products across SaaS, E-commerce, Marketplace, FinTech and GovTech. I improve user journeys and business metrics through research and hypothesis-driven design.</p>
 
       <a class="btn btn--primary hero__cta" href="#work">
         View cases
@@ -186,14 +186,15 @@
 
       <div>
         <dl class="stats">
-          <div><dt class="stats__label">Experience</dt><dd class="stats__value">5+ years</dd></div>
+          <div><dt class="stats__label">Experience</dt><dd class="stats__value">6+ years</dd></div>
           <div><dt class="stats__label">Based in</dt><dd class="stats__value">Kyiv, Ukraine</dd></div>
           <div><dt class="stats__label">Projects</dt><dd class="stats__value">12+</dd></div>
         </dl>
 
         <div class="prose">
-          <p>Senior UX/Product Designer with 5+ years of experience designing complex digital products. I’m focused on improving user journeys and business metrics through research and hypothesis-driven design.</p>
-          <p>I work end-to-end, from problem discovery to validation and delivery. I specialize in simplifying complex workflows, building design systems and intuitive, accessible UX, and I advocate for a seamless design experience throughout the entire process.</p>
+          <p>My focus is on improving user journeys and business metrics through research and hypothesis-driven design. I love clean &amp; clear interfaces that are accessible by default and meet WCAG 2.2 AA.</p>
+          <p>Design systems are a core part of that work, built and evolved from the ground up to keep products consistent as they scale. From problem discovery to delivery, I work directly with clients and stakeholders — presenting ideas, aligning on goals and justifying design decisions.</p>
+          <p>I use AI (Figma AI, ChatGPT and Claude) daily to explore ideas, support research, speed up prototyping and automate routine tasks, while the design decisions stay mine. This website was also built with Claude.</p>
         </div>
 
         <ul class="chips" aria-label="Domains">
@@ -211,7 +212,7 @@
     <section class="contact" id="contact" aria-labelledby="contact-title">
       <div class="container contact__inner">
         <div class="section-heading">
-          <h2 class="section-title" id="contact-title">Let’s connect to discuss more <span class="accent" aria-hidden="true">✦</span></h2>
+          <h2 class="section-title" id="contact-title">Let’s connect to discuss more <svg class="title-star" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path d="M24 1C26 14 34 22 47 24C34 26 26 34 24 47C22 34 14 26 1 24C14 22 22 14 24 1Z"/></svg></h2>
         </div>
 
         <ul class="contact__list">

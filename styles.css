@@ -16,10 +16,12 @@
   --color-placeholder: #2b2b2b;   /* grey box when an image is missing */
   --color-text: #f2f2f2;          /* main text */
   --color-text-muted: #a8a8a8;    /* labels, meta (7:1 on bg) */
+  --color-text-subtle: #8a8a8a;   /* non-clickable footer text (5:1 on footer bg, passes AA) */
   --color-accent: #ffd60a;        /* yellow */
   --color-on-accent: #1a1a1a;     /* text on yellow */
   --color-border: rgba(255, 255, 255, 0.14);
   --color-border-strong: rgba(255, 255, 255, 0.32);
+  --color-border-tag: rgba(255, 255, 255, 0.12);  /* soft outline of tags/pills (decorative, not a contrast requirement) */
 
   /* Typography */
   --font-sans: "Onest", "Helvetica Neue", Arial, system-ui, sans-serif;
@@ -28,7 +30,7 @@
   --fs-base: 1.0625rem; /* 17px */
   --fs-md: 1.25rem;     /* 20px */
   --fs-lg: 1.5rem;      /* 24px — section titles */
-  --fs-xl: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem); /* card titles */
+  --fs-xl: clamp(1.125rem, 1rem + 0.5vw, 1.3125rem); /* card titles: 18px phone to 21px desktop */
   --fs-hero: clamp(2.375rem, 1.4rem + 4.2vw, 4.25rem);
   --fs-case-title: clamp(2.375rem, 1.3rem + 4.8vw, 4.75rem);
   --lh-tight: 1.08;
@@ -167,6 +169,16 @@ svg { flex-shrink: 0; }
 
 .accent { color: var(--color-accent); }
 
+/* Yellow star after a heading: same shape as the logo star, no letters */
+.title-star {
+  display: inline-block;
+  width: 0.8em;
+  height: 0.8em;
+  margin-left: 0.1em;
+  vertical-align: -0.05em;
+  fill: var(--color-accent);
+}
+
 /* Two-column block used in About and on case pages:
    title on the left, content on the right (desktop) */
 .split {
@@ -240,7 +252,7 @@ svg { flex-shrink: 0; }
   z-index: 50;
   height: var(--header-h);
   background: var(--color-bg-deep);
-  border-bottom: 1px solid var(--color-border);
+  /* no bottom line: header is set apart by its darker background only */
 }
 
 .header__inner {
@@ -399,7 +411,7 @@ svg { flex-shrink: 0; }
 
 .hero__label {
   padding: var(--space-2) var(--space-4);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-border-tag);
   border-radius: var(--radius-pill);
   font-size: var(--fs-xs);
   line-height: 1.4;
@@ -425,27 +437,39 @@ svg { flex-shrink: 0; }
 /* Decorative yellow star with rings (desktop only) */
 .hero__decor { display: none; }
 
-/* Star animation: one full turn, fast start, soft stop.
-   The dashed yellow ring turns together with the star.
-   script.js adds .is-spinning to both every time the star scrolls into view */
+/* Star animation: fast start, soft stop.
+   The big star and the dashed yellow ring make 2 full turns together;
+   the small star orbits the centre once in the same time.
+   script.js adds .is-spinning every time the star scrolls into view */
 .hero__star,
 .hero__ring {
   transform-box: fill-box;
   transform-origin: center;
 }
+.hero__sparkle {
+  transform-box: view-box;          /* rotate around the centre of the whole decor */
+  transform-origin: 180px 180px;
+}
 .hero__star.is-spinning,
 .hero__ring.is-spinning {
   animation: star-spin var(--star-spin-duration) cubic-bezier(0.2, 0.8, 0.2, 1) 1;
 }
+.hero__sparkle.is-spinning {
+  animation: sparkle-orbit var(--star-spin-duration) cubic-bezier(0.2, 0.8, 0.2, 1) 1;
+}
 
 @keyframes star-spin {
-  to { transform: rotate(360deg); }
+  to { transform: rotate(720deg); }  /* 2 turns */
+}
+@keyframes sparkle-orbit {
+  to { transform: rotate(360deg); }  /* 1 full circle */
 }
 
 /* No spinning for people who turned on "Reduce motion" */
 @media (prefers-reduced-motion: reduce) {
   .hero__star.is-spinning,
-  .hero__ring.is-spinning { animation: none; }
+  .hero__ring.is-spinning,
+  .hero__sparkle.is-spinning { animation: none; }
 }
 
 /* ---------------------------------------------------------
@@ -487,7 +511,7 @@ svg { flex-shrink: 0; }
 .case-card__num {
   margin-right: var(--space-2);
   font-weight: 700;
-  color: var(--color-text);
+  color: var(--color-text-muted);   /* same light grey as the domain label next to it */
 }
 
 .case-card__title {
@@ -565,7 +589,7 @@ svg { flex-shrink: 0; }
 .stats {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-4) var(--space-6);
+  gap: var(--space-4) var(--space-6);   /* phones: 32px between items, so all three fit on one line */
   padding-block: var(--space-4);
   border-block: 1px solid var(--color-border);
 }
@@ -592,7 +616,7 @@ svg { flex-shrink: 0; }
 }
 .chip {
   padding: var(--space-1) var(--space-4);
-  border: 1px solid var(--color-border-strong);
+  border: 1px solid var(--color-border-tag);
   border-radius: var(--radius-pill);
   font-size: var(--fs-sm);
   line-height: 1.8;
@@ -699,12 +723,23 @@ svg { flex-shrink: 0; }
 .copy-btn.is-copied .copy-btn__icon--done,
 .copy-btn.is-copied .copy-btn__label { display: inline; }
 
+/* "Copied" floats next to the check icon without taking up room in the row,
+   so Telegram and LinkedIn don't jump to the right */
+.copy-btn { position: relative; }
+.copy-btn__label {
+  position: absolute;
+  top: 50%;
+  left: calc(1.25rem + var(--space-1));   /* icon width + small gap */
+  transform: translateY(-50%);
+  white-space: nowrap;
+}
+
 /* ---------------------------------------------------------
    13. FOOTER
    --------------------------------------------------------- */
 .site-footer {
   padding-block: var(--space-5);
-  border-top: 1px solid var(--color-border);
+  /* no top line: footer is set apart by its darker background only */
   background: var(--color-bg-deep);
   font-size: var(--fs-sm);
 }
@@ -715,7 +750,7 @@ svg { flex-shrink: 0; }
   justify-content: space-between;
   gap: var(--space-3) var(--space-5);
 }
-.footer__copy { color: var(--color-text-muted); }
+.footer__copy { color: var(--color-text-subtle); }   /* dimmer than links: not clickable */
 .footer__top svg { width: 0.875rem; height: 0.875rem; }
 
 /* ---------------------------------------------------------
@@ -818,11 +853,6 @@ svg { flex-shrink: 0; }
    --------------------------------------------------------- */
 @media (max-width: 22.5em) {
   :root { --gutter: 1rem; }
-
-  /* Hero label wraps onto two lines, no middle dot */
-  .hero__label-sep { display: none; }
-  .hero__label-part { display: block; }
-  .hero__label { border-radius: var(--radius-md); }
 }
 
 /* ---------------------------------------------------------
@@ -855,6 +885,7 @@ svg { flex-shrink: 0; }
   .contact__value { white-space: nowrap; }
 
   .shots { grid-template-columns: repeat(2, 1fr); }
+  .stats { gap: var(--space-6) var(--space-8); }   /* About stats: 64px between items (doubled) */
   .mini-cards { grid-template-columns: repeat(3, 1fr); }
 
   .case-meta { grid-template-columns: 10rem 12rem 1fr; }
@@ -883,6 +914,7 @@ svg { flex-shrink: 0; }
     right: calc(var(--gutter) - 2rem);
     width: 15.75rem;   /* 252px, same as the design */
     height: 15.75rem;
+    overflow: visible; /* the bigger outer ring may stick out over the header and text */
     pointer-events: none;
   }
 

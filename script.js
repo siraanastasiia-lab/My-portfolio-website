@@ -118,16 +118,17 @@
 
 /* ---------------------------------------------------------
    4. HERO STAR ANIMATION
-   Each time the star scrolls into view, it spins once,
-   and the dashed ring around it turns together with it.
+   Each time the star scrolls into view, it spins (2 turns) together
+   with the dashed ring, and the small star orbits the centre once.
    (The spin itself is .is-spinning in styles.css)
    --------------------------------------------------------- */
 (function () {
   var decor = document.querySelector(".hero__decor");
   var star = document.querySelector(".hero__star");
   var ring = document.querySelector(".hero__ring");
+  var sparkle = document.querySelector(".hero__sparkle");
   if (!decor || !star || !("IntersectionObserver" in window)) return;
-  var parts = ring ? [star, ring] : [star];
+  var parts = [star, ring, sparkle].filter(Boolean);
 
   // When a spin finishes, get ready for the next one
   star.addEventListener("animationend", function () {
