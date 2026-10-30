@@ -531,6 +531,13 @@ svg { flex-shrink: 0; }
   margin-top: auto;
 }
 
+/* Note under the case cards (NDA) */
+.cards-note {
+  margin-top: var(--space-5);
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+}
+
 .case-card__meta {
   font-size: var(--fs-sm);
   color: var(--color-text-muted);
