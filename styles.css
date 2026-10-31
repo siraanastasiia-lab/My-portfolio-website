@@ -640,9 +640,12 @@ svg { flex-shrink: 0; }
 .about__domains { order: 5; }
 
 /* Stats circled by hand: transparent box, straight text, and a purple
-   brush line going round it 3 times (script.js draws it to fit the box) */
+   brush line going round it 3 times (script.js draws it to fit the box).
+   The box is only as wide as its content, so the line hugs the stats. */
 .doodle-box {
   position: relative;
+  width: fit-content;
+  max-width: 100%;
   padding: var(--space-5) var(--space-6);
 }
 .doodle-box__line {
@@ -660,8 +663,7 @@ svg { flex-shrink: 0; }
 .stats {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  gap: var(--space-4);
+  gap: var(--space-4) var(--space-6);   /* phones: 32px between items */
   margin: 0;   /* browsers add a top/bottom margin to <dl> by default */
 }
 .stats__label {
@@ -705,6 +707,7 @@ svg { flex-shrink: 0; }
 .prose p + p { margin-top: var(--space-4); }
 .prose { margin-top: var(--space-5); }
 .about__text { margin-top: var(--space-7); }
+.about__text .accent-purple { font-weight: 500; }   /* highlighted phrases: Medium */
 .prose--flush { margin-top: 0; }  /* when the text is the first thing in a column */
 
 .chips {
@@ -729,10 +732,11 @@ svg { flex-shrink: 0; }
 .ooo__head {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: var(--space-4);
   margin-bottom: var(--space-6);
 }
+.ooo__head .gallery__toggle { margin-left: auto; }   /* pause button on the far right */
+
 
 /* Small round icon button (pause / play) */
 .icon-btn {
@@ -1066,6 +1070,7 @@ svg { flex-shrink: 0; }
 
   .shots { grid-template-columns: repeat(2, 1fr); }
   .gallery { --gallery-visible: 3.5; --gallery-gap: var(--space-4); }
+  .stats { gap: var(--space-8); }   /* 64px between the three stats */
   .mini-cards { grid-template-columns: repeat(3, 1fr); }
 
   .case-meta { grid-template-columns: 10rem 12rem 1fr; }
