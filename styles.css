@@ -18,6 +18,7 @@
   --color-text-muted: #a8a8a8;    /* labels, meta (7:1 on bg) */
   --color-text-subtle: #8a8a8a;   /* non-clickable footer text (5:1 on footer bg, passes AA) */
   --color-accent: #ffd60a;        /* yellow */
+  --color-accent-purple: #b796ff; /* lavender, second accent (6.7:1 on bg) */
   --color-on-accent: #1a1a1a;     /* text on yellow */
   --color-border: rgba(255, 255, 255, 0.14);
   --color-border-strong: rgba(255, 255, 255, 0.32);
@@ -59,6 +60,9 @@
   --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
   --dur: 220ms;
   --star-spin-duration: 2.4s; /* hero star: how long one turn takes */
+  --star-rest-angle: 30deg;    /* hero star: tilt when it is not spinning */
+  /* Logo star shape, used as a bullet in lists */
+  --star-shape: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath d='M24 1C26 14 34 22 47 24C34 26 26 34 24 47C22 34 14 26 1 24C14 22 22 14 24 1Z'/%3E%3C/svg%3E");
 }
 
 /* ---------------------------------------------------------
@@ -168,6 +172,7 @@ svg { flex-shrink: 0; }
 }
 
 .accent { color: var(--color-accent); }
+.accent-purple { color: var(--color-accent-purple); }
 
 /* Yellow star after a heading: same shape as the logo star, no letters */
 .title-star {
@@ -263,15 +268,34 @@ svg { flex-shrink: 0; }
   height: 100%;
 }
 
-/* Logo: links to the main page.
+/* Logo: star "AS" + name, the whole thing links to the main page.
    Hover/focus: yellow outline star, no fill */
 .logo {
-  display: block;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 2.75rem;
+}
+.logo svg {
+  flex: none;
   width: 2.75rem;
   height: 2.75rem;
-  border-radius: 50%;
+  overflow: visible;
 }
-.logo svg { width: 100%; height: 100%; overflow: visible; }
+/* Name next to the star: looks and behaves like the menu links
+   (white, yellow underline on hover/focus of the whole logo link) */
+.logo__name {
+  padding-block: var(--space-1);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  white-space: nowrap;
+  background-image: linear-gradient(var(--color-accent), var(--color-accent));
+  background-size: 0 2px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size var(--dur) var(--ease);
+}
+.logo:focus-visible .logo__name { background-size: 100% 2px; }
 .logo__star {
   fill: var(--color-accent);
   stroke: var(--color-accent);
@@ -290,6 +314,7 @@ svg { flex-shrink: 0; }
 @media (hover: hover) {
   .logo:hover .logo__star { fill: transparent; }
   .logo:hover .logo__text { fill: var(--color-accent); }
+  .logo:hover .logo__name { background-size: 100% 2px; }
 }
 
 .nav,
@@ -446,6 +471,10 @@ svg { flex-shrink: 0; }
   transform-box: fill-box;
   transform-origin: center;
 }
+.hero__star {
+  --spin-from: var(--star-rest-angle);   /* the spin starts and ends at this tilt */
+  transform: rotate(var(--star-rest-angle));
+}
 .hero__sparkle {
   transform-box: view-box;          /* rotate around the centre of the whole decor */
   transform-origin: 180px 180px;
@@ -459,7 +488,8 @@ svg { flex-shrink: 0; }
 }
 
 @keyframes star-spin {
-  to { transform: rotate(720deg); }  /* 2 turns */
+  from { transform: rotate(var(--spin-from, 0deg)); }
+  to   { transform: rotate(calc(var(--spin-from, 0deg) + 720deg)); }  /* 2 turns */
 }
 @keyframes sparkle-orbit {
   to { transform: rotate(360deg); }  /* 1 full circle */
@@ -593,12 +623,46 @@ svg { flex-shrink: 0; }
 /* ---------------------------------------------------------
    11. ABOUT (main page)
    --------------------------------------------------------- */
+/* Layout: phones = one column in this order:
+   stats → text → How I use AI → Core skills → Domains.
+   The two column wrappers "disappear" on phones (display: contents)
+   so their pieces can be re-ordered; on desktop they become columns. */
+.about {
+  display: flex;
+  flex-direction: column;
+}
+.about__col { display: contents; }
+.about__title   { order: 0; margin-bottom: var(--space-6); }
+.about__stats   { order: 1; }
+.about__text    { order: 2; }
+.about__ai      { order: 3; }
+.about__skills  { order: 4; }
+.about__domains { order: 5; }
+
+/* Stats circled by hand: transparent box, straight text, and a purple
+   brush line going round it 3 times (script.js draws it to fit the box) */
+.doodle-box {
+  position: relative;
+  padding: var(--space-5) var(--space-6);
+}
+.doodle-box__line {
+  position: absolute;
+  inset: calc(var(--space-2) * -1);
+  width: calc(100% + var(--space-4));
+  height: calc(100% + var(--space-4));
+  overflow: visible;
+  pointer-events: none;
+}
+.doodle-box__line path {
+  fill: var(--color-accent-purple);   /* each stroke is a filled shape, thin and thick in places */
+}
+
 .stats {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-4) var(--space-6);   /* phones: 32px between items, so all three fit on one line */
-  padding-block: var(--space-4);
-  border-block: 1px solid var(--color-border);
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin: 0;   /* browsers add a top/bottom margin to <dl> by default */
 }
 .stats__label {
   font-size: var(--fs-sm);
@@ -611,15 +675,42 @@ svg { flex-shrink: 0; }
   letter-spacing: -0.02em;
 }
 
+/* Small headings inside About: Core skills, Domains, How I use AI? */
+.about__block { margin-top: var(--space-7); }
+.about__subtitle {
+  margin-bottom: var(--space-4);
+  font-size: var(--fs-md);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* Core skills list with small yellow stars (logo star shape) */
+.skills li {
+  position: relative;
+  padding-left: 1.75rem;
+}
+.skills li + li { margin-top: 0.375rem; }   /* 6px, tight list */
+.skills li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.3em;
+  width: 0.875rem;
+  height: 0.875rem;
+  background: var(--color-accent);
+  -webkit-mask: var(--star-shape) center / contain no-repeat;
+          mask: var(--star-shape) center / contain no-repeat;
+}
+
 .prose p + p { margin-top: var(--space-4); }
 .prose { margin-top: var(--space-5); }
+.about__text { margin-top: var(--space-7); }
 .prose--flush { margin-top: 0; }  /* when the text is the first thing in a column */
 
 .chips {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
-  margin-top: var(--space-5);
 }
 .chip {
   padding: var(--space-1) var(--space-4);
@@ -627,6 +718,88 @@ svg { flex-shrink: 0; }
   border-radius: var(--radius-pill);
   font-size: var(--fs-sm);
   line-height: 1.8;
+}
+
+/* ---------------------------------------------------------
+   11b. OUT OF OFFICE — endless photo strip (main page)
+   Phones show 2.5 photos, tablets 3.5, desktop exactly 5.
+   The strip holds the 10 photos twice and slides left by one
+   full set, then starts again: an endless loop.
+   --------------------------------------------------------- */
+.ooo__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+/* Small round icon button (pause / play) */
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 1.5px solid var(--color-border-strong);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: border-color var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.icon-btn svg { width: 1.25rem; height: 1.25rem; fill: currentColor; }
+.icon-btn:focus-visible { border-color: var(--color-accent); color: var(--color-accent); }
+@media (hover: hover) {
+  .icon-btn:hover { border-color: var(--color-accent); color: var(--color-accent); }
+}
+/* Show "pause" while moving, "play" when paused */
+.icon-btn__play { display: none; }
+.gallery__toggle[aria-pressed="true"] .icon-btn__pause { display: none; }
+.gallery__toggle[aria-pressed="true"] .icon-btn__play { display: block; }
+
+.gallery {
+  --gallery-visible: 2.5;                 /* how many photos fit in the width */
+  --gallery-gap: var(--space-3);
+  --gallery-speed: 33s;                   /* time for all 10 photos to pass by (smaller = faster) */
+  container-type: inline-size;            /* lets the photos size themselves from this width */
+  overflow: hidden;
+}
+.gallery__track {
+  display: flex;
+  width: max-content;
+}
+.gallery__list {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.gallery__item {
+  flex: none;
+  width: calc((100cqw - var(--gallery-gap) * (var(--gallery-visible) - 1)) / var(--gallery-visible));
+  aspect-ratio: 1 / 1;
+  margin-right: var(--gallery-gap);       /* margin (not gap) so both copies are exactly equal */
+  border-radius: var(--radius-md);        /* same as the case cards */
+}
+
+/* Motion: only once the section is on screen (.is-playing from script.js),
+   and not while paused or for people who turned on "Reduce motion" */
+.gallery.is-playing .gallery__track {
+  animation: gallery-slide var(--gallery-speed) linear infinite;
+}
+.gallery.is-paused .gallery__track { animation-play-state: paused; }
+
+@keyframes gallery-slide {
+  to { transform: translateX(-50%); }     /* exactly one set of 10 photos */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery.is-playing .gallery__track { animation: none; }
+  .gallery { overflow-x: auto; }          /* swipe / scroll through the photos instead */
+  .gallery__toggle { display: none; }
 }
 
 /* ---------------------------------------------------------
@@ -892,7 +1065,7 @@ svg { flex-shrink: 0; }
   .contact__value { white-space: nowrap; }
 
   .shots { grid-template-columns: repeat(2, 1fr); }
-  .stats { gap: var(--space-6) var(--space-8); }   /* About stats: 64px between items (doubled) */
+  .gallery { --gallery-visible: 3.5; --gallery-gap: var(--space-4); }
   .mini-cards { grid-template-columns: repeat(3, 1fr); }
 
   .case-meta { grid-template-columns: 10rem 12rem 1fr; }
@@ -906,10 +1079,25 @@ svg { flex-shrink: 0; }
 @media (min-width: 64em) {
   .cards--three { grid-template-columns: repeat(3, 1fr); }
 
+  .gallery { --gallery-visible: 5; }   /* exactly 5 photos across */
+
   .split {
     grid-template-columns: 5fr 7fr;
     gap: var(--space-6);
   }
+
+  /* About: title on top, two equal columns below */
+  .about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: var(--space-8);
+    align-items: start;
+  }
+  .about__title { grid-column: 1 / -1; margin-bottom: var(--space-7); }
+  .about__col { display: block; }
+  .about__text { margin-top: 0; }
+  /* Pull the stats box up so "Experience" lines up with the first line of text */
+  .about__stats { margin-top: calc(var(--space-5) * -1); }
 
   /* Extra top space so the star sits above the headline, as in the design */
   .hero { padding-top: 7.5rem; }

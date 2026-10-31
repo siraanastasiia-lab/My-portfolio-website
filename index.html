@@ -38,6 +38,7 @@
     <div class="container header__inner">
       <a class="logo" href="index.html" aria-label="Anastasiia Sira, home page">
         <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path class="logo__star" d="M24 1C26 14 34 22 47 24C34 26 26 34 24 47C22 34 14 26 1 24C14 22 22 14 24 1Z"/><text class="logo__text" x="24" y="28.6" text-anchor="middle" font-family="Onest, Arial, sans-serif" font-size="13" font-weight="800">AS</text></svg>
+        <span class="logo__name">Anastasiia Sira</span>
       </a>
 
       <nav class="nav" aria-label="Main">
@@ -114,7 +115,7 @@
         <p class="hero__label">Senior UX/Product Designer</p>
       </div>
 
-      <h1 class="hero__title" id="hero-title">Hello, I’m Anastasiia. I design with <span class="accent">curiosity</span> and a reason behind every pixel<span class="accent">.</span></h1>
+      <h1 class="hero__title" id="hero-title">I design with <span class="accent">curiosity</span> and<br> a <span class="accent-purple">reason</span> behind every pixel<span class="accent">.</span></h1>
 
       <p class="hero__text">6+ years designing complex digital products across SaaS, E-commerce, Marketplace, FinTech and GovTech. I improve user journeys and business metrics through research and hypothesis-driven design.</p>
 
@@ -183,31 +184,107 @@
       <p class="cards-note">* Client names and some visuals are anonymized under NDA.</p>
     </section>
 
-    <!-- ================= ABOUT ME ================= -->
-    <section class="section container split" id="about" aria-labelledby="about-title">
-      <h2 class="section-title" id="about-title">About me</h2>
+    <!-- ================= ABOUT ME =================
+         Desktop: title on top, then two equal columns.
+         Left: text, How I use AI. Right: stats, Core skills, Domains.
+         Phones: one column, text comes right after the stats. -->
+    <section class="section container about" id="about" aria-labelledby="about-title">
+      <h2 class="section-title about__title" id="about-title">About me</h2>
 
-      <div>
-        <dl class="stats">
-          <div><dt class="stats__label">Experience</dt><dd class="stats__value">6+ years</dd></div>
-          <div><dt class="stats__label">Based in</dt><dd class="stats__value">Kyiv, Ukraine</dd></div>
-          <div><dt class="stats__label">Projects</dt><dd class="stats__value">12+</dd></div>
-        </dl>
-
-        <div class="prose">
-          <p>My focus is on improving user journeys and business metrics through research and hypothesis-driven design. I love clean &amp; clear interfaces that are accessible by default and meet WCAG 2.2 AA.</p>
-          <p>Design systems are a core part of that work, built and evolved from the ground up to keep products consistent as they scale. From problem discovery to delivery, I work directly with clients and stakeholders — presenting ideas, aligning on goals and justifying design decisions.</p>
-          <p>I use AI (Figma AI, ChatGPT and Claude) daily to explore ideas, support research, speed up prototyping and automate routine tasks, while the design decisions stay mine. This website was also built with Claude.</p>
+      <!-- Left column: text -->
+      <div class="about__col">
+        <div class="prose about__text">
+          <p>My focus is on improving user journeys and business metrics through research and hypothesis-driven design.<br> <span class="accent-purple">I love clean &amp; clear interfaces</span> that are accessible by default and meet WCAG 2.2 AA.</p>
+          <p>Design systems are a core part of that work, built and evolved from the ground up to keep products consistent as they scale. <span class="accent-purple">From problem discovery to delivery</span>, I work directly with clients and stakeholders — presenting ideas, aligning on goals and justifying design decisions.</p>
         </div>
 
-        <ul class="chips" aria-label="Domains">
-          <li class="chip">SaaS</li>
-          <li class="chip">E-commerce</li>
-          <li class="chip">Marketplace</li>
-          <li class="chip">EdTech</li>
-          <li class="chip">FinTech</li>
-          <li class="chip">GovTech</li>
-        </ul>
+        <!-- How I use AI -->
+        <div class="about__block about__ai">
+          <h3 class="about__subtitle">How I use AI?</h3>
+          <p>I use AI (Figma AI, ChatGPT and Claude) daily to explore ideas, support research, speed up prototyping and automate routine tasks, while the design decisions stay mine. This website was also built with Claude.</p>
+        </div>
+      </div>
+
+      <!-- Right column: stats, skills, domains -->
+      <div class="about__col">
+        <!-- Stats, circled 3 times with a purple brush line (drawn by script.js) -->
+        <div class="doodle-box about__stats">
+          <svg class="doodle-box__line" aria-hidden="true" focusable="false"></svg>
+          <dl class="stats">
+            <div><dt class="stats__label">Experience</dt><dd class="stats__value">6+ years</dd></div>
+            <div><dt class="stats__label">Based in</dt><dd class="stats__value">Kyiv, Ukraine</dd></div>
+            <div><dt class="stats__label">Projects</dt><dd class="stats__value">12+</dd></div>
+          </dl>
+        </div>
+
+        <!-- Core skills -->
+        <div class="about__block about__skills">
+          <h3 class="about__subtitle">Core skills</h3>
+          <ul class="skills">
+            <li>UX design</li>
+            <li>User research &amp; usability testing</li>
+            <li>Design systems</li>
+            <li>Visual &amp; UI design</li>
+            <li>Accessible design (WCAG 2.2 AA)</li>
+          </ul>
+        </div>
+
+        <!-- Domains -->
+        <div class="about__block about__domains">
+          <h3 class="about__subtitle">Domains</h3>
+          <ul class="chips">
+            <li class="chip">SaaS</li>
+            <li class="chip">E-commerce</li>
+            <li class="chip">Marketplace</li>
+            <li class="chip">EdTech</li>
+            <li class="chip">FinTech</li>
+            <li class="chip">GovTech</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= OUT OF OFFICE =================
+         10 square photos sliding left in an endless loop.
+         The list is repeated twice so the loop has no gap; the copy
+         is hidden from screen readers. script.js starts the motion when
+         the section scrolls into view; the button pauses it. -->
+    <section class="section container ooo" id="out-of-office" aria-labelledby="ooo-title">
+      <div class="ooo__head">
+        <h2 class="section-title" id="ooo-title">When I’m out of office…</h2>
+        <button class="icon-btn gallery__toggle" type="button" aria-pressed="false" aria-label="Pause photo slideshow">
+          <svg class="icon-btn__pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
+          <svg class="icon-btn__play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13l11-6.5z"/></svg>
+        </button>
+      </div>
+
+      <div class="gallery">
+        <div class="gallery__track">
+          <ul class="gallery__list">
+            <li class="gallery__item media"><img src="assets/photo-1.jpeg" alt="Standing by a lakeside railing, with green hills and a speedboat behind" width="1038" height="1280" loading="lazy"></li>
+            <li class="gallery__item media"><img src="assets/photo-2.jpeg" alt="In a grey hoodie on a golden mountain meadow in autumn" width="795" height="894" loading="lazy"></li>
+            <li class="gallery__item media"><img src="assets/photo-3.jpeg" alt="Two glasses of rosé and a box of cheese on a picnic bench at a food and wine festival" width="720" height="772" loading="lazy"></li>
+            <li class="gallery__item media"><img src="assets/photo-4.jpeg" alt="Looking at Monet’s Poppy Field in a museum" width="720" height="716" loading="lazy"></li>
+            <li class="gallery__item media"><img src="assets/photo-5.jpeg" alt="Holding a freshly found porcini mushroom in an autumn forest" width="1117" height="1280" loading="lazy"></li>
+            <li class="gallery__item media"><img src="assets/photo-6.jpeg" alt="Flowering cacti against a clear blue sky in Sharm el-Sheikh" width="720" height="808" loading="lazy"></li>
+            <li class="gallery__item media"><img src="assets/photo-7.jpeg" alt="Selfie with long wavy blonde hair" width="720" height="1280" loading="lazy"></li>
+            <li class="gallery__item media"><img src="assets/photo-8.jpeg" alt="Homemade crêpes in a pan and stacked on a plate" width="720" height="1280" loading="lazy"></li>
+            <li class="gallery__item media"><img src="assets/photo-9.jpeg" alt="Orange sunset over the city skyline" width="1137" height="1280" loading="lazy"></li>
+            <li class="gallery__item media"><img src="assets/photo-10.jpeg" alt="An open book on a beach towel in the sun" width="1040" height="1280" loading="lazy"></li>
+          </ul>
+          <ul class="gallery__list" aria-hidden="true">
+            <li class="gallery__item media"><img src="assets/photo-1.jpeg" alt="" width="1038" height="1280" loading="lazy"></li>
+            <li class="gallery__item media"><img src="assets/photo-2.jpeg" alt="" width="795" height="894" loading="lazy"></li>
+            <li class="gallery__item media"><img src="assets/photo-3.jpeg" alt="" width="720" height="772" loading="lazy"></li>
+            <li class="gallery__item media"><img src="assets/photo-4.jpeg" alt="" width="720" height="716" loading="lazy"></li>
+            <li class="gallery__item media"><img src="assets/photo-5.jpeg" alt="" width="1117" height="1280" loading="lazy"></li>
+            <li class="gallery__item media"><img src="assets/photo-6.jpeg" alt="" width="720" height="808" loading="lazy"></li>
+            <li class="gallery__item media"><img src="assets/photo-7.jpeg" alt="" width="720" height="1280" loading="lazy"></li>
+            <li class="gallery__item media"><img src="assets/photo-8.jpeg" alt="" width="720" height="1280" loading="lazy"></li>
+            <li class="gallery__item media"><img src="assets/photo-9.jpeg" alt="" width="1137" height="1280" loading="lazy"></li>
+            <li class="gallery__item media"><img src="assets/photo-10.jpeg" alt="" width="1040" height="1280" loading="lazy"></li>
+          </ul>
+        </div>
       </div>
     </section>
 
