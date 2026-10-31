@@ -25,11 +25,11 @@
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Onest:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <script src="script.js" defer></script>
 </head>
-<body id="top">
+<body id="top" class="page-case">
 
   <a class="skip-link" href="#main">Skip to content</a>
 
@@ -176,41 +176,45 @@
       </ul>
     </section>
 
-    <!-- ================= MORE CASES ================= -->
-    <section class="section container" aria-labelledby="more-title">
-      <h2 class="section-title" id="more-title">More cases</h2>
-      <ul class="cards">
-        <li>
-          <a class="case-card" href="case-govtech.html">
-            <div class="case-card__media media media--card">
-              <img src="assets/govtech-cover.jpeg" alt="" width="1920" height="1080" loading="lazy">
-            </div>
-            <div class="case-card__body">
-              <p class="case-card__label">GovTech · Full Redesign</p>
-              <h3 class="case-card__title">Redesign for Public Services</h3>
-              <div class="case-card__footer">
-                <p class="case-card__meta">2025–2026 · Key Designer</p>
-                <span class="circle-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    <!-- ================= MORE CASES =================
+         Full-width dark band (same colour as the header) to separate
+         the other cases from the story of this one -->
+    <section class="more-cases" aria-labelledby="more-title">
+      <div class="container">
+        <h2 class="section-title" id="more-title">More cases</h2>
+        <ul class="cards">
+          <li>
+            <a class="case-card" href="case-govtech.html">
+              <div class="case-card__media media media--card">
+                <img src="assets/govtech-cover.jpeg" alt="" width="1920" height="1080" loading="lazy">
               </div>
-            </div>
-          </a>
-        </li>
-        <li>
-          <a class="case-card" href="case-legal.html">
-            <div class="case-card__media media media--card">
-              <img src="assets/legal-cover.jpg" alt="" width="3600" height="1851" loading="lazy">
-            </div>
-            <div class="case-card__body">
-              <p class="case-card__label">SaaS</p>
-              <h3 class="case-card__title">Improvements for Legal Practice Management App</h3>
-              <div class="case-card__footer">
-                <p class="case-card__meta">2025 · UX/UI Designer</p>
-                <span class="circle-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+              <div class="case-card__body">
+                <p class="case-card__label">GovTech · Full Redesign with Constraints</p>
+                <h3 class="case-card__title">Redesign for Public Services</h3>
+                <div class="case-card__footer">
+                  <p class="case-card__meta">2025–2026 · Key Designer</p>
+                  <span class="circle-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+                </div>
               </div>
-            </div>
-          </a>
-        </li>
-      </ul>
+            </a>
+          </li>
+          <li>
+            <a class="case-card" href="case-legal.html">
+              <div class="case-card__media media media--card">
+                <img src="assets/legal-cover.jpg" alt="" width="3600" height="1851" loading="lazy">
+              </div>
+              <div class="case-card__body">
+                <p class="case-card__label">SaaS</p>
+                <h3 class="case-card__title">Improvements for Legal Practice Management App</h3>
+                <div class="case-card__footer">
+                  <p class="case-card__meta">2025 · UX/UI Designer</p>
+                  <span class="circle-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+                </div>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
     </section>
 
     <!-- ================= CONTACT ================= -->

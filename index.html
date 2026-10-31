@@ -25,7 +25,7 @@
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Onest:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <script src="script.js" defer></script>
 </head>
@@ -98,8 +98,11 @@
 
     <!-- ================= HERO ================= -->
     <section class="hero container" aria-labelledby="hero-title">
-      <!-- Decorative star: big star spins once on page load (see .hero__star in styles.css) -->
-      <svg class="hero__decor" viewBox="0 0 360 360" fill="none" aria-hidden="true" focusable="false">
+      <!-- Decorative star: big star spins when the hero comes into view (see .hero__star in styles.css).
+           The round button over the big star: hover = star grows and glows, click = spin again -->
+      <div class="hero__decor">
+      <button class="hero__star-btn" type="button" aria-label="Spin the star"></button>
+      <svg class="hero__decor-art" viewBox="0 0 360 360" fill="none" aria-hidden="true" focusable="false">
         <circle cx="180" cy="180" r="224" stroke="rgba(255,255,255,0.08)"/><!-- outer ring, 25% bigger, may overflow the box -->
         <circle class="hero__ring" cx="180" cy="180" r="120" stroke="#ffd60a" stroke-opacity="0.5" stroke-width="2" stroke-dasharray="8 18"/>
         <g class="hero__star">
@@ -109,6 +112,7 @@
           <path fill="rgba(255,214,10,0.7)" transform="translate(262 44) rotate(-41 9 9) scale(0.75)" d="M12 0C12.8 7.2 16.8 11.2 24 12C16.8 12.8 12.8 16.8 12 24C11.2 16.8 7.2 12.8 0 12C7.2 11.2 11.2 7.2 12 0Z"/>
         </g>
       </svg>
+      </div>
 
       <div class="hero__intro">
         <img class="hero__avatar" src="assets/avatar.png" alt="Portrait of Anastasiia Sira" width="56" height="56" loading="lazy">
@@ -137,7 +141,7 @@
               <img src="assets/govtech-cover.jpeg" alt="" width="1920" height="1080" loading="lazy">
             </div>
             <div class="case-card__body">
-              <p class="case-card__label"><span class="case-card__num">01</span>GovTech · Full Redesign</p>
+              <p class="case-card__label"><span class="case-card__num">01</span>GovTech · Full Redesign with Constraints</p>
               <h3 class="case-card__title">Redesign for Public Services</h3>
               <div class="case-card__footer">
                 <p class="case-card__meta">2025–2026 · Key Designer</p>
@@ -154,7 +158,7 @@
             </div>
             <div class="case-card__body">
               <p class="case-card__label"><span class="case-card__num">02</span>E-commerce · Research</p>
-              <h3 class="case-card__title">Redesigning the Ticket Purchase Flow</h3>
+              <h3 class="case-card__title">Increasing Conversion for Ticket Purchase Flow</h3>
               <div class="case-card__footer">
                 <p class="case-card__meta">2024 · UX Designer / Researcher</p>
                 <span class="circle-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
@@ -186,7 +190,7 @@
 
     <!-- ================= ABOUT ME =================
          Desktop: title on top, then two equal columns.
-         Left: text, How I use AI. Right: stats, Core skills, Domains.
+         Left: text, How I use AI. Right: stats, Domains, Core skills.
          Phones: one column, text comes right after the stats. -->
     <section class="section container about" id="about" aria-labelledby="about-title">
       <h2 class="section-title about__title" id="about-title">About me</h2>
@@ -195,7 +199,7 @@
       <div class="about__col">
         <div class="prose about__text">
           <p>My focus is on improving user journeys and business metrics through research and hypothesis-driven design.<br> <span class="accent-purple">I love clean &amp; clear interfaces</span> that are accessible by default and meet WCAG 2.2 AA.</p>
-          <p>Design systems are a core part of that work, built and evolved from the ground up to keep products consistent as they scale. <span class="accent-purple">From problem discovery to delivery</span>, I work directly with clients and stakeholders — presenting ideas, aligning on goals and justifying design decisions.</p>
+          <p>Design systems are a core part of that work, built and evolved from the ground up to keep products consistent as they scale.<br> <span class="accent-purple">From problem discovery to delivery</span>, I work directly with clients and stakeholders — presenting ideas, aligning on goals and justifying design decisions.</p>
         </div>
 
         <!-- How I use AI -->
@@ -205,7 +209,7 @@
         </div>
       </div>
 
-      <!-- Right column: stats, skills, domains -->
+      <!-- Right column: stats, domains, skills -->
       <div class="about__col">
         <!-- Stats, circled 3 times with a purple brush line (drawn by script.js) -->
         <div class="doodle-box about__stats">
@@ -217,18 +221,6 @@
           </dl>
         </div>
 
-        <!-- Core skills -->
-        <div class="about__block about__skills">
-          <h3 class="about__subtitle">Core skills</h3>
-          <ul class="skills">
-            <li>UX design</li>
-            <li>User research &amp; usability testing</li>
-            <li>Design systems</li>
-            <li>Visual &amp; UI design</li>
-            <li>Accessible design (WCAG 2.2 AA)</li>
-          </ul>
-        </div>
-
         <!-- Domains -->
         <div class="about__block about__domains">
           <h3 class="about__subtitle">Domains</h3>
@@ -238,6 +230,18 @@
             <li class="chip">Marketplace</li>
             <li class="chip">FinTech</li>
             <li class="chip">GovTech</li>
+          </ul>
+        </div>
+
+        <!-- Core skills -->
+        <div class="about__block about__skills">
+          <h3 class="about__subtitle">Core skills</h3>
+          <ul class="skills">
+            <li>UX design</li>
+            <li>User research &amp; usability testing</li>
+            <li>Design systems</li>
+            <li>Visual &amp; UI design</li>
+            <li>Accessible design (WCAG 2.2 AA)</li>
           </ul>
         </div>
       </div>

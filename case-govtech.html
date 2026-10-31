@@ -4,14 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Redesign for Public Services — Anastasiia Sira</title>
-  <meta name="description" content="Case study by Anastasiia Sira: Redesign for Public Services (GovTech · Full Redesign).">
+  <meta name="description" content="Case study by Anastasiia Sira: Redesign for Public Services (GovTech · Full Redesign with Constraints).">
   <!-- Social share preview (Open Graph). Links must be absolute (full https:// address).
        If the site gets another address, replace https://siraanastasiiaportfolio.vercel.app/
        in og:url and og:image below. -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Anastasiia Sira">
   <meta property="og:title" content="Redesign for Public Services — Anastasiia Sira">
-  <meta property="og:description" content="Case study by Anastasiia Sira: Redesign for Public Services (GovTech · Full Redesign).">
+  <meta property="og:description" content="Case study by Anastasiia Sira: Redesign for Public Services (GovTech · Full Redesign with Constraints).">
   <meta property="og:url" content="https://siraanastasiiaportfolio.vercel.app/case-govtech.html">
   <meta property="og:image" content="https://siraanastasiiaportfolio.vercel.app/assets/og-image.jpg">
   <meta property="og:image:width" content="1200">
@@ -25,11 +25,11 @@
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Onest:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <script src="script.js" defer></script>
 </head>
-<body id="top">
+<body id="top" class="page-case">
 
   <a class="skip-link" href="#main">Skip to content</a>
 
@@ -101,7 +101,7 @@
       <a class="back-link link-underline" href="index.html#work"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M19 12H5M11 6l-6 6 6 6"/></svg> Back</a>
 
       <h1 class="case-hero__title" id="case-title">Redesign for Public Services</h1>
-      <p class="case-hero__eyebrow"><span class="accent" aria-hidden="true">✦</span> GovTech · Full Redesign</p>
+      <p class="case-hero__eyebrow"><span class="accent" aria-hidden="true">✦</span> GovTech · Full Redesign with Constraints</p>
 
       <dl class="case-meta">
         <div>
@@ -117,17 +117,20 @@
           <dd><ul class="chips">
             <li class="chip">GovTech</li>
             <li class="chip">Design Library</li>
-            <li class="chip">Style Guide</li>
             <li class="chip">UI design</li>
             <li class="chip">Prototyping</li>
             <li class="chip">Stakeholder management</li>
             <li class="chip">Cross-collaboration</li>
             <li class="chip">Visual strategy</li>
             <li class="chip">Accessibility</li>
+            <li class="chip">ServiceNow capabilities</li>
           </ul></dd>
         </div>
       </dl>
     </section>
+
+    <!-- Same NDA note as under the cards on the main page -->
+    <p class="container cards-note case-note">* Client names and some visuals are anonymized under NDA.</p>
 
     <!-- ================= COVER IMAGE ================= -->
     <div class="case-cover media media--cover">
@@ -138,8 +141,8 @@
     <section class="section container split" aria-labelledby="goals-title">
       <h2 class="section-title" id="goals-title">Project goals</h2>
       <div class="prose prose--flush">
+          <p>The project goal was redesigning the public web platform (for the island in the image above) in line with brand guidelines within ServiceNow constraints. Another huge task was creating sign-up flows and the after-login experience from scratch.</p>
           <p>The platform enables users to explore public services, read articles and news, and access their accounts to complete government-related actions.</p>
-          <p>The project goal was redesigning the public web platform in line with brand guidelines within ServiceNow constraints, as well as creating sign-up flows and the after-login experience from scratch.</p>
       </div>
     </section>
 
@@ -156,10 +159,79 @@
       </ul>
     </section>
 
-    <!-- ================= CASE IMAGE (one wide, full screen width) ================= -->
-    <figure class="case-wide media media--wide" style="--ratio: 3440 / 1778">
-      <img src="assets/govtech-1.jpg" alt="Public services platform shown on a laptop, home page with a list of services." width="3440" height="1778" loading="lazy">
+    <!-- ================= CASE IMAGE (one wide, full screen width) =================
+         Yellow sticker on the homepage (top right), right above its blurred logo,
+         with a grey arrow pointing into the page (desktop) -->
+    <figure class="case-wide has-sticker">
+      <div class="media media--wide" style="--ratio: 3440 / 1778">
+        <img src="assets/govtech-1.jpg" alt="Public services platform shown on a laptop, home page with a list of services." width="3440" height="1778" loading="lazy">
+      </div>
+      <svg class="sticker-arrow" style="--arrow-top: calc(5.3% - 3.5rem); --arrow-left: calc(74.5% - 3.15rem); --arrow-turn: 30deg" viewBox="0 0 100 80" aria-hidden="true" focusable="false"><path d="M18 2C8 20 10 40 26 44C40 48 44 32 34 28C22 24 18 46 32 58C48 70 72 66 94 58M83 50L94 58L82 64"/></svg>
+      <figcaption class="sticker" style="--sticker-top: calc(5.3% - 8rem); --sticker-left: 74.5%; --sticker-margin: 0 var(--gutter) -1.5rem auto">Homepage designed with a new UI approach and approved by stakeholders.</figcaption>
     </figure>
+
+    <!-- ================= DESIGN PROCESS STEPS ================= -->
+    <section class="section container split" aria-labelledby="process-title">
+      <h2 class="section-title" id="process-title">Design process steps</h2>
+      <div class="prose prose--flush">
+        <p>To ensure our design is data-driven: we analyzed and used Research report made by 3rd party, also validated the design concept.</p>
+        <ul class="star-list">
+          <li>Analyzing existing Researches and Artifacts</li>
+          <li>Direct Competitors analysis and Information Architecture</li>
+          <li>Creating Style Guide based on Client’s Brand guide</li>
+          <li>Design concept creation for 2 key pages</li>
+          <li>User validation: testing with real citizens (future users)</li>
+          <li>Iteration after testing and work on other design flows</li>
+          <li>Work on Design Library, customization of ServiceNow components</li>
+          <li>Collaboration with Multiple stakeholders for different flows, iteration after feedback</li>
+          <li>Continuous development, cross-functional collaboration and Visual QA</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ================= ACCESSIBILITY ================= -->
+    <section class="section container split" aria-labelledby="a11y-title">
+      <h2 class="section-title" id="a11y-title">Accessibility</h2>
+      <div class="prose prose--flush">
+        <p>Accessibility is one of my focus areas, and I consistently ensure that my designs comply with WCAG standards.</p>
+        <p>For this project – following <span class="accent-purple">WCAG 2.2 standards</span> is key requirement, therefore I designed with ensuring the design pass color contrast, have focus states, and touch target sizes etc.</p>
+        <p>This helps ensure consistency, reduce risks during development, and deliver inclusive, high-quality user experiences.</p>
+      </div>
+    </section>
+
+    <!-- ================= ACCESSIBILITY IMAGE =================
+         Narrower than the content: double side spacing (see .case-shot).
+         Yellow sticker over the right edge of the focused job card,
+         grey arrow pointing into the card (desktop). -->
+    <div class="case-shot container">
+      <figure class="case-shot__frame has-sticker">
+        <div class="media media--shot media--clear" style="--ratio: 2162 / 1300">
+          <img src="assets/govtech-a11y.png" alt="Vacancies page on a laptop: search, job type filters with checkboxes, and job cards; the focused card has a visible yellow focus outline." width="2162" height="1300" loading="lazy">
+        </div>
+        <svg class="sticker-arrow" style="--arrow-top: 64.2%; --arrow-left: calc(65.9% + 20px); --arrow-turn: 135deg" viewBox="0 0 100 80" aria-hidden="true" focusable="false"><path d="M18 2C8 20 10 40 26 44C40 48 44 32 34 28C22 24 18 46 32 58C48 70 72 66 94 58M83 50L94 58L82 64"/></svg>
+        <figcaption class="sticker" style="--sticker-top: 58%; --sticker-left: 78%; --sticker-margin: 0 0 -2rem auto">Focus state for the card enabled via keyboard navigation</figcaption>
+      </figure>
+    </div>
+
+    <!-- ================= DESIGN SYSTEM ================= -->
+    <section class="section container split" aria-labelledby="ds-title">
+      <h2 class="section-title" id="ds-title">Design system</h2>
+      <div class="prose prose--flush">
+        <p>On this project I have created and maintained Design system in Figma, including style guide, components, variables, tokens, and clear guidelines.</p>
+        <p>I ensured alignment between design and development, contributed to system evolution based on product needs. I also consider accessibility, responsiveness, and reusability when defining components.</p>
+        <ul class="star-list">
+          <li>Created Style Guide based on Client Brand guide to build foundation for DS</li>
+          <li>Created and maintain scalable Design System libraries in Figma (with components, variants, tokens)</li>
+          <li>Ensure components meet accessibility (WCAG) standards and support responsive behavior across breakpoints</li>
+        </ul>
+        <!-- Design library image: right column, same width as the text -->
+        <figure class="case-figure">
+          <div class="media media--shot media--sharp" style="--ratio: 1464 / 668">
+            <img src="assets/govtech-library.png" alt="Design library components: radio buttons and checkboxes in default, focused and disabled states, and buttons in several styles and states." width="1464" height="668" loading="lazy">
+          </div>
+        </figure>
+      </div>
+    </section>
 
     <!-- ================= RESULT ================= -->
     <section class="section container split" aria-labelledby="result-title">
@@ -172,41 +244,45 @@
       </ul>
     </section>
 
-    <!-- ================= MORE CASES ================= -->
-    <section class="section container" aria-labelledby="more-title">
-      <h2 class="section-title" id="more-title">More cases</h2>
-      <ul class="cards">
-        <li>
-          <a class="case-card" href="case-tickets.html">
-            <div class="case-card__media media media--card">
-              <img src="assets/tickets-cover.jpg" alt="" width="800" height="400" loading="lazy">
-            </div>
-            <div class="case-card__body">
-              <p class="case-card__label">E-commerce · Research</p>
-              <h3 class="case-card__title">Redesigning the Ticket Purchase Flow</h3>
-              <div class="case-card__footer">
-                <p class="case-card__meta">2024 · UX Designer / Researcher</p>
-                <span class="circle-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    <!-- ================= MORE CASES =================
+         Full-width dark band (same colour as the header) to separate
+         the other cases from the story of this one -->
+    <section class="more-cases" aria-labelledby="more-title">
+      <div class="container">
+        <h2 class="section-title" id="more-title">More cases</h2>
+        <ul class="cards">
+          <li>
+            <a class="case-card" href="case-tickets.html">
+              <div class="case-card__media media media--card">
+                <img src="assets/tickets-cover.jpg" alt="" width="800" height="400" loading="lazy">
               </div>
-            </div>
-          </a>
-        </li>
-        <li>
-          <a class="case-card" href="case-legal.html">
-            <div class="case-card__media media media--card">
-              <img src="assets/legal-cover.jpg" alt="" width="3600" height="1851" loading="lazy">
-            </div>
-            <div class="case-card__body">
-              <p class="case-card__label">SaaS</p>
-              <h3 class="case-card__title">Improvements for Legal Practice Management App</h3>
-              <div class="case-card__footer">
-                <p class="case-card__meta">2025 · UX/UI Designer</p>
-                <span class="circle-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+              <div class="case-card__body">
+                <p class="case-card__label">E-commerce · Research</p>
+                <h3 class="case-card__title">Increasing Conversion for Ticket Purchase Flow</h3>
+                <div class="case-card__footer">
+                  <p class="case-card__meta">2024 · UX Designer / Researcher</p>
+                  <span class="circle-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+                </div>
               </div>
-            </div>
-          </a>
-        </li>
-      </ul>
+            </a>
+          </li>
+          <li>
+            <a class="case-card" href="case-legal.html">
+              <div class="case-card__media media media--card">
+                <img src="assets/legal-cover.jpg" alt="" width="3600" height="1851" loading="lazy">
+              </div>
+              <div class="case-card__body">
+                <p class="case-card__label">SaaS</p>
+                <h3 class="case-card__title">Improvements for Legal Practice Management App</h3>
+                <div class="case-card__footer">
+                  <p class="case-card__meta">2025 · UX/UI Designer</p>
+                  <span class="circle-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+                </div>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
     </section>
 
     <!-- ================= CONTACT ================= -->

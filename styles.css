@@ -20,12 +20,14 @@
   --color-accent: #ffd60a;        /* yellow */
   --color-accent-purple: #b796ff; /* lavender, second accent (6.7:1 on bg) */
   --color-on-accent: #1a1a1a;     /* text on yellow */
+  --color-sticker: #ffea84;        /* sticky note: the yellow with half the saturation, lighter */
   --color-border: rgba(255, 255, 255, 0.14);
   --color-border-strong: rgba(255, 255, 255, 0.32);
   --color-border-tag: rgba(255, 255, 255, 0.12);  /* soft outline of tags/pills (decorative, not a contrast requirement) */
 
   /* Typography */
   --font-sans: "Onest", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --font-hand: "Caveat", "Segoe Print", "Bradley Hand", cursive;   /* handwritten image captions */
   --fs-xs: 0.8125rem;   /* 13px */
   --fs-sm: 0.9375rem;   /* 15px */
   --fs-base: 1.0625rem; /* 17px */
@@ -61,9 +63,13 @@
   --dur: 220ms;
   --star-spin-duration: 2.4s; /* hero star: how long one turn takes */
   --star-rest-angle: 30deg;    /* hero star: tilt when it is not spinning */
+  --sparkle-rest-angle: 45deg; /* hero small star: moved this far clockwise along its circle */
   /* Logo star shape, used as a bullet in lists */
   --star-shape: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath d='M24 1C26 14 34 22 47 24C34 26 26 34 24 47C22 34 14 26 1 24C14 22 22 14 24 1Z'/%3E%3C/svg%3E");
 }
+
+/* Case pages: sections 20% closer together than on the main page */
+.page-case { --space-section: calc(clamp(6rem, 4.5rem + 7.5vw, 11.25rem) * 0.8); }
 
 /* ---------------------------------------------------------
    2. RESET & BASE
@@ -438,7 +444,7 @@ svg { flex-shrink: 0; }
   padding: var(--space-2) var(--space-4);
   border: 1px solid var(--color-border-tag);
   border-radius: var(--radius-pill);
-  font-size: var(--fs-xs);
+  font-size: var(--fs-sm);
   line-height: 1.4;
 }
 
@@ -474,10 +480,42 @@ svg { flex-shrink: 0; }
 .hero__star {
   --spin-from: var(--star-rest-angle);   /* the spin starts and ends at this tilt */
   transform: rotate(var(--star-rest-angle));
+  /* "scale" and "filter" work on top of the spin, so hover and spin can mix */
+  transition: scale 300ms var(--ease), filter 300ms var(--ease);
 }
+
+/* Clickable star: an invisible round button sits over the big star.
+   Hover / keyboard focus: the star grows 50% and glows yellow
+   (the same glow as a hovered case card). Click: spins again. */
+.hero__decor-art { width: 100%; height: 100%; overflow: visible; }
+.hero__star-btn {
+  position: absolute;
+  z-index: 1;
+  top: 30.5%;
+  left: 30.5%;
+  width: 39%;
+  height: 39%;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  pointer-events: auto;       /* the rest of the decor ignores the mouse */
+}
+.hero__star-btn:focus-visible { outline-offset: 0.5rem; }
+.hero__star-btn:hover + .hero__decor-art .hero__star,
+.hero__star-btn:focus-visible + .hero__decor-art .hero__star {
+  scale: 1.5;
+  filter: drop-shadow(0 0 1.25rem rgba(255, 214, 10, 0.55));
+}
+/* ...and the dashed yellow circle grows 20% with it */
+.hero__ring { transition: scale 300ms var(--ease); }
+.hero__star-btn:hover + .hero__decor-art .hero__ring,
+.hero__star-btn:focus-visible + .hero__decor-art .hero__ring { scale: 1.2; }
 .hero__sparkle {
   transform-box: view-box;          /* rotate around the centre of the whole decor */
   transform-origin: 180px 180px;
+  transform: rotate(var(--sparkle-rest-angle));   /* resting spot on the circle */
 }
 .hero__star.is-spinning,
 .hero__ring.is-spinning {
@@ -491,8 +529,9 @@ svg { flex-shrink: 0; }
   from { transform: rotate(var(--spin-from, 0deg)); }
   to   { transform: rotate(calc(var(--spin-from, 0deg) + 720deg)); }  /* 2 turns */
 }
-@keyframes sparkle-orbit {
-  to { transform: rotate(360deg); }  /* 1 full circle */
+@keyframes sparkle-orbit {          /* 1 full circle, from and back to its resting spot */
+  from { transform: rotate(var(--sparkle-rest-angle)); }
+  to   { transform: rotate(calc(var(--sparkle-rest-angle) + 360deg)); }
 }
 
 /* No spinning for people who turned on "Reduce motion" */
@@ -515,7 +554,7 @@ svg { flex-shrink: 0; }
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: var(--space-2);
+  overflow: hidden;   /* cover fills the card edge to edge, corners follow the card */
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   background: var(--color-surface);
@@ -523,7 +562,7 @@ svg { flex-shrink: 0; }
 }
 
 .case-card__media {
-  border-radius: calc(var(--radius-md) - 0.375rem);
+  border-radius: 0;   /* no inner gap: the card's own rounded corners clip the cover */
 }
 .case-card__media img { transition: transform 400ms var(--ease); }
 
@@ -531,7 +570,7 @@ svg { flex-shrink: 0; }
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding: var(--space-4) var(--space-3) var(--space-3);
+  padding: var(--space-4) 1.25rem 1.25rem;   /* text stays where it was before the cover went edge to edge */
 }
 
 .case-card__label {
@@ -581,7 +620,9 @@ svg { flex-shrink: 0; }
   box-shadow: 0 12px 40px -12px rgba(255, 214, 10, 0.35);
 }
 .case-card:hover .case-card__media img,
-.case-card:focus-visible .case-card__media img { transform: scale(1.04); }
+.case-card:focus-visible .case-card__media img { transform: scale(1.08); }   /* cover zoom on hover */
+/* Arrow inside the card's circle is yellow; the circle outline stays grey */
+.case-card .circle-arrow { color: var(--color-accent); }
 .case-card:hover .circle-arrow,
 .case-card:focus-visible .circle-arrow {
   background: var(--color-accent);
@@ -609,6 +650,11 @@ svg { flex-shrink: 0; }
 /* Case screenshots: width = the column, height = the image's own shape.
    Set the shape in the HTML with style="--ratio: width / height" (default 4:3) */
 .media--shot  { aspect-ratio: var(--ratio, 4 / 3); border-radius: var(--radius-md); }
+.media--sharp { border-radius: calc(var(--radius-md) / 2); }   /* half the usual rounding */
+
+/* Image with its own transparent background (e.g. a mockup with shadow):
+   no grey box behind it. The grey box still shows if the file is missing. */
+.media--clear:not(.is-missing) { background: transparent; border-radius: 0; }
 
 .media.is-missing img { visibility: hidden; }
 .media.is-missing::before {
@@ -624,7 +670,7 @@ svg { flex-shrink: 0; }
    11. ABOUT (main page)
    --------------------------------------------------------- */
 /* Layout: phones = one column in this order:
-   stats → text → How I use AI → Core skills → Domains.
+   stats → text → How I use AI → Domains → Core skills.
    The two column wrappers "disappear" on phones (display: contents)
    so their pieces can be re-ordered; on desktop they become columns. */
 .about {
@@ -636,8 +682,8 @@ svg { flex-shrink: 0; }
 .about__stats   { order: 1; }
 .about__text    { order: 2; }
 .about__ai      { order: 3; }
-.about__skills  { order: 4; }
-.about__domains { order: 5; }
+.about__domains { order: 4; }
+.about__skills  { order: 5; }
 
 /* Stats circled by hand: transparent box, straight text, and a purple
    brush line going round it 3 times (script.js draws it to fit the box).
@@ -705,9 +751,10 @@ svg { flex-shrink: 0; }
 }
 
 .prose p + p { margin-top: var(--space-4); }
+.prose p + .star-list { margin-top: var(--space-6); }   /* intro text, then a list */
 .prose { margin-top: var(--space-5); }
 .about__text { margin-top: var(--space-7); }
-.about__text .accent-purple { font-weight: 500; }   /* highlighted phrases: Medium */
+.prose .accent-purple { font-weight: 500; }   /* highlighted phrases in text: Medium */
 .prose--flush { margin-top: 0; }  /* when the text is the first thing in a column */
 
 .chips {
@@ -738,7 +785,8 @@ svg { flex-shrink: 0; }
 .ooo__head .gallery__toggle { margin-left: auto; }   /* pause button on the far right */
 
 
-/* Small round icon button (pause / play) */
+/* Small round icon button (pause / play): yellow like every clickable
+   element; fills with yellow on hover/focus, like the outline buttons */
 .icon-btn {
   display: inline-flex;
   align-items: center;
@@ -747,17 +795,17 @@ svg { flex-shrink: 0; }
   width: 2.75rem;
   height: 2.75rem;
   padding: 0;
-  border: 1.5px solid var(--color-border-strong);
+  border: 1.5px solid var(--color-accent);
   border-radius: 50%;
   background: transparent;
-  color: var(--color-text);
+  color: var(--color-accent);
   cursor: pointer;
-  transition: border-color var(--dur) var(--ease), color var(--dur) var(--ease);
+  transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
 }
 .icon-btn svg { width: 1.25rem; height: 1.25rem; fill: currentColor; }
-.icon-btn:focus-visible { border-color: var(--color-accent); color: var(--color-accent); }
+.icon-btn:focus-visible { background: var(--color-accent); color: var(--color-on-accent); }
 @media (hover: hover) {
-  .icon-btn:hover { border-color: var(--color-accent); color: var(--color-accent); }
+  .icon-btn:hover { background: var(--color-accent); color: var(--color-on-accent); }
 }
 /* Show "pause" while moving, "play" when paused */
 .icon-btn__play { display: none; }
@@ -767,7 +815,7 @@ svg { flex-shrink: 0; }
 .gallery {
   --gallery-visible: 2.5;                 /* how many photos fit in the width */
   --gallery-gap: var(--space-3);
-  --gallery-speed: 33s;                   /* time for all 10 photos to pass by (smaller = faster) */
+  --gallery-speed: 26.4s;                   /* time for all 10 photos to pass by (smaller = faster) */
   container-type: inline-size;            /* lets the photos size themselves from this width */
   overflow: hidden;
 }
@@ -805,6 +853,15 @@ svg { flex-shrink: 0; }
   .gallery { overflow-x: auto; }          /* swipe / scroll through the photos instead */
   .gallery__toggle { display: none; }
 }
+
+/* More cases (case pages): full-width dark band, like the header */
+.more-cases {
+  margin-top: var(--space-section);
+  padding-block: calc(var(--space-section) / 2);
+  background: var(--color-bg-deep);
+}
+/* No grey gap between the dark More cases band and the contact block */
+.more-cases + .contact { margin-top: 0; }
 
 /* ---------------------------------------------------------
    12. CONTACT BLOCK (all pages)
@@ -984,6 +1041,9 @@ svg { flex-shrink: 0; }
 .case-meta .chips { margin-top: var(--space-2); }
 
 .case-cover { margin-top: var(--space-7); }
+/* NDA note right above the cover: keeps the usual gap above, small gap to the image */
+.case-note { margin-top: var(--space-7); }
+.case-note + .case-cover { margin-top: var(--space-4); }
 
 /* Star bullet list (My Role, Result) */
 .star-list li {
@@ -1009,6 +1069,66 @@ svg { flex-shrink: 0; }
    The frame takes the image's own shape, so nothing is cropped.
    Set the shape in the HTML: style="--ratio: width / height" */
 .case-wide { margin-top: var(--space-section); }
+/* Image inside a text column, under a list, with a caption */
+.case-figure { margin: var(--space-7) 0 0; }
+/* One image with triple side spacing: the usual gap from the screen edge
+   to the titles, plus twice that gap again inside the content */
+.case-shot { margin-top: calc(var(--space-section) / 2); }   /* half the usual gap: belongs to the text above */
+.case-shot__frame {
+  margin: 0 calc(max(var(--gutter), (100vw - var(--container)) / 2) * 2);
+}
+/* ---------------------------------------------------------
+   YELLOW STICKER (reusable) — a sticky note on an image, with an
+   optional grey hand-drawn arrow. The look is fixed here; each use
+   only sets its position (and text) in the HTML with CSS variables:
+     on the sticker  --sticker-top, --sticker-left        (tablet and up)
+                     --sticker-top-lg, --sticker-left-lg  (desktop, optional)
+                     --sticker-margin                     (phones, optional)
+     on the arrow    --arrow-top, --arrow-left, --arrow-turn (desktop only)
+   The wrapper needs class "has-sticker".
+   Phones: the sticker sits above the image, overlapping its top edge.
+   --------------------------------------------------------- */
+.has-sticker {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.sticker {
+  position: relative;
+  z-index: 2;
+  width: fit-content;
+  max-width: 11.25rem;
+  order: -1;                         /* phones: above the image */
+  margin: var(--sticker-margin, 0 0 -2rem -0.25rem);
+  padding: var(--space-3) 1.125rem 1.125rem;
+  font-family: var(--font-hand);
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 1.15;
+  color: var(--color-on-accent);
+  background: var(--color-sticker);
+  border-radius: 4px;   /* same on all four corners */
+  box-shadow: 0 0.75rem 1.25rem -0.5rem rgba(0, 0, 0, 0.55), 0 2px 4px rgba(0, 0, 0, 0.25);
+  transform: rotate(3deg);
+}
+/* A sticker with no text yet keeps the usual sticker size */
+.sticker:empty { width: 11.25rem; height: 7.5rem; }
+.sticker-arrow {
+  display: none;                     /* desktop only, see the ≥ 1024px block */
+  position: absolute;
+  z-index: 2;
+  top: var(--arrow-top);
+  left: var(--arrow-left);
+  width: 6rem;
+  height: 4.8rem;
+  overflow: visible;
+  fill: none;
+  stroke: var(--color-text-subtle);  /* grey, like the share-image doodles */
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transform: rotate(var(--arrow-turn, 0deg));
+}
 .media--wide {
   width: 100%;
   aspect-ratio: var(--ratio, 2 / 1);
@@ -1066,10 +1186,19 @@ svg { flex-shrink: 0; }
     flex-wrap: wrap;
     gap: var(--space-6) var(--space-8);
   }
+  /* Telegram → LinkedIn gap = copy icon → Telegram gap
+     (the copy button adds 24px after the email, so Telegram gets the same) */
+  .contact__list > li:nth-child(2) { margin-right: var(--space-5); }
   .contact__value { white-space: nowrap; }
 
   .shots { grid-template-columns: repeat(2, 1fr); }
   .gallery { --gallery-visible: 3.5; --gallery-gap: var(--space-4); }
+  .sticker {                       /* yellow sticker: stuck onto the image */
+    position: absolute;
+    top: var(--sticker-top);
+    left: var(--sticker-left);
+    margin: 0;
+  }
   .stats { gap: var(--space-8); }   /* 64px between the three stats */
   .mini-cards { grid-template-columns: repeat(3, 1fr); }
 
@@ -1100,6 +1229,13 @@ svg { flex-shrink: 0; }
   }
   .about__title { grid-column: 1 / -1; margin-bottom: var(--space-7); }
   .about__col { display: block; }
+
+  /* Yellow sticker: desktop position (if set) and the grey arrow */
+  .sticker {
+    top: var(--sticker-top-lg, var(--sticker-top));
+    left: var(--sticker-left-lg, var(--sticker-left));
+  }
+  .sticker-arrow { display: block; }
   .about__text { margin-top: 0; }
   /* Pull the stats box up so "Experience" lines up with the first line of text */
   .about__stats { margin-top: calc(var(--space-5) * -1); }

@@ -122,6 +122,7 @@
    4. HERO STAR ANIMATION
    Each time the star scrolls into view, it spins (2 turns) together
    with the dashed ring, and the small star orbits the centre once.
+   A click on the big star plays the same spin again.
    (The spin itself is .is-spinning in styles.css)
    --------------------------------------------------------- */
 (function () {
@@ -137,13 +138,22 @@
     parts.forEach(function (el) { el.classList.remove("is-spinning"); });
   });
 
+  // Start (or restart) the spin
+  function spin() {
+    parts.forEach(function (el) { el.classList.remove("is-spinning"); });
+    void star.getBoundingClientRect();   // let the browser notice the reset
+    parts.forEach(function (el) { el.classList.add("is-spinning"); });
+  }
+
   new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        parts.forEach(function (el) { el.classList.add("is-spinning"); });
-      }
+      if (entry.isIntersecting) spin();
     });
   }, { threshold: 0.6 }).observe(decor);
+
+  // Click on the big star spins it again
+  var button = document.querySelector(".hero__star-btn");
+  if (button) button.addEventListener("click", spin);
 })();
 
 /* ---------------------------------------------------------
