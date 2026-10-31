@@ -262,9 +262,16 @@ svg { flex-shrink: 0; }
   top: 0;
   z-index: 50;
   height: var(--header-h);
-  background: var(--color-bg-deep);
+  /* 75% dark background (25% see-through), content under it is blurred.
+     Checked: even over pure white content the text keeps AA contrast
+     (white 6.8:1, yellow 5.4:1). */
+  background: rgba(27, 27, 27, 0.75);   /* --color-bg-deep at 75% */
+  -webkit-backdrop-filter: blur(12px);
+          backdrop-filter: blur(12px);
   /* no bottom line: header is set apart by its darker background only */
 }
+/* Solid again while the mobile menu is open */
+.menu-open .site-header { background: var(--color-bg-deep); }
 
 .header__inner {
   display: flex;
@@ -1071,12 +1078,11 @@ svg { flex-shrink: 0; }
 .case-wide { margin-top: var(--space-section); }
 /* Image inside a text column, under a list, with a caption */
 .case-figure { margin: var(--space-7) 0 0; }
-/* One image with triple side spacing: the usual gap from the screen edge
-   to the titles, plus twice that gap again inside the content */
+/* One image a bit narrower than the content, centred:
+   phones use the full width, tablet and up 85% of the content width
+   (the same proportion on every screen, so it never gets tiny) */
 .case-shot { margin-top: calc(var(--space-section) / 2); }   /* half the usual gap: belongs to the text above */
-.case-shot__frame {
-  margin: 0 calc(max(var(--gutter), (100vw - var(--container)) / 2) * 2);
-}
+.case-shot__frame { margin: 0 auto; }
 /* ---------------------------------------------------------
    YELLOW STICKER (reusable) — a sticky note on an image, with an
    optional grey hand-drawn arrow. The look is fixed here; each use
@@ -1193,6 +1199,7 @@ svg { flex-shrink: 0; }
 
   .shots { grid-template-columns: repeat(2, 1fr); }
   .gallery { --gallery-visible: 3.5; --gallery-gap: var(--space-4); }
+  .case-shot__frame { width: 85%; }
   .sticker {                       /* yellow sticker: stuck onto the image */
     position: absolute;
     top: var(--sticker-top);

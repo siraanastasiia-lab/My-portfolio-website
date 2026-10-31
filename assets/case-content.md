@@ -41,7 +41,7 @@ All site copy is in English. Use this text exactly.
 | № | Title | Domain label | Year | Role | Cover | Link |
 |---|---|---|---|---|---|---|
 | 01 | Redesign for Public Services | GovTech · Full Redesign | 2025–2026 | Key Designer | assets/govtech-cover.jpg | case-govtech.html |
-| 02 | Redesigning the Ticket Purchase Flow | E-commerce · Research | 2024 | UX Designer / Researcher | assets/tickets-cover.jpg | case-tickets.html |
+| 02 | Increasing Conversion for Ticket Purchase | E-commerce · Research | 2024 | UX Designer / Researcher | assets/tickets-cover.jpg | case-tickets.html |
 | 03 | Improvements for Legal Practice Management App | SaaS | 2025 | UX/UI Designer | assets/legal-cover.jpg | case-legal.html |
 
 Each card also has an arrow →.
@@ -104,7 +104,7 @@ Captions: not written yet.
 
 ## 5. case-tickets.html
 
-- **Title (H1):** Redesigning the Ticket Purchase Flow
+- **Title (H1):** Increasing Conversion for Ticket Purchase
 - **Eyebrow:** ✦ E-commerce · Research
 - **Period:** 2024
 - **My Role:** UX Designer / Researcher

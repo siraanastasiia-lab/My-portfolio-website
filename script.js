@@ -158,7 +158,7 @@
 
 /* ---------------------------------------------------------
    5. BRUSH OUTLINE (About me stats)
-   Draws a rough rounded loop around .doodle-box three times, like a
+   Draws a rough, lopsided oval around .doodle-box three times, like a
    quick purple brush scribble: each pass is tilted and wobbly, thinner
    or thicker in places. Redrawn whenever the box changes size.
    --------------------------------------------------------- */
@@ -168,35 +168,30 @@
   var NS = "http://www.w3.org/2000/svg";
 
   // Three quick, careless passes. Each one is drawn a bit tilted, shifted
-  // and squashed, with its own corner roundness, so they never line up:
+  // and squashed, and lopsided in its own way, so they never line up:
   // [start (0-1 of the loop), how far it goes, thickness, wobble,
-  //  tilt in degrees, shift x, shift y, extra width, extra height, corner, seed]
+  //  tilt in degrees, shift x, shift y, extra width, extra height,
+  //  lopsidedness (one side fuller than the other), seed]
   var passes = [
-    [0.03, 1.10, 3.0, 4, -2.2, -3,  2,  6, -2, 0.55, 1],
-    [0.35, 1.02, 2.0, 6,  1.6,  4, -3, -4,  5, 0.30, 2],
-    [0.70, 0.95, 1.4, 7, -0.6,  1,  4,  9,  2, 0.45, 3]
+    [0.03, 1.10, 3.0, 3,  -2.2, -3,  2,  6, -2,  0.06, 1],
+    [0.35, 1.02, 2.0, 4,   1.6,  4, -3, -4,  5, -0.05, 2],
+    [0.70, 0.95, 1.4, 5,  -0.6,  1,  4,  9,  2,  0.08, 3]
   ];
 
-  // Point on a rounded rectangle, t from 0 to 1 around the edge (clockwise from top-left)
-  function onRoundedRect(w, h, r, t) {
-    var straightX = w - 2 * r, straightY = h - 2 * r, arc = Math.PI * r / 2;
-    var total = 2 * straightX + 2 * straightY + 4 * arc;
-    var d = ((t % 1) + 1) % 1 * total;
-    var parts = [
-      [straightX, function (k) { return [r + k, 0, 0]; }],
-      [arc, function (k) { var a = -Math.PI / 2 + k / r; return [w - r + r * Math.cos(a), r + r * Math.sin(a)]; }],
-      [straightY, function (k) { return [w, r + k]; }],
-      [arc, function (k) { var a = k / r; return [w - r + r * Math.cos(a), h - r + r * Math.sin(a)]; }],
-      [straightX, function (k) { return [w - r - k, h]; }],
-      [arc, function (k) { var a = Math.PI / 2 + k / r; return [r + r * Math.cos(a), h - r + r * Math.sin(a)]; }],
-      [straightY, function (k) { return [0, h - r - k]; }],
-      [arc, function (k) { var a = Math.PI + k / r; return [r + r * Math.cos(a), r + r * Math.sin(a)]; }]
-    ];
-    for (var i = 0; i < parts.length; i++) {
-      if (d <= parts[i][0]) return parts[i][1](d);
-      d -= parts[i][0];
-    }
-    return [r, 0];
+  // Point on a hand-drawn oval, t from 0 to 1 around it (clockwise from the top).
+  // It's a "full" oval (between an ellipse and a rounded box), so it goes
+  // round the box corners without cutting through the text; one side and
+  // the top are fuller than the other, so it's not perfect.
+  var FULLNESS = 2.8;                              // 2 = plain ellipse, higher = boxier
+  function onOval(w, h, t, lean) {
+    var a = w / 2 + 4, b = h / 2 + 6;
+    var angle = 2 * Math.PI * t - Math.PI / 2;
+    var c = Math.cos(angle), sn = Math.sin(angle);
+    var ax = a * (c >= 0 ? 1 + lean : 1 - lean);
+    var by = b * (sn >= 0 ? 1 + lean * 0.6 : 1 - lean * 0.6);
+    var px = Math.sign(c) * Math.pow(Math.abs(c), 2 / FULLNESS);
+    var py = Math.sign(sn) * Math.pow(Math.abs(sn), 2 / FULLNESS);
+    return [w / 2 + ax * px, h / 2 + by * py];
   }
 
   function draw() {
@@ -210,16 +205,15 @@
     passes.forEach(function (p) {
       var start = p[0], length = p[1], thick = p[2], wobble = p[3];
       var tilt = p[4] * Math.PI / 180, sx = p[5], sy = p[6];
-      var pw = iw + p[7], ph = ih + p[8], seed = p[10];
-      var r = Math.min(ph * p[9], 44);               // soft corners, different on each pass
+      var pw = iw + p[7], ph = ih + p[8], lean = p[9], seed = p[10];
       var cx = pad + iw / 2, cy = pad + ih / 2;
       var cos = Math.cos(tilt), sin = Math.sin(tilt);
       var steps = 260, left = [], right = [];
       for (var i = 0; i <= steps; i++) {
         var f = i / steps;
         var t = start + f * length;
-        var a = onRoundedRect(pw, ph, r, t);
-        var b = onRoundedRect(pw, ph, r, t + 0.002);
+        var a = onOval(pw, ph, t, lean);
+        var b = onOval(pw, ph, t + 0.002, lean);
         var tx = b[0] - a[0], ty = b[1] - a[1], len = Math.hypot(tx, ty) || 1;
         var nx = ty / len, ny = -tx / len;         // points outwards
         // Hand wobble: a few uneven waves, so the edge bulges and dips.
