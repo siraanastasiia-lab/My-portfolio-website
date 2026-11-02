@@ -759,6 +759,14 @@ svg { flex-shrink: 0; }
 
 .prose p + p { margin-top: var(--space-4); }
 .prose p + .star-list { margin-top: var(--space-6); }   /* intro text, then a list */
+.prose .star-list + p { margin-top: var(--space-6); }   /* a list, then text again */
+/* Small heading inside case text (e.g. Goals, Session structure) */
+.prose__subtitle {
+  margin: var(--space-7) 0 var(--space-4);
+  font-size: var(--fs-md);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
 .prose { margin-top: var(--space-5); }
 .about__text { margin-top: var(--space-7); }
 .prose .accent-purple { font-weight: 500; }   /* highlighted phrases in text: Medium */
@@ -1082,6 +1090,11 @@ svg { flex-shrink: 0; }
    phones use the full width, tablet and up 85% of the content width
    (the same proportion on every screen, so it never gets tiny) */
 .case-shot { margin-top: calc(var(--space-section) / 2); }   /* half the usual gap: belongs to the text above */
+.case-shot--roomy { margin-top: var(--space-section); }   /* extra room for a sticker hanging above the image */
+/* Text that continues a section after a full-width image */
+.case-continue { margin-top: calc(var(--space-section) / 2); }
+.case-continue > [aria-hidden] { display: none; }        /* empty left column: desktop only */
+.prose > .prose__subtitle:first-child { margin-top: 0; }
 .case-shot__frame { margin: 0 auto; }
 /* ---------------------------------------------------------
    YELLOW STICKER (reusable) — a sticky note on an image, with an
@@ -1090,7 +1103,7 @@ svg { flex-shrink: 0; }
      on the sticker  --sticker-top, --sticker-left        (tablet and up)
                      --sticker-top-lg, --sticker-left-lg  (desktop, optional)
                      --sticker-margin                     (phones, optional)
-     on the arrow    --arrow-top, --arrow-left, --arrow-turn (desktop only)
+     on the arrow    --arrow-top, --arrow-left, --arrow-turn, --arrow-flip (desktop only)
    The wrapper needs class "has-sticker".
    Phones: the sticker sits above the image, overlapping its top edge.
    --------------------------------------------------------- */
@@ -1102,9 +1115,9 @@ svg { flex-shrink: 0; }
 .sticker {
   position: relative;
   z-index: 2;
-  width: fit-content;
-  max-width: 11.25rem;
-  order: -1;                         /* phones: above the image */
+  width: max-content;                /* own width even near a container edge... */
+  max-width: 11.25rem;               /* ...but never wider than this */
+  order: var(--sticker-order, -1);   /* phones: above the image (or below with --sticker-order: 1) */
   margin: var(--sticker-margin, 0 0 -2rem -0.25rem);
   padding: var(--space-3) 1.125rem 1.125rem;
   font-family: var(--font-hand);
@@ -1133,7 +1146,7 @@ svg { flex-shrink: 0; }
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
-  transform: rotate(var(--arrow-turn, 0deg));
+  transform: rotate(var(--arrow-turn, 0deg)) scaleY(var(--arrow-flip, 1));   /* --arrow-flip: -1 mirrors the loop */
 }
 .media--wide {
   width: 100%;
@@ -1200,11 +1213,19 @@ svg { flex-shrink: 0; }
   .shots { grid-template-columns: repeat(2, 1fr); }
   .gallery { --gallery-visible: 3.5; --gallery-gap: var(--space-4); }
   .case-shot__frame { width: 85%; }
+  .case-shot--full .case-shot__frame { width: 100%; }   /* full content width */
   .sticker {                       /* yellow sticker: stuck onto the image */
     position: absolute;
     top: var(--sticker-top);
     left: var(--sticker-left);
     margin: 0;
+  }
+  /* Stickers on busy images stay above / below the image until desktop */
+  .sticker.sticker--float-lg {
+    position: relative;
+    top: auto;
+    left: auto;
+    margin: var(--sticker-margin, 0 0 -2rem -0.25rem);
   }
   .stats { gap: var(--space-8); }   /* 64px between the three stats */
   .mini-cards { grid-template-columns: repeat(3, 1fr); }
@@ -1238,7 +1259,12 @@ svg { flex-shrink: 0; }
   .about__col { display: block; }
 
   /* Yellow sticker: desktop position (if set) and the grey arrow */
-  .sticker {
+  .case-continue > [aria-hidden] { display: block; }
+
+  .sticker,
+  .sticker.sticker--float-lg {
+    position: absolute;
+    margin: 0;
     top: var(--sticker-top-lg, var(--sticker-top));
     left: var(--sticker-left-lg, var(--sticker-left));
   }

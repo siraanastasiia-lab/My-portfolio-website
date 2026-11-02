@@ -123,7 +123,7 @@ The main goals of this project *were* to enhance usability, increase user satisf
 - Designed and validated new user purchase flow and interaction patterns, collaborating closely with product and engineering teams
 - Facilitated stakeholder alignment by presenting research insights and design rationale
 
-**Images:** assets/tickets-1.jpg (phones and laptop), assets/tickets-2.jpg (four phone screens)
+**Images:** assets/tickets-8.png (three phone screens of the final mobile design)
 Alt text 1: Ticket purchase flow shown on phones and a laptop.
 Alt text 2: Four mobile screens of the redesigned ticket purchase flow.
 Captions: not written yet.

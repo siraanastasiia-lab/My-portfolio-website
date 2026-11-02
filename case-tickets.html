@@ -123,11 +123,13 @@
             <li class="chip">Interviews</li>
             <li class="chip">Prototyping</li>
             <li class="chip">Research Report</li>
-            <li class="chip">Collaboration with Client’s product team</li>
           </ul></dd>
         </div>
       </dl>
     </section>
+
+    <!-- Same NDA note as under the cards on the main page -->
+    <p class="container cards-note case-note">* Client names and some visuals are anonymized under NDA.</p>
 
     <!-- ================= COVER IMAGE ================= -->
     <div class="case-cover media media--cover">
@@ -143,6 +145,23 @@
       </div>
     </section>
 
+    <!-- ================= DESIGN PROCESS STEPS ================= -->
+    <section class="section container split" aria-labelledby="process-title">
+      <h2 class="section-title" id="process-title">Design process steps</h2>
+      <div class="prose prose--flush">
+        <p>To ensure our improvements would enhance the user experience, we conducted user interviews followed by usability testing after creating the design concept.</p>
+        <ul class="star-list">
+          <li>Onboarding, current state and requirements analysis, backlog priorities review</li>
+          <li>UX audit to identify gaps and areas for improvement</li>
+          <li>User interviews</li>
+          <li>Ideation and concept generation</li>
+          <li>Planning and conducting usability testing</li>
+          <li>UX report, presenting to stakeholders, design updates and approval</li>
+          <li>Final delivery &amp; design hand-off</li>
+        </ul>
+      </div>
+    </section>
+
     <!-- ================= MY ROLE ================= -->
     <section class="section container split" aria-labelledby="role-title">
       <h2 class="section-title" id="role-title">My role</h2>
@@ -155,13 +174,112 @@
       </ul>
     </section>
 
-    <!-- ================= CASE IMAGES ================= -->
-    <div class="section container shots">
-      <figure class="media media--shot" style="--ratio: 3858 / 2388">
-        <img src="assets/tickets-1.jpg" alt="Ticket purchase flow shown on phones and a laptop." width="3858" height="2388" loading="lazy">
+    <!-- ================= USER INTERVIEWS ================= -->
+    <section class="section container split" aria-labelledby="interviews-title">
+      <h2 class="section-title" id="interviews-title">User interviews</h2>
+      <div class="prose prose--flush">
+        <p>The interviews focused on gathering deep insights to inform our design decisions. We talked to 5 current users aged 16 and above who regularly buy tickets on the website, selected through a pre-screening survey.</p>
+        <p>Using affinity mapping, we grouped similar insights and revealed patterns in user behavior and preferences. I then presented the findings and recommendations to product managers in a report. The interviews helped us define:</p>
+        <ul class="star-list">
+          <li>positive user feedback about the ticket purchase flow</li>
+          <li>user pain points</li>
+          <li>user needs and requests</li>
+          <li>habits and specific use cases</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- User interviews board: full content width (same side spacing as the titles).
+         Yellow sticker on the top-right corner, half on the image, half on the page -->
+    <div class="case-shot case-shot--full container">
+      <figure class="case-shot__frame has-sticker">
+        <div class="media media--shot media--sharp" style="--ratio: 2692 / 1762">
+          <img src="assets/tickets-5.png" alt="Interview key notes board: five interviews in columns, with sticky notes grouped by website experience, positive feedback, difficulties and ideas, ways to pay, fare information and other notes." width="2692" height="1762" loading="lazy">
+        </div>
+        <svg class="sticker-arrow" style="--arrow-top: -1.4rem; --arrow-left: calc(100% - 17.75rem + clamp(0.5rem, (100vw - 75rem) / 2 - 1rem, 3.25rem)); --arrow-turn: 135deg" viewBox="0 0 100 80" aria-hidden="true" focusable="false"><path d="M18 2C8 20 10 40 26 44C40 48 44 32 34 28C22 24 18 46 32 58C48 70 72 66 94 58M83 50L94 58L82 64"/></svg>
+        <figcaption class="sticker" style="--sticker-top: -3rem; --sticker-left: calc(100% - 10.5rem); --sticker-left-lg: calc(100% - 11.25rem + clamp(0.5rem, (100vw - 75rem) / 2 - 1rem, 3.25rem)); --sticker-margin: 0 0 -1rem auto">We recorded and transcribed every interview, then summed up key insights in a table.</figcaption>
       </figure>
-      <figure class="media media--shot" style="--ratio: 3858 / 2388">
-        <img src="assets/tickets-2.jpg" alt="Four mobile screens of the redesigned ticket purchase flow." width="3858" height="2388" loading="lazy">
+    </div>
+
+    <!-- ================= TESTING THE CONCEPT (usability testing) ================= -->
+    <section class="section container split" aria-labelledby="testing-title">
+      <h2 class="section-title" id="testing-title">Testing the concept</h2>
+      <div class="prose prose--flush">
+        <p>Usability testing helped us identify issues, gather feedback and make informed design decisions. We ran 5 sessions of 30 minutes, each with 7 tasks on a prototype. Overall, the new concept was easy to use, with only minor difficulties at the start of the flow.</p>
+
+        <h3 class="prose__subtitle">Goals</h3>
+        <ul class="star-list">
+          <li>Validate the mobile design concept of the purchase flow</li>
+          <li>Check usability and find gaps</li>
+          <li>Understand how users choose between e-tickets and passes</li>
+        </ul>
+
+        <h3 class="prose__subtitle">Session structure</h3>
+        <ul class="star-list">
+          <li>Questions about background and past ticket-buying experience</li>
+          <li>Tasks on the prototype (happy path of buying a ticket)</li>
+          <li>Feedback on the hardest parts and overall impressions</li>
+          <li>SUS questionnaire</li>
+        </ul>
+
+        <p>Usability testing results were presented to highlight key findings:<br>positive feedback, user needs, pain points, habits and specific use cases, and other interesting insights.</p>
+
+      </div>
+    </section>
+
+    <!-- Task completion results: full content width image inside "Testing the concept".
+         Two yellow stickers (text comes later): left one about the table,
+         right one about the phone screen. Floating on the image from desktop up,
+         above / below the image on smaller screens. -->
+    <div class="case-shot case-shot--full case-shot--roomy container">
+      <figure class="case-shot__frame has-sticker">
+        <div class="media media--shot media--sharp" style="--ratio: 2182 / 921">
+          <img src="assets/tickets-6.png" alt="Task completion results: a table of 7 tasks for 5 users coloured green, yellow or red by success, and the search results screen on a phone with notes on what users understood or found confusing." width="2182" height="921" loading="lazy">
+        </div>
+        <svg class="sticker-arrow" style="--arrow-top: 1rem; --arrow-left: calc(30% - 6.1rem); --arrow-turn: 100deg" viewBox="0 0 100 80" aria-hidden="true" focusable="false"><path d="M18 2C8 20 10 40 26 44C40 48 44 32 34 28C22 24 18 46 32 58C48 70 72 66 94 58M83 50L94 58L82 64"/></svg>
+        <p class="sticker sticker--float-lg" style="--sticker-top: calc(14% - 9rem); --sticker-left: 30%; --sticker-margin: 0 0 0.5rem 0">Table to reflect results: green – task successfully completed, yellow – partially, red – task failed.</p>
+        <svg class="sticker-arrow" style="--arrow-top: calc(72% - 3.1rem); --arrow-left: calc(70% - 6.3rem); --arrow-turn: -110deg; --arrow-flip: -1" viewBox="0 0 100 80" aria-hidden="true" focusable="false"><path d="M18 2C8 20 10 40 26 44C40 48 44 32 34 28C22 24 18 46 32 58C48 70 72 66 94 58M83 50L94 58L82 64"/></svg>
+        <p class="sticker sticker--float-lg" style="--sticker-top: 72%; --sticker-left: 70%; --sticker-order: 1; --sticker-margin: -1rem 0 0 auto">Each screen was analyzed in the report, and all feedback or user concerns were documented</p>
+      </figure>
+    </div>
+
+    <!-- "Testing the concept" continues: SUS questionnaire (same right column, no title) -->
+    <div class="container split case-continue">
+      <div aria-hidden="true"></div>
+      <div class="prose prose--flush">
+        <h3 class="prose__subtitle">SUS questionnaire</h3>
+        <p>After the main testing sessions, we asked respondents <strong>to fill in the SUS test.</strong> The SUS questionnaire, with 5 response options for respondents, can effectively differentiate between usable and unusable systems. SUS has proved to be a valuable evaluation tool, being robust and reliable.</p>
+        <p><strong>The System Usability Scale (SUS)</strong> test is a widely used method for assessing the usability of software or websites through a 10-item questionnaire.</p>
+      </div>
+    </div>
+
+    <!-- SUS results: full content width (same side spacing as the titles) -->
+    <div class="case-shot case-shot--full container">
+      <figure class="case-shot__frame">
+        <div class="media media--shot media--sharp" style="--ratio: 2128 / 1097">
+          <img src="assets/tickets-7.png" alt="SUS test results: score 88 out of 100, grade A, Acceptable, Best imaginable, shown on the SUS scale with NPS, acceptability, adjective and grade bands." width="2128" height="1097" loading="lazy">
+        </div>
+      </figure>
+    </div>
+
+    <!-- ================= MOBILE FIRST APPROACH ================= -->
+    <section class="section container split" aria-labelledby="mobile-title">
+      <h2 class="section-title" id="mobile-title">Mobile First Approach</h2>
+      <div class="prose prose--flush">
+        <p>We chose a mobile-first approach because 80% of users accessed the site from their phones. This meant designing the purchase flow for the smallest screen first and then scaling it up to desktop. We kept one clear primary action per screen, made touch targets comfortable to tap on the go, and simplified ticket selection, especially for one-day trips. We then validated the mobile concept in usability testing to make sure the new flow felt clear and easy to use.</p>
+      </div>
+    </section>
+
+    <!-- ================= MOBILE SCREENS (full content width) =================
+         Yellow sticker on the empty background left of the phones (desktop),
+         grey arrow pointing at the left phone -->
+    <div class="case-shot case-shot--full container">
+      <figure class="case-shot__frame has-sticker">
+        <div class="media media--shot media--sharp" style="--ratio: 1564 / 774">
+          <img src="assets/tickets-8.png" alt="Three mobile screens of the redesigned ticket purchase flow: Tickets &amp; Passes search, choosing a group pass with Buy Now and Add To Cart, and the order success page." width="1564" height="774" loading="lazy">
+        </div>
+        <svg class="sticker-arrow" style="--arrow-top: calc(20% + 5.5rem); --arrow-left: calc(20.3% - 6rem); --arrow-turn: 0deg" viewBox="0 0 100 80" aria-hidden="true" focusable="false"><path d="M18 2C8 20 10 40 26 44C40 48 44 32 34 28C22 24 18 46 32 58C48 70 72 66 94 58M83 50L94 58L82 64"/></svg>
+        <figcaption class="sticker sticker--float-lg" style="--sticker-top: 20%; --sticker-left: calc(20.3% - 12.5rem); --sticker-margin: 0 0 -1rem 0">Final design for key screens on mobile</figcaption>
       </figure>
     </div>
 
