@@ -1130,6 +1130,12 @@ svg { flex-shrink: 0; }
   box-shadow: 0 0.75rem 1.25rem -0.5rem rgba(0, 0, 0, 0.55), 0 2px 4px rgba(0, 0, 0, 0.25);
   transform: rotate(3deg);
 }
+/* Smaller sticker for a longer text: smaller handwriting, a bit wider, less tall */
+.sticker--compact {
+  max-width: 13rem;
+  padding: var(--space-2) var(--space-4) var(--space-3);
+  font-size: 0.9375rem;
+}
 /* A sticker with no text yet keeps the usual sticker size */
 .sticker:empty { width: 11.25rem; height: 7.5rem; }
 .sticker-arrow {
@@ -1159,11 +1165,11 @@ svg { flex-shrink: 0; }
   gap: var(--space-3);
   margin-top: var(--space-5);
 }
+/* Thin lavender outline, no fill */
 .mini-card {
   padding: var(--space-4) var(--space-5);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-accent-purple);
   border-radius: var(--radius-sm);
-  background: var(--color-surface);
 }
 .mini-card__title { font-weight: 700; }
 .mini-card__text {

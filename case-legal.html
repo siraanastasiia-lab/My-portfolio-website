@@ -120,7 +120,6 @@
             <li class="chip">Heuristic evaluation</li>
             <li class="chip">Prioritization</li>
             <li class="chip">Prototyping</li>
-            <li class="chip">Collaboration with Client’s product team</li>
           </ul></dd>
         </div>
       </dl>
@@ -155,10 +154,47 @@
       </ul>
     </section>
 
-    <!-- ================= CASE IMAGE (one wide, full screen width) ================= -->
-    <figure class="case-wide media media--wide" style="--ratio: 3806 / 1778">
-      <img src="assets/legal-1.jpg" alt="Heuristic review of the legal practice management app with marked usability findings." width="3806" height="1778" loading="lazy">
-    </figure>
+    <!-- ================= BEFORE / AFTER (full content width) =================
+         Two yellow stickers on the spots marked in the image (desktop),
+         each with a grey arrow to its screen. Above / below the image on smaller screens. -->
+    <div class="case-shot case-shot--full case-shot--roomy container">
+      <figure class="case-shot__frame has-sticker">
+        <div class="media media--shot media--sharp" style="--ratio: 1540 / 734">
+          <img src="assets/legal-2.png" alt="Before and after: the old timesheet screen of the legal practice management app next to the redesigned Add Invoice screen." width="1540" height="734" loading="lazy">
+        </div>
+        <svg class="sticker-arrow" style="--arrow-top: calc(29% - 4.6rem); --arrow-left: calc(71% - 5.9rem); --arrow-turn: 100deg" viewBox="0 0 100 80" aria-hidden="true" focusable="false"><path d="M18 2C8 20 10 40 26 44C40 48 44 32 34 28C22 24 18 46 32 58C48 70 72 66 94 58M83 50L94 58L82 64"/></svg>
+        <p class="sticker sticker--float-lg sticker--compact" style="--sticker-top: calc(29% - 7.75rem); --sticker-left: 71%; --sticker-margin: 0 0 -1rem auto">After: reorganized sidebar nav by moving menu items elsewhere, new color for the sidebar to improve contrast with workspace.</p>
+        <svg class="sticker-arrow" style="--arrow-top: calc(73.4% - 4.3rem); --arrow-left: calc(19% + 3.6rem); --arrow-turn: -90deg; --arrow-flip: -1" viewBox="0 0 100 80" aria-hidden="true" focusable="false"><path d="M18 2C8 20 10 40 26 44C40 48 44 32 34 28C22 24 18 46 32 58C48 70 72 66 94 58M83 50L94 58L82 64"/></svg>
+        <p class="sticker sticker--float-lg" style="--sticker-top: 73.4%; --sticker-left: 19%; --sticker-order: 1; --sticker-margin: -1rem 0 0 0">Before: dense screens with weak hierarchy and hard-to-find actions</p>
+      </figure>
+    </div>
+
+    <!-- ================= DESIGN PROCESS STEPS ================= -->
+    <section class="section container split" aria-labelledby="process-title">
+      <h2 class="section-title" id="process-title">Design process steps</h2>
+      <ul class="star-list">
+        <li>Analyzing existing research, artifacts and the current state</li>
+        <li>Direct competitors analysis</li>
+        <li>Gathering user feedback (pain points) from support</li>
+        <li>Heuristic evaluation</li>
+        <li>Feature prioritization for our design scope, plus additional requirements from PO and LD for specific features</li>
+        <li>Interactive prototypes for client review, feedback and approval</li>
+      </ul>
+    </section>
+
+    <!-- ================= DESIGN CHALLENGES ================= -->
+    <section class="section container split" aria-labelledby="challenges-title">
+      <h2 class="section-title" id="challenges-title">Design challenges</h2>
+      <div class="prose prose--flush">
+        <p>Throughout the project, several challenges required flexibility, cross-team collaboration and continuous alignment:</p>
+        <ul class="star-list">
+          <li><strong>Tight timelines.</strong> The design track focused on near-term wins that moved into development quickly, so we worked in fast, iterative cycles.</li>
+          <li><strong>Multi-level approvals.</strong> Each design needed sign-off from our Design Leads, the client’s Product Owner, Design Lead and wider stakeholders, so all feedback had to be consolidated into the final designs.</li>
+          <li><strong>Evolving design foundations.</strong> The client’s Design System and documentation standards were still being defined, so we adapted our approach as they evolved.</li>
+        </ul>
+        <p>Despite these challenges, we stayed agile and delivered designs that met both business goals and user needs.</p>
+      </div>
+    </section>
 
     <!-- ================= HEURISTIC REVIEW FINDINGS ================= -->
     <section class="section container split" aria-labelledby="heuristic-title">
@@ -173,6 +209,44 @@
           <li class="mini-card"><p class="mini-card__title">Efficiency</p><p class="mini-card__text">time/effort</p></li>
           <li class="mini-card"><p class="mini-card__title">Satisfaction</p><p class="mini-card__text">overall experience</p></li>
         </ul>
+      </div>
+    </section>
+
+    <!-- Heuristic review image: full content width, right after the metric cards.
+         Two yellow stickers on the spots marked in the image (desktop), arrows to
+         the metrics slide and to the findings board. Above / below the image on smaller screens. -->
+    <div class="case-shot case-shot--full container">
+      <figure class="case-shot__frame has-sticker">
+        <div class="media media--shot media--sharp" style="--ratio: 1540 / 782">
+          <img src="assets/legal-3.png" alt="Heuristic review: a board of findings grouped by theme (simplify steps, improve navigation, consistent interactions, assistive handrails, visual UI) and a slide on how each improvement affects effectiveness, efficiency and satisfaction." width="1540" height="782" loading="lazy">
+        </div>
+        <svg class="sticker-arrow" style="--arrow-top: calc(43.9% - 4.4rem); --arrow-left: calc(36.2% - 18rem); --arrow-turn: 90deg" viewBox="0 0 100 80" aria-hidden="true" focusable="false"><path d="M18 2C8 20 10 40 26 44C40 48 44 32 34 28C22 24 18 46 32 58C48 70 72 66 94 58M83 50L94 58L82 64"/></svg>
+        <p class="sticker sticker--float-lg" style="--sticker-top: calc(43.9% - 9.3rem); --sticker-left: calc(36.2% - 12.5rem); --sticker-margin: 0 0 -1rem 0">Each improvement was rated by its impact on Effectiveness, Efficiency and Satisfaction</p>
+        <svg class="sticker-arrow" style="--arrow-top: 70.8%; --arrow-left: 75.9%; --arrow-turn: -90deg; --arrow-flip: -1" viewBox="0 0 100 80" aria-hidden="true" focusable="false"><path d="M18 2C8 20 10 40 26 44C40 48 44 32 34 28C22 24 18 46 32 58C48 70 72 66 94 58M83 50L94 58L82 64"/></svg>
+        <p class="sticker sticker--float-lg" style="--sticker-top: 78.8%; --sticker-left: 83.3%; --sticker-order: 1; --sticker-margin: -1rem 0 0 auto">Findings grouped by theme into key suggestions, with early wireframes for each</p>
+      </figure>
+    </div>
+
+    <!-- ================= FEATURE PRIORITIZATION ================= -->
+    <section class="section container split" aria-labelledby="priority-title">
+      <h2 class="section-title" id="priority-title">Feature prioritization</h2>
+      <div class="prose prose--flush">
+        <p>To define the design direction and align priorities, we created a Product Improvement Board in Miro, grounded in the Heuristic Review findings and insights from user interviews conducted by the design track. For each proposed improvement, our design team:</p>
+        <ul class="star-list">
+          <li>defined sub-features</li>
+          <li>prepared early wireframes to visualize potential solutions</li>
+          <li>evaluated value (0–10 scale) and implementation effort (Epic Points)</li>
+        </ul>
+        <p>The board became our key delivery artifact. Together with the client, we used it to agree on the final scope, so the most impactful improvements were addressed first.</p>
+        <!-- Value / effort matrix: text-column width. Yellow sticker hangs out into
+             the empty left column, arrow into the matrix (desktop) -->
+        <figure class="case-figure has-sticker">
+          <div class="media media--shot media--sharp" style="--ratio: 753 / 590">
+            <img src="assets/legal-7.png" alt="Value and effort prioritization matrix with improvements sorted into Quick Wins, Big Projects, Fill-Ins and Money Pits." width="753" height="590" loading="lazy">
+          </div>
+          <svg class="sticker-arrow" style="--arrow-top: calc(10% + 5.9rem); --arrow-left: -2.35rem; --arrow-turn: 0deg" viewBox="0 0 100 80" aria-hidden="true" focusable="false"><path d="M18 2C8 20 10 40 26 44C40 48 44 32 34 28C22 24 18 46 32 58C48 70 72 66 94 58M83 50L94 58L82 64"/></svg>
+          <figcaption class="sticker sticker--float-lg" style="--sticker-top: 10%; --sticker-left: -13.5rem; --sticker-margin: 0 0 -1rem 0">High value with small effort – our scope for Quick wins.</figcaption>
+        </figure>
       </div>
     </section>
 
