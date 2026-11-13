@@ -59,8 +59,14 @@
   --radius-pill: 999px;
 
   /* Motion */
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --dur: 220ms;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);       /* standard curve: hovers, buttons, menu, header */
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1); /* soft landing: blocks appearing, image zoom */
+  --dur-fast: 150ms;    /* tiny changes: icon nudges, button press */
+  --dur: 200ms;         /* links, icons, colours */
+  --dur-fill: 400ms;    /* yellow fill sliding in / out of buttons on hover */
+  --dur-slow: 500ms;    /* header while scrolling */
+  --dur-reveal: 700ms;  /* blocks fading in as you scroll */
+  --reveal-shift: 1.5rem; /* how far a block rises while it fades in */
   --star-spin-duration: 2.4s; /* hero star: how long one turn takes */
   --star-rest-angle: 30deg;    /* hero star: tilt when it is not spinning */
   --sparkle-rest-angle: 45deg; /* hero small star: moved this far clockwise along its circle */
@@ -190,6 +196,27 @@ svg { flex-shrink: 0; }
   fill: var(--color-accent);
 }
 
+/* REVEAL ON SCROLL: script.js adds .has-reveal to the page and .reveal to
+   blocks below the first screen. Each block fades in and rises a little when
+   it scrolls into view (.is-visible); blocks that appear together follow one
+   another (--reveal-delay). Without JS or with "Reduce motion" turned on,
+   everything is simply visible. */
+/* An animation, not a transition, so a block keeps its own hover
+   transitions (e.g. the button fill) after it has appeared */
+.has-reveal .reveal.is-visible {
+  animation: rise-in var(--dur-reveal) var(--ease-out) var(--reveal-delay, 0ms) both;
+}
+.has-reveal .reveal:not(.is-visible) {
+  opacity: 0;
+  translate: 0 var(--reveal-shift);
+}
+
+/* "Reduce motion": no press shrink either */
+@media (prefers-reduced-motion: reduce) {
+  .btn:active,
+  .icon-btn:active { scale: none; }
+}
+
 /* Two-column block used in About and on case pages:
    title on the left, content on the right (desktop) */
 .split {
@@ -213,46 +240,77 @@ svg { flex-shrink: 0; }
   font-weight: 500;
   line-height: 1.2;
   cursor: pointer;
-  transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
+  /* The yellow fill is a layer that slides in / out sideways */
+  background-color: transparent;
+  background-image: linear-gradient(var(--color-accent), var(--color-accent));
+  background-repeat: no-repeat;
+  transition: background-size var(--dur-fill) var(--ease), color var(--dur-fill) var(--ease), scale var(--dur-fast) var(--ease);
 }
+.btn:active { scale: 0.97; }   /* small "press" on click / tap */
 
-/* Primary: yellow fill → outlined on hover/focus */
+/* Primary: yellow fill → outlined on hover/focus. Same motion as Secondary:
+   the page colour fills the button from left to right over the yellow */
 .btn--primary {
-  background: var(--color-accent);
+  background-image: linear-gradient(var(--color-bg), var(--color-bg)),
+                    linear-gradient(var(--color-accent), var(--color-accent));
+  background-position: 0 0;
+  background-size: 0 100%, 100% 100%;
   color: var(--color-on-accent);
 }
 .btn--primary:hover,
 .btn--primary:focus-visible {
-  background: transparent;
+  background-size: 100% 100%, 100% 100%;
   color: var(--color-accent);
 }
 
-/* Secondary: yellow outline → filled on hover/focus */
+/* Secondary: yellow outline → filled on hover/focus (the yellow sweeps in from the left) */
 .btn--secondary {
-  background: transparent;
+  background-position: 0 0;
+  background-size: 0 100%;
   color: var(--color-accent);
 }
 .btn--secondary:hover,
 .btn--secondary:focus-visible {
-  background: var(--color-accent);
+  background-size: 100% 100%;
   color: var(--color-on-accent);
 }
 
 .btn--block { width: 100%; }
 
-/* Text link with yellow underline on hover/focus */
+/* Text link with yellow underline on hover/focus.
+   The line sweeps in from the left and leaves to the right. */
 .link-underline {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
   background-image: linear-gradient(var(--color-accent), var(--color-accent));
   background-size: 0 2px;
-  background-position: 0 100%;
+  background-position: 100% 100%;
   background-repeat: no-repeat;
   transition: background-size var(--dur) var(--ease);
 }
 .link-underline:hover,
-.link-underline:focus-visible { background-size: 100% 2px; }
+.link-underline:focus-visible,
+.nav__link.is-active {           /* menu link of the section on screen (script.js) */
+  background-size: 100% 2px;
+  background-position: 0 100%;
+}
+
+/* Small arrows inside links nudge in their direction on hover/focus */
+.hero__cta svg,
+.back-link svg,
+.footer__top svg,
+.contact__link[target] .contact__label svg { transition: translate var(--dur) var(--ease); }
+@media (prefers-reduced-motion: no-preference) {
+  .hero__cta:hover svg,
+  .hero__cta:focus-visible svg { translate: 0 3px; }
+  .back-link:hover svg,
+  .back-link:focus-visible svg { translate: -3px 0; }
+  .footer__top:hover svg,
+  .footer__top:focus-visible svg { translate: 0 -3px; }
+  .contact__link[target]:hover .contact__label svg,
+  .contact__link[target]:focus-visible .contact__label svg { translate: 2px -2px; }
+}
 
 /* ---------------------------------------------------------
    5. HEADER & DESKTOP NAV
@@ -269,6 +327,21 @@ svg { flex-shrink: 0; }
   -webkit-backdrop-filter: blur(12px);
           backdrop-filter: blur(12px);
   /* no bottom line: header is set apart by its darker background only */
+  transition: background-color var(--dur-slow) var(--ease), box-shadow var(--dur-slow) var(--ease);
+}
+/* Once the page is scrolled (script.js): a soft shadow under the header */
+.site-header.is-scrolled { box-shadow: 0 12px 32px -20px rgba(0, 0, 0, 0.9); }
+
+/* Case pages: thin yellow line under the header fills up as you read (script.js) */
+.read-progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--color-accent);
+  transform-origin: 0 50%;
+  transform: scaleX(var(--read, 0));
 }
 /* Solid again while the mobile menu is open */
 .menu-open .site-header { background: var(--color-bg-deep); }
@@ -304,11 +377,11 @@ svg { flex-shrink: 0; }
   white-space: nowrap;
   background-image: linear-gradient(var(--color-accent), var(--color-accent));
   background-size: 0 2px;
-  background-position: 0 100%;
+  background-position: 100% 100%;   /* same sweep as .link-underline */
   background-repeat: no-repeat;
   transition: background-size var(--dur) var(--ease);
 }
-.logo:focus-visible .logo__name { background-size: 100% 2px; }
+.logo:focus-visible .logo__name { background-size: 100% 2px; background-position: 0 100%; }
 .logo__star {
   fill: var(--color-accent);
   stroke: var(--color-accent);
@@ -327,7 +400,7 @@ svg { flex-shrink: 0; }
 @media (hover: hover) {
   .logo:hover .logo__star { fill: transparent; }
   .logo:hover .logo__text { fill: var(--color-accent); }
-  .logo:hover .logo__name { background-size: 100% 2px; }
+  .logo:hover .logo__name { background-size: 100% 2px; background-position: 0 100%; }
 }
 
 .nav,
@@ -399,6 +472,21 @@ svg { flex-shrink: 0; }
   margin-block: var(--space-7) var(--space-6);
 }
 
+/* Opening the menu: the panel fades in, its rows rise one after another,
+   and the close icon turns in */
+@media (prefers-reduced-motion: no-preference) {
+  .mobile-menu:not([hidden]) { animation: fade-in 250ms var(--ease) both; }
+  .mobile-menu:not([hidden]) .mobile-menu__nav li,
+  .mobile-menu:not([hidden]) .mobile-menu__contacts,
+  .mobile-menu:not([hidden]) .btn--block { animation: rise-in var(--dur-slow) var(--ease-out) both; }
+  .mobile-menu:not([hidden]) .mobile-menu__nav li:nth-child(2) { animation-delay: 60ms; }
+  .mobile-menu:not([hidden]) .mobile-menu__nav li:nth-child(3) { animation-delay: 120ms; }
+  .mobile-menu:not([hidden]) .mobile-menu__contacts { animation-delay: 180ms; }
+  .mobile-menu:not([hidden]) .btn--block { animation-delay: 240ms; }
+  .menu-toggle[aria-expanded="true"] .icon-close { animation: icon-turn 300ms var(--ease) both; }
+}
+@keyframes icon-turn { from { opacity: 0; rotate: -90deg; } }
+
 /* ---------------------------------------------------------
    7. CIRCLE ARROW (cards, mobile menu)
    --------------------------------------------------------- */
@@ -410,9 +498,23 @@ svg { flex-shrink: 0; }
   height: 2.75rem;
   border: 1.5px solid var(--color-border-strong);
   border-radius: 50%;
+  overflow: hidden;   /* the arrow slides out of the circle on hover */
   transition: background-color var(--dur) var(--ease), border-color var(--dur) var(--ease), color var(--dur) var(--ease);
 }
 .circle-arrow svg { width: 1.125rem; height: 1.125rem; }
+
+/* Hover/focus: the arrow flies out to the right and comes back in from the left */
+@media (prefers-reduced-motion: no-preference) {
+  .case-card:hover .circle-arrow svg,
+  .case-card:focus-visible .circle-arrow svg,
+  .mobile-menu__link:hover .circle-arrow svg,
+  .mobile-menu__link:focus-visible .circle-arrow svg { animation: arrow-through 450ms var(--ease); }
+}
+@keyframes arrow-through {
+  40%  { translate: 200% 0; }
+  41%  { translate: -200% 0; }
+  100% { translate: 0 0; }
+}
 
 .mobile-menu__link .circle-arrow { width: 3rem; height: 3rem; }
 
@@ -541,6 +643,24 @@ svg { flex-shrink: 0; }
   to   { transform: rotate(calc(var(--sparkle-rest-angle) + 360deg)); }
 }
 
+/* Page opens: the hero (main page and case pages) rises in line by line */
+@media (prefers-reduced-motion: no-preference) {
+  .hero__intro,
+  .hero__title,
+  .hero__text,
+  .hero__cta,
+  .case-hero > * { animation: rise-in var(--dur-reveal) var(--ease-out) both; }
+  .hero__title,
+  .case-hero > :nth-child(2) { animation-delay: 80ms; }
+  .hero__text,
+  .case-hero > :nth-child(3) { animation-delay: 160ms; }
+  .hero__cta,
+  .case-hero > :nth-child(4) { animation-delay: 240ms; }
+  .hero__decor { animation: fade-in 1s var(--ease-out) 200ms both; }
+}
+@keyframes rise-in { from { opacity: 0; translate: 0 var(--reveal-shift); } }
+@keyframes fade-in { from { opacity: 0; } }
+
 /* No spinning for people who turned on "Reduce motion" */
 @media (prefers-reduced-motion: reduce) {
   .hero__star.is-spinning,
@@ -571,7 +691,7 @@ svg { flex-shrink: 0; }
 .case-card__media {
   border-radius: 0;   /* no inner gap: the card's own rounded corners clip the cover */
 }
-.case-card__media img { transition: transform 400ms var(--ease); }
+.case-card__media img { transition: transform 400ms var(--ease-out); }
 
 .case-card__body {
   display: flex;
@@ -703,14 +823,33 @@ svg { flex-shrink: 0; }
 }
 .doodle-box__line {
   position: absolute;
-  inset: calc(var(--space-2) * -1);
-  width: calc(100% + var(--space-4));
-  height: calc(100% + var(--space-4));
+  /* 2rem (--space-6) of extra room on every side, so the whole wobbly line
+     fits inside the svg and the draw-in mask never cuts it (script.js
+     keeps the oval itself the same size: BLEED) */
+  inset: calc((var(--space-2) + var(--space-6)) * -1);
+  width: calc(100% + var(--space-4) + var(--space-6) * 2);
+  height: calc(100% + var(--space-4) + var(--space-6) * 2);
   overflow: visible;
   pointer-events: none;
 }
 .doodle-box__line path {
   fill: var(--color-accent-purple);   /* each stroke is a filled shape, thin and thick in places */
+}
+/* When the stats scroll into view the brush line is "drawn" round the box:
+   a mask sweeps clockwise from the top and uncovers it */
+@property --brush-sweep {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 360deg;
+}
+.doodle-box__line {
+  -webkit-mask-image: conic-gradient(#000 var(--brush-sweep), transparent 0);
+          mask-image: conic-gradient(#000 var(--brush-sweep), transparent 0);
+}
+.about__stats.is-visible .doodle-box__line { animation: brush-draw 1.2s var(--ease-out) 300ms both; }
+@keyframes brush-draw {
+  from { --brush-sweep: 0deg; }
+  to   { --brush-sweep: 360deg; }
 }
 
 .stats {
@@ -815,12 +954,18 @@ svg { flex-shrink: 0; }
   background: transparent;
   color: var(--color-accent);
   cursor: pointer;
-  transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
+  /* Yellow fills it from left to right, like the outlined .btn */
+  background-image: linear-gradient(var(--color-accent), var(--color-accent));
+  background-position: 0 0;
+  background-size: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size var(--dur-fill) var(--ease), color var(--dur-fill) var(--ease), scale var(--dur-fast) var(--ease);
 }
+.icon-btn:active { scale: 0.92; }   /* small "press" */
 .icon-btn svg { width: 1.25rem; height: 1.25rem; fill: currentColor; }
-.icon-btn:focus-visible { background: var(--color-accent); color: var(--color-on-accent); }
+.icon-btn:focus-visible { background-size: 100% 100%; color: var(--color-on-accent); }
 @media (hover: hover) {
-  .icon-btn:hover { background: var(--color-accent); color: var(--color-on-accent); }
+  .icon-btn:hover { background-size: 100% 100%; color: var(--color-on-accent); }
 }
 /* Show "pause" while moving, "play" when paused */
 .icon-btn__play { display: none; }
@@ -858,6 +1003,10 @@ svg { flex-shrink: 0; }
   animation: gallery-slide var(--gallery-speed) linear infinite;
 }
 .gallery.is-paused .gallery__track { animation-play-state: paused; }
+/* With a mouse: the strip stops while the pointer is over it, to look at a photo */
+@media (hover: hover) {
+  .gallery:hover .gallery__track { animation-play-state: paused; }
+}
 
 @keyframes gallery-slide {
   to { transform: translateX(-50%); }     /* exactly one set of 10 photos */
@@ -989,6 +1138,17 @@ svg { flex-shrink: 0; }
   transform: translateY(-50%);
   white-space: nowrap;
 }
+/* The check icon pops in, "Copied" slides in next to it */
+@media (prefers-reduced-motion: no-preference) {
+  .copy-btn.is-copied .copy-btn__icon--done { animation: pop-in 350ms var(--ease-out) both; }
+  .copy-btn.is-copied .copy-btn__label { animation: slide-in 300ms var(--ease-out) both; }
+}
+@keyframes pop-in {
+  0%   { opacity: 0; scale: 0.4; }
+  60%  { opacity: 1; scale: 1.15; }
+  100% { scale: 1; }
+}
+@keyframes slide-in { from { opacity: 0; translate: -0.375rem 0; } }
 
 /* ---------------------------------------------------------
    13. FOOTER
@@ -1154,6 +1314,23 @@ svg { flex-shrink: 0; }
   stroke-linejoin: round;
   transform: rotate(var(--arrow-turn, 0deg)) scaleY(var(--arrow-flip, 1));   /* --arrow-flip: -1 mirrors the loop */
 }
+/* Sticker comes in when its image is on screen (script.js adds .is-stuck):
+   it drops onto the image like a note being stuck on, then the arrow draws itself */
+.has-reveal .has-sticker:not(.is-stuck) .sticker { opacity: 0; }
+.has-reveal .sticker-arrow path { stroke-dasharray: 1; }   /* script.js sets the path length to 1 */
+.has-reveal .has-sticker:not(.is-stuck) .sticker-arrow path { stroke-dashoffset: 1; }
+.has-sticker.is-stuck .sticker { animation: sticker-land 600ms var(--ease-out) 150ms both; }
+.has-sticker.is-stuck .sticker-arrow path { animation: arrow-draw 700ms var(--ease) 650ms both; }
+@keyframes sticker-land {
+  from { opacity: 0; scale: 1.25; rotate: -6deg; }
+  60%  { opacity: 1; }
+  to   { opacity: 1; scale: 1; rotate: 0deg; }
+}
+@keyframes arrow-draw {
+  from { stroke-dashoffset: 1; }
+  to   { stroke-dashoffset: 0; }
+}
+
 .media--wide {
   width: 100%;
   aspect-ratio: var(--ratio, 2 / 1);

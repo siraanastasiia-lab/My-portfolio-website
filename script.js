@@ -6,6 +6,9 @@
    4. Hero star spins every time it comes into view
    5. Hand-drawn brush outline around the About stats
    6. Out of office photo strip: start when visible, pause button
+   7. Header while scrolling: shadow + reading progress (case pages)
+   8. Active menu link for the section on screen
+   9. Blocks and stickers appear as you scroll
    ========================================================= */
 
 /* ---------------------------------------------------------
@@ -200,7 +203,8 @@
     if (!w || !h) return;
     svg.setAttribute("viewBox", "0 0 " + w + " " + h);
     svg.textContent = "";
-    var pad = 6;                                   // keep the line inside the svg
+    var BLEED = 32;                                // extra room round the svg (2rem in styles.css)
+    var pad = 6 + BLEED;                           // keep the line inside the svg
     var iw = w - 2 * pad, ih = h - 2 * pad;
     passes.forEach(function (p) {
       var start = p[0], length = p[1], thick = p[2], wobble = p[3];
@@ -272,4 +276,141 @@
       toggle.setAttribute("aria-pressed", String(paused));   // "Pause slideshow, pressed" = paused
     });
   }
+})();
+
+/* ---------------------------------------------------------
+   7. HEADER WHILE SCROLLING
+   .is-scrolled gives the header a soft shadow once the page moves.
+   Case pages: a thin yellow line under the header fills up as you
+   read (.read-progress in styles.css).
+   --------------------------------------------------------- */
+(function () {
+  var header = document.querySelector(".site-header");
+  if (!header) return;
+
+  var bar = null;
+  if (document.body.classList.contains("page-case")) {
+    bar = document.createElement("span");
+    bar.className = "read-progress";
+    bar.setAttribute("aria-hidden", "true");
+    header.appendChild(bar);
+  }
+
+  var waiting = false;
+  function update() {
+    waiting = false;
+    var y = window.scrollY;
+    header.classList.toggle("is-scrolled", y > 8);
+    if (bar) {
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.setProperty("--read", max > 0 ? Math.min(1, y / max) : 0);
+    }
+  }
+
+  // Update at most once per frame
+  window.addEventListener("scroll", function () {
+    if (!waiting) { waiting = true; requestAnimationFrame(update); }
+  }, { passive: true });
+  window.addEventListener("resize", update);
+  update();
+})();
+
+/* ---------------------------------------------------------
+   8. ACTIVE MENU LINK
+   The menu link of the section you are looking at keeps its yellow
+   underline (.is-active). Contact is short, so it becomes active
+   once the page is scrolled to the bottom.
+   --------------------------------------------------------- */
+(function () {
+  var pairs = [];
+  document.querySelectorAll('.nav__link[href^="#"]').forEach(function (link) {
+    var section = document.querySelector(link.getAttribute("href"));
+    if (section) pairs.push([link, section]);
+  });
+  if (!pairs.length) return;
+
+  var waiting = false;
+  function update() {
+    waiting = false;
+    var line = window.innerHeight * 0.4;   // a section is "on screen" when it crosses this line
+    var current = -1;
+    pairs.forEach(function (pair, i) {
+      var box = pair[1].getBoundingClientRect();
+      if (box.top <= line && box.bottom > line) current = i;
+    });
+    var root = document.documentElement;
+    if (window.innerHeight + window.scrollY >= root.scrollHeight - 2) current = pairs.length - 1;
+    pairs.forEach(function (pair, i) { pair[0].classList.toggle("is-active", i === current); });
+  }
+
+  window.addEventListener("scroll", function () {
+    if (!waiting) { waiting = true; requestAnimationFrame(update); }
+  }, { passive: true });
+  window.addEventListener("resize", update);
+  update();
+})();
+
+/* ---------------------------------------------------------
+   9. APPEAR ON SCROLL
+   Blocks below the first screen fade in and rise a little when they
+   scroll into view (.reveal / .is-visible in styles.css). Blocks that
+   come into view together appear one after another.
+   Yellow stickers drop onto their image and the arrow draws itself
+   (.is-stuck). Nothing moves if "Reduce motion" is turned on.
+   --------------------------------------------------------- */
+(function () {
+  if (!("IntersectionObserver" in window)) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  // Which blocks appear on scroll. To add one, add its selector here.
+  var SELECTOR = [
+    ".section-title", ".cards > li", ".cards-note",
+    ".about__stats", ".about__text", ".about__ai", ".about__domains", ".about__skills",
+    ".gallery",
+    ".split > *", ".case-cover", ".case-wide", ".case-shot", ".case-continue > *",
+    ".contact__inner > *"
+  ].join(",");
+
+  var all = Array.prototype.slice.call(document.querySelectorAll(SELECTOR));
+  var fold = window.innerHeight * 0.9;
+  var blocks = all.filter(function (el) {
+    // Skip a block inside another block from the list (the outer one moves for both)
+    var nested = all.some(function (other) { return other !== el && other.contains(el); });
+    // Blocks already on the first screen stay as they are (no flash)
+    return !nested && el.getBoundingClientRect().top > fold;
+  });
+
+  document.documentElement.classList.add("has-reveal");
+
+  var observer = new IntersectionObserver(function (entries) {
+    var order = 0;
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      entry.target.style.setProperty("--reveal-delay", Math.min(order, 4) * 90 + "ms");
+      entry.target.classList.add("is-visible");
+      observer.unobserve(entry.target);
+      order++;
+    });
+  }, { rootMargin: "0px 0px -10% 0px" });
+
+  blocks.forEach(function (el) {
+    el.classList.add("reveal");
+    observer.observe(el);
+  });
+
+  // Stickers: wait until a third of the image is on screen
+  var stickers = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add("is-stuck");
+      stickers.unobserve(entry.target);
+    });
+  }, { threshold: 0.3 });
+
+  document.querySelectorAll(".has-sticker").forEach(function (figure) {
+    figure.querySelectorAll(".sticker-arrow path").forEach(function (path) {
+      path.setAttribute("pathLength", "1");   // lets CSS draw the arrow from 0 to 1
+    });
+    stickers.observe(figure);
+  });
 })();
