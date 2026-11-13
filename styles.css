@@ -10,17 +10,17 @@
    --------------------------------------------------------- */
 :root {
   /* Colours */
-  --color-bg: #222222;            /* page background */
+  --color-bg: #1e1f1f;            /* page background */
   --color-bg-deep: #1b1b1b;       /* header, footer */
   --color-surface: #262626;       /* cards */
   --color-placeholder: #2b2b2b;   /* grey box when an image is missing */
   --color-text: #f2f2f2;          /* main text */
   --color-text-muted: #a8a8a8;    /* labels, meta (7:1 on bg) */
   --color-text-subtle: #8a8a8a;   /* non-clickable footer text (5:1 on footer bg, passes AA) */
-  --color-accent: #ffd60a;        /* yellow */
-  --color-accent-purple: #b796ff; /* lavender, second accent (6.7:1 on bg) */
+  --color-accent: #d1fd79;        /* lime, main brand colour (13.7:1 on bg) */
+  --color-accent-purple: #6242f5; /* violet, second accent. Only 2.7:1 on bg: below WCAG AA for text, kept on purpose (brand colour) */
   --color-on-accent: #1a1a1a;     /* text on yellow */
-  --color-sticker: #ffea84;        /* sticky note: the yellow with half the saturation, lighter */
+  --color-sticker: #ffea84;        /* sticky note: pale yellow (kept when the brand colour became lime) */
   --color-border: rgba(255, 255, 255, 0.14);
   --color-border-strong: rgba(255, 255, 255, 0.32);
   --color-border-tag: rgba(255, 255, 255, 0.12);  /* soft outline of tags/pills (decorative, not a contrast requirement) */
@@ -322,7 +322,7 @@ svg { flex-shrink: 0; }
   height: var(--header-h);
   /* 75% dark background (25% see-through), content under it is blurred.
      Checked: even over pure white content the text keeps AA contrast
-     (white 6.8:1, yellow 5.4:1). */
+     (white 7.6:1, lime 6.5:1). */
   background: rgba(27, 27, 27, 0.75);   /* --color-bg-deep at 75% */
   -webkit-backdrop-filter: blur(12px);
           backdrop-filter: blur(12px);
@@ -615,7 +615,7 @@ svg { flex-shrink: 0; }
 .hero__star-btn:hover + .hero__decor-art .hero__star,
 .hero__star-btn:focus-visible + .hero__decor-art .hero__star {
   scale: 1.5;
-  filter: drop-shadow(0 0 1.25rem rgba(255, 214, 10, 0.55));
+  filter: drop-shadow(0 0 1.25rem rgba(209, 253, 121, 0.55));
 }
 /* ...and the dashed yellow circle grows 20% with it */
 .hero__ring { transition: scale 300ms var(--ease); }
@@ -744,7 +744,7 @@ svg { flex-shrink: 0; }
 .case-card:focus-visible {
   transform: translateY(-4px);
   border-color: var(--color-accent);
-  box-shadow: 0 12px 40px -12px rgba(255, 214, 10, 0.35);
+  box-shadow: 0 12px 40px -12px rgba(209, 253, 121, 0.35);
 }
 .case-card:hover .case-card__media img,
 .case-card:focus-visible .case-card__media img { transform: scale(1.08); }   /* cover zoom on hover */
@@ -996,6 +996,11 @@ svg { flex-shrink: 0; }
   margin-right: var(--gallery-gap);       /* margin (not gap) so both copies are exactly equal */
   border-radius: var(--radius-md);        /* same as the case cards */
 }
+/* Three kinds of rounding, mixed along the strip (set per photo in the HTML).
+   In % of the photo, so they look the same on every screen size. */
+.gallery__item--sm { border-radius: 5%; }    /* small: almost square */
+.gallery__item--md { border-radius: 15%; }   /* medium */
+.gallery__item--lg { border-radius: 50%; }   /* large: a full circle */
 
 /* Motion: only once the section is on screen (.is-playing from script.js),
    and not while paused or for people who turned on "Reduce motion" */
@@ -1035,7 +1040,7 @@ svg { flex-shrink: 0; }
   padding-block: calc(var(--space-8) * 1.6);   /* ~102px above and below the content */
   border-top: 1px solid var(--color-border);
   /* soft yellow glow in the top-right corner */
-  background: radial-gradient(60% 80% at 100% 0%, rgba(255, 214, 10, 0.08), transparent 70%);
+  background: radial-gradient(60% 80% at 100% 0%, rgba(209, 253, 121, 0.08), transparent 70%);
 }
 
 .contact__list {
