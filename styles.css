@@ -18,7 +18,7 @@
   --color-text-muted: #a8a8a8;    /* labels, meta (7:1 on bg) */
   --color-text-subtle: #8a8a8a;   /* non-clickable footer text (5:1 on footer bg, passes AA) */
   --color-accent: #d1fd79;        /* lime, main brand colour (13.7:1 on bg) */
-  --color-accent-purple: #6242f5; /* violet, second accent. Only 2.7:1 on bg: below WCAG AA for text, kept on purpose (brand colour) */
+  --color-accent-purple: #6b52f3; /* violet, second accent. 3.25:1 on bg: below WCAG AA for normal text (4.5:1), kept on purpose (brand colour) */
   --color-on-accent: #1a1a1a;     /* text on yellow */
   --color-sticker: #ffea84;        /* sticky note: pale yellow (kept when the brand colour became lime) */
   --color-border: rgba(255, 255, 255, 0.14);
