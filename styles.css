@@ -1241,6 +1241,56 @@ svg { flex-shrink: 0; }
   top: 0;
   color: var(--color-accent);
 }
+/* First words of a finding, up to the colon: SemiBold, for scanning */
+.star-list__lead { font-weight: 600; }
+
+/* Numbered step cards (Tickets: Discovery Approach).
+   Phones: one column; tablet and up: 2 × 2 */
+.steps {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.step {
+  padding: var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);   /* same as the case cards */
+  background: var(--color-surface);
+}
+/* Appear on scroll: the list itself stays put, its cards rise in
+   one after another (1, 2, 3, 4), same speed as the other blocks */
+.has-reveal .steps.reveal:not(.is-visible) { opacity: 1; translate: none; }
+.has-reveal .steps.reveal.is-visible { animation: none; }
+.has-reveal .steps.reveal:not(.is-visible) > .step { opacity: 0; translate: 0 var(--reveal-shift); }
+.has-reveal .steps.reveal.is-visible > .step {
+  animation: rise-in var(--dur-reveal) var(--ease-out) var(--reveal-delay, 0ms) both;
+}
+.has-reveal .steps.reveal.is-visible > .step:nth-child(2) { animation-delay: calc(var(--reveal-delay, 0ms) + 90ms); }
+.has-reveal .steps.reveal.is-visible > .step:nth-child(3) { animation-delay: calc(var(--reveal-delay, 0ms) + 180ms); }
+.has-reveal .steps.reveal.is-visible > .step:nth-child(4) { animation-delay: calc(var(--reveal-delay, 0ms) + 270ms); }
+.step__num {
+  display: block;
+  margin-bottom: var(--space-4);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--color-accent);
+}
+.step__title {
+  font-size: var(--fs-md);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.step__text {
+  margin-top: var(--space-2);
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);   /* 6.5:1 on the card */
+}
+@media (min-width: 48em) {
+  .steps { grid-template-columns: repeat(2, 1fr); }
+}
 
 /* Pair of case screenshots */
 .shots {
@@ -1323,12 +1373,15 @@ svg { flex-shrink: 0; }
   transform: rotate(var(--arrow-turn, 0deg)) scaleY(var(--arrow-flip, 1));   /* --arrow-flip: -1 mirrors the loop */
 }
 /* Sticker comes in when its image is on screen (script.js adds .is-stuck):
-   it drops onto the image like a note being stuck on, then the arrow draws itself */
+   it drops onto the image like a note being stuck on. Once it has landed,
+   the arrow is drawn like with a pencil: the line from the sticker towards
+   what it points at, then the arrowhead at the end. */
 .has-reveal .has-sticker:not(.is-stuck) .sticker { opacity: 0; }
 .has-reveal .sticker-arrow path { stroke-dasharray: 1; }   /* script.js sets the path length to 1 */
 .has-reveal .has-sticker:not(.is-stuck) .sticker-arrow path { stroke-dashoffset: 1; }
 .has-sticker.is-stuck .sticker { animation: sticker-land 600ms var(--ease-out) 150ms both; }
-.has-sticker.is-stuck .sticker-arrow path { animation: arrow-draw 700ms var(--ease) 650ms both; }
+.has-sticker.is-stuck .sticker-arrow path { animation: arrow-draw 700ms var(--ease) 750ms both; }
+.has-sticker.is-stuck .sticker-arrow .sticker-arrow__head { animation: arrow-draw 250ms var(--ease) 1450ms both; }
 @keyframes sticker-land {
   from { opacity: 0; scale: 1.25; rotate: -6deg; }
   60%  { opacity: 1; }
