@@ -929,8 +929,8 @@ svg { flex-shrink: 0; }
 
 /* ---------------------------------------------------------
    11b. OUT OF OFFICE — endless photo strip (main page)
-   Phones show 2.5 photos, tablets 3.5, desktop exactly 5.
-   The strip holds the 10 photos twice and slides left by one
+   Photo height: like 2.5 square photos across on phones, 3.5 on tablets, 5 on desktop.
+   The strip holds the 9 shapes (8 photos + a lime star circle) twice and slides left by one
    full set, then starts again: an endless loop.
    --------------------------------------------------------- */
 .ooo__head {
@@ -976,9 +976,9 @@ svg { flex-shrink: 0; }
 .gallery__toggle[aria-pressed="true"] .icon-btn__play { display: block; }
 
 .gallery {
-  --gallery-visible: 2.5;                 /* how many photos fit in the width */
+  --gallery-visible: 2.5;                 /* sets the photo height: this many square photos would fit in the width */
   --gallery-gap: var(--space-3);
-  --gallery-speed: 26.4s;                   /* time for all 10 photos to pass by (smaller = faster) */
+  --gallery-speed: 24.4s;                   /* time for the whole set of 9 shapes to pass by (smaller = faster) */
   container-type: inline-size;            /* lets the photos size themselves from this width */
   overflow: hidden;
 }
@@ -993,17 +993,35 @@ svg { flex-shrink: 0; }
   list-style: none;
 }
 .gallery__item {
+  /* Every photo has the same height; the width depends on its shape */
+  --gallery-h: calc((100cqw - var(--gallery-gap) * (var(--gallery-visible) - 1)) / var(--gallery-visible));
   flex: none;
-  width: calc((100cqw - var(--gallery-gap) * (var(--gallery-visible) - 1)) / var(--gallery-visible));
-  aspect-ratio: 1 / 1;
+  width: calc(var(--gallery-h) * var(--shape-w, 1));
+  height: var(--gallery-h);
   margin-right: var(--gallery-gap);       /* margin (not gap) so both copies are exactly equal */
-  border-radius: var(--radius-md);        /* same as the case cards */
+  border-radius: var(--radius-md);
 }
-/* Three kinds of rounding, mixed along the strip (set per photo in the HTML).
-   In % of the photo, so they look the same on every screen size. */
-.gallery__item--sm { border-radius: 5%; }    /* small: almost square */
-.gallery__item--md { border-radius: 15%; }   /* medium */
-.gallery__item--lg { border-radius: 50%; }   /* large: a full circle */
+/* Shapes from the Figma design (320 px tall there), set per photo in the HTML.
+   Order: circle, rounded, circle (lime star), rounded, pill, wide, circle, wide, rounded,
+   so the same shape never sits next to itself, not even where the loop restarts.
+   Sizes are relative to the photo height, so they look the same on every screen. */
+/* Lime shape instead of a photo, with the logo star (no letters) in the middle,
+   in the footer's dark grey */
+.gallery__item--accent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-accent);
+}
+.gallery__star {
+  width: 55%;
+  height: 55%;
+  fill: var(--color-bg-deep);
+}
+.gallery__item--circle  { border-radius: 50%; }                                         /* 320 × 320, full circle */
+.gallery__item--rounded { border-radius: calc(var(--gallery-h) * 20 / 320); }           /* 320 × 320, 20 px corners */
+.gallery__item--pill    { --shape-w: calc(233 / 320); border-radius: var(--radius-pill); } /* 233 × 320, tall pill */
+.gallery__item--wide    { --shape-w: calc(390 / 320); border-radius: calc(var(--gallery-h) * 35 / 320); } /* 390 × 320, 35 px corners */
 
 /* Motion: only once the section is on screen (.is-playing from script.js),
    and not while paused or for people who turned on "Reduce motion" */
@@ -1017,7 +1035,7 @@ svg { flex-shrink: 0; }
 }
 
 @keyframes gallery-slide {
-  to { transform: translateX(-50%); }     /* exactly one set of 10 photos */
+  to { transform: translateX(-50%); }     /* exactly one set of 9 shapes */
 }
 
 @media (prefers-reduced-motion: reduce) {
