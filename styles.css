@@ -198,6 +198,42 @@ svg { flex-shrink: 0; }
   fill: var(--color-accent);
 }
 
+/* SQUISH CURSOR: a lime dot that follows the mouse and stretches as it moves
+   (script.js, section 10). Only with a mouse and without "Reduce motion";
+   otherwise the normal cursor stays. */
+.squish-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  width: 28px;
+  height: 28px;
+  margin: -14px 0 0 -14px;
+  border-radius: 50%;
+  pointer-events: none;         /* never blocks a click */
+  will-change: transform;
+  opacity: 0;                   /* shown after the first mouse move */
+  transition: opacity var(--dur) var(--ease);
+}
+.squish-cursor.is-visible { opacity: 1; }
+/* Colour: 3 dots on top of each other, each blending with what is under it.
+   Together they turn the page background (#1e1f1f) into exactly the brand
+   lime (#d1fd79, as in the logo), while white text under the dot shows
+   through in dark grey, so it can still be read. Change these 3 colours
+   only together (they are calculated). */
+.squish-cursor--flip { background: rgb(255 255 255); mix-blend-mode: difference; }   /* 1. dark ↔ light */
+.squish-cursor--tint { background: rgb(198 252 92);  mix-blend-mode: multiply; }     /* 2. tint to lime */
+.squish-cursor--lift { background: rgb(35 32 40);    mix-blend-mode: plus-lighter; } /* 3. lift to the exact shade */
+/* Older browsers without "plus-lighter": one simple lime dot instead */
+@supports not (mix-blend-mode: plus-lighter) {
+  .squish-cursor--flip,
+  .squish-cursor--tint { display: none; }
+  .squish-cursor--lift { background: var(--color-accent); mix-blend-mode: normal; }
+}
+/* Hide the normal arrow / hand everywhere while the dot is on */
+.has-squish-cursor,
+.has-squish-cursor * { cursor: none; }
+
 /* REVEAL ON SCROLL: script.js adds .has-reveal to the page and .reveal to
    blocks below the first screen. Each block fades in and rises a little when
    it scrolls into view (.is-visible); blocks that appear together follow one

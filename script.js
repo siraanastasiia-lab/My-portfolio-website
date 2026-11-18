@@ -9,6 +9,7 @@
    7. Header while scrolling: shadow + reading progress (case pages)
    8. Active menu link for the section on screen
    9. Blocks and stickers appear as you scroll
+  10. Custom "squish" cursor (mouse only)
    ========================================================= */
 
 /* ---------------------------------------------------------
@@ -413,4 +414,69 @@
     });
     stickers.observe(figure);
   });
+})();
+
+/* ---------------------------------------------------------
+   10. SQUISH CURSOR
+   A lime dot follows the mouse with a little delay and stretches
+   in the direction it moves (squashes across it), like a soft ball.
+   Over links and buttons it grows, so it's clear they are clickable.
+   It is 3 stacked dots that blend with the page: on the background it
+   is exactly the brand lime, and text under it stays visible (dark).
+   Only with a mouse, and not for people who turned on "Reduce motion":
+   then the normal cursor stays. Styles: .squish-cursor in styles.css
+   --------------------------------------------------------- */
+(function () {
+  var mouse = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  var calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (!mouse || calm) return;
+
+  var layers = ["squish-cursor--flip", "squish-cursor--tint", "squish-cursor--lift"].map(function (name) {
+    var dot = document.createElement("div");
+    dot.className = "squish-cursor " + name;
+    dot.setAttribute("aria-hidden", "true");
+    document.body.appendChild(dot);
+    return dot;
+  });
+  function each(fn) { layers.forEach(fn); }
+  document.documentElement.classList.add("has-squish-cursor");
+
+  var EASE  = 0.2;
+  var POWER = 0.96;   // maximum deformation
+  var HOVER = 1.6;    // size over links and buttons
+
+  var mx = 0, my = 0, x = 0, y = 0, sx = 1, sy = 1, rot = 0, grow = 1, hovering = false;
+
+  addEventListener("pointermove", function (e) {
+    mx = e.clientX; my = e.clientY;
+    each(function (dot) { dot.classList.add("is-visible"); });
+  }, { passive: true });
+
+  // Grow over anything clickable
+  addEventListener("pointerover", function (e) {
+    hovering = !!e.target.closest("a, button, [role='button'], label, summary");
+  }, { passive: true });
+
+  // Hide when the mouse leaves the window
+  document.addEventListener("mouseleave", function () {
+    each(function (dot) { dot.classList.remove("is-visible"); });
+  });
+
+  (function loop() {
+    var dx = mx - x, dy = my - y;
+    x += dx * EASE;
+    y += dy * EASE;
+
+    var speed = Math.min(Math.hypot(dx, dy) / 44, POWER);
+    if (speed > 0.02) rot = Math.atan2(dy, dx) * 180 / Math.PI;
+
+    sx += ((1 + speed)        - sx) * 0.18;   // stretch along travel
+    sy += ((1 - speed * 0.78) - sy) * 0.18;   // squash across it
+    grow += ((hovering ? HOVER : 1) - grow) * 0.2;
+
+    var transform =
+      "translate3d(" + x + "px, " + y + "px, 0) rotate(" + rot + "deg) scale(" + sx * grow + ", " + sy * grow + ")";
+    each(function (dot) { dot.style.transform = transform; });
+    requestAnimationFrame(loop);
+  })();
 })();
