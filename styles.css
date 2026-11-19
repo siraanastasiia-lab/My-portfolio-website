@@ -100,8 +100,8 @@ body {
   line-height: var(--lh-body);
   color: var(--color-text);
   background-color: var(--color-bg);
-  /* Subtle film grain, like in the design */
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  /* Film grain over the whole page (8%), so the background doesn't look flat */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
@@ -195,6 +195,18 @@ svg { flex-shrink: 0; }
   margin-left: 0.1em;
   vertical-align: -0.05em;
   fill: var(--color-accent);
+}
+
+/* STAR BURST: little lime stars fly out of "Copy", "Download CV" and
+   "View cases" when clicked (script.js, section 11) */
+.star-burst {
+  position: fixed;
+  z-index: 9998;
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  fill: var(--color-accent);
+  pointer-events: none;
 }
 
 /* SQUISH CURSOR: a lime dot that follows the mouse and stretches as it moves
@@ -425,6 +437,10 @@ svg { flex-shrink: 0; }
   stroke-width: 1.5;
   stroke-linejoin: round;
   transition: fill var(--dur) var(--ease);
+  /* turns slowly while the page scrolls (script.js sets --logo-turn) */
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: rotate(var(--logo-turn, 0deg));
 }
 .logo__text {
   fill: var(--color-on-accent);
@@ -814,9 +830,10 @@ svg { flex-shrink: 0; }
   pointer-events: none;
 }
 .about-card > * { position: relative; z-index: 1; }
+/* Lime, violet and yellow cards: their own grain (15%), like a risograph print */
 .about-card--lime::before,
-.about-card--note::before { mix-blend-mode: multiply; opacity: 0.32; }
-.about-card--violet::before { mix-blend-mode: multiply; opacity: 0.4; }
+.about-card--note::before,
+.about-card--violet::before { mix-blend-mode: multiply; opacity: 0.15; }
 .about-card--dark { background: var(--color-surface); border: 1px solid var(--color-border); }
 
 .about-card__top { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-2); }
@@ -1189,6 +1206,30 @@ svg { flex-shrink: 0; }
   border-top: 1px solid var(--color-border);
   /* soft yellow glow in the top-right corner */
   background: radial-gradient(60% 80% at 100% 0%, rgba(209, 253, 121, 0.08), transparent 70%);
+}
+/* "Live" grain: the grain jumps a little 8 times a second, like film.
+   Only when the system allows animations. */
+@media (prefers-reduced-motion: no-preference) {
+  .contact { position: relative; isolation: isolate; }
+  .contact::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image: var(--noise);
+    mix-blend-mode: screen;
+    opacity: 0.07;
+    pointer-events: none;
+    animation: film-grain 0.75s steps(1) infinite;
+  }
+}
+@keyframes film-grain {
+  0%   { background-position: 0 0; }
+  17%  { background-position: -37px 21px; }
+  33%  { background-position: 53px -44px; }
+  50%  { background-position: -18px -63px; }
+  67%  { background-position: 71px 32px; }
+  83%  { background-position: -59px 47px; }
 }
 
 .contact__list {

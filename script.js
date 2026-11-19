@@ -10,6 +10,7 @@
    8. Active menu link for the section on screen
    9. Blocks and stickers appear as you scroll
   10. Custom "squish" cursor (mouse only)
+  11. Star burst on "Copy", "Download CV" and "View cases"
    ========================================================= */
 
 /* ---------------------------------------------------------
@@ -158,6 +159,8 @@
    .is-scrolled gives the header a soft shadow once the page moves.
    Case pages: a thin yellow line under the header fills up as you
    read (.read-progress in styles.css).
+   The logo star turns slowly with the scroll (one full turn every
+   2400px), a quiet sign that the page is moving. Not with "Reduce motion".
    --------------------------------------------------------- */
 (function () {
   var header = document.querySelector(".site-header");
@@ -171,11 +174,15 @@
     header.appendChild(bar);
   }
 
+  var logoStar = header.querySelector(".logo__star");
+  var calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
   var waiting = false;
   function update() {
     waiting = false;
     var y = window.scrollY;
     header.classList.toggle("is-scrolled", y > 8);
+    if (logoStar && !calm) logoStar.style.setProperty("--logo-turn", (y * 0.15) + "deg");
     if (bar) {
       var max = document.documentElement.scrollHeight - window.innerHeight;
       bar.style.setProperty("--read", max > 0 ? Math.min(1, y / max) : 0);
@@ -388,4 +395,58 @@
     each(function (dot) { dot.style.transform = transform; });
     requestAnimationFrame(loop);
   })();
+})();
+
+/* ---------------------------------------------------------
+   11. STAR BURST
+   Clicking "Copy" (email), "Download CV" or "View cases" sends a
+   handful of little lime stars flying out of the click and fading.
+   Purely decorative; nothing happens with "Reduce motion".
+   --------------------------------------------------------- */
+(function () {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if (!Element.prototype.animate) return;
+  var NS = "http://www.w3.org/2000/svg";
+  var STAR = "M24 1C26 14 34 22 47 24C34 26 26 34 24 47C22 34 14 26 1 24C14 22 22 14 24 1Z";
+
+  function burst(x, y) {
+    var count = 10;
+    for (var i = 0; i < count; i++) {
+      var star = document.createElementNS(NS, "svg");
+      star.setAttribute("class", "star-burst");
+      star.setAttribute("viewBox", "0 0 48 48");
+      star.setAttribute("aria-hidden", "true");
+      var path = document.createElementNS(NS, "path");
+      path.setAttribute("d", STAR);
+      star.appendChild(path);
+      star.style.left = x + "px";
+      star.style.top = y + "px";
+      document.body.appendChild(star);
+
+      // each star flies in its own direction, a random distance, size and spin
+      var angle = (i / count) * Math.PI * 2 + Math.random() * 0.6;
+      var dist = 40 + Math.random() * 50;
+      var size = 0.5 + Math.random() * 0.9;
+      var spin = (Math.random() < 0.5 ? -1 : 1) * (90 + Math.random() * 180);
+      star.animate([
+        { transform: "translate(0, 0) scale(0) rotate(0deg)", opacity: 1 },
+        { transform: "translate(" + Math.cos(angle) * dist * 0.7 + "px, " + Math.sin(angle) * dist * 0.7 + "px) scale(" + size + ") rotate(" + spin * 0.6 + "deg)", opacity: 1, offset: 0.55 },
+        { transform: "translate(" + Math.cos(angle) * dist + "px, " + (Math.sin(angle) * dist + 12) + "px) scale(" + size * 0.6 + ") rotate(" + spin + "deg)", opacity: 0 }
+      ], { duration: 700 + Math.random() * 250, easing: "cubic-bezier(0.2, 0.7, 0.2, 1)" })
+        .onfinish = (function (el) { return function () { el.remove(); }; })(star);
+    }
+  }
+
+  document.addEventListener("click", function (e) {
+    var target = e.target.closest('.copy-btn, a[href$="cv.pdf"], .hero__cta');
+    if (!target) return;
+    // From the mouse; from the middle of the button when pressed with the keyboard
+    var x = e.clientX, y = e.clientY;
+    if (!e.detail) {
+      var box = target.getBoundingClientRect();
+      x = box.left + box.width / 2;
+      y = box.top + box.height / 2;
+    }
+    burst(x, y);
+  });
 })();
