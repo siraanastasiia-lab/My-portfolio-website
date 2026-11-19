@@ -16,7 +16,7 @@
   <meta property="og:image" content="https://siraanastasiiaportfolio.vercel.app/assets/og-image.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Anastasiia Sira, Product Designer from Kyiv, Ukraine.">
+  <meta property="og:image:alt" content="Anastasiia Sira’s name in wavy white letters with lime, red and blue colour fringes on a dark background.">
   <meta name="twitter:card" content="summary_large_image">
   <!-- Favicon: yellow star from the logo, no letters (SVG for modern browsers, PNG fallbacks, iPhone home screen) -->
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=2">
@@ -25,7 +25,7 @@
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=2">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Onest:wght@400;500;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500&family=Onest:wght@400;500;600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <script src="script.js" defer></script>
 </head>
@@ -98,20 +98,14 @@
 
     <!-- ================= HERO ================= -->
     <section class="hero container" aria-labelledby="hero-title">
-      <!-- Decorative star: big star spins when the hero comes into view (see .hero__star in styles.css).
-           The round button over the big star: hover = star grows and glows, click = spin again -->
-      <div class="hero__decor">
-      <button class="hero__star-btn" type="button" aria-label="Spin the star"></button>
-      <svg class="hero__decor-art" viewBox="0 0 360 360" fill="none" aria-hidden="true" focusable="false">
-        <circle cx="180" cy="180" r="224" stroke="rgba(255,255,255,0.08)"/><!-- outer ring, 25% bigger, may overflow the box -->
-        <circle class="hero__ring" cx="180" cy="180" r="120" stroke="#d1fd79" stroke-opacity="0.5" stroke-width="2" stroke-dasharray="8 18"/>
-        <g class="hero__star">
-          <path fill="#d1fd79" transform="translate(110 110) scale(5.8333)" d="M12 0C12.8 7.2 16.8 11.2 24 12C16.8 12.8 12.8 16.8 12 24C11.2 16.8 7.2 12.8 0 12C7.2 11.2 11.2 7.2 12 0Z"/>
-        </g>
-        <g class="hero__sparkle"><!-- small star: orbits the centre once while the big star spins -->
-          <path fill="rgba(209,253,121,0.7)" transform="translate(262 44) rotate(-41 9 9) scale(0.75)" d="M12 0C12.8 7.2 16.8 11.2 24 12C16.8 12.8 12.8 16.8 12 24C11.2 16.8 7.2 12.8 0 12C7.2 11.2 11.2 7.2 12 0Z"/>
-        </g>
-      </svg>
+      <!-- Decorative star (desktop only): the logo star, no letters. It turns slowly
+           all the time and its colour cycles lime → yellow → violet (see .hero__star in styles.css) -->
+      <div class="hero__decor" aria-hidden="true">
+        <svg class="hero__star" viewBox="0 0 24 24" focusable="false">
+          <g class="hero__star-turn">
+            <path class="hero__star-shape" d="M12 0C12.8 7.2 16.8 11.2 24 12C16.8 12.8 12.8 16.8 12 24C11.2 16.8 7.2 12.8 0 12C7.2 11.2 11.2 7.2 12 0Z"/>
+          </g>
+        </svg>
       </div>
 
       <div class="hero__intro">
@@ -188,62 +182,75 @@
       <p class="cards-note">* Client names and some visuals are anonymized under NDA.</p>
     </section>
 
-    <!-- ================= ABOUT ME =================
-         Desktop: title on top, then two equal columns.
-         Left: text, Domains. Right: stats, How I use AI, Core skills.
-         Phones: one column, text comes right after the stats. -->
+    <!-- ================= ABOUT ME (bento board) =================
+         Desktop (≥ 1024px): big text card on the left; Experience, Based in,
+         photo and Core skills as squares on the right; How I use AI under the
+         text and the yellow Domains note next to it.
+         Phones / tablets: the same cards in 2 columns.
+         Cards rise in and the doodles draw themselves when the section scrolls
+         into view (.is-in from script.js, see "About me" in styles.css). -->
     <section class="section container about" id="about" aria-labelledby="about-title">
       <h2 class="section-title about__title" id="about-title">About me</h2>
 
-      <!-- Left column: text -->
-      <div class="about__col">
-        <div class="prose about__text">
-          <p>My focus is on improving user journeys and business metrics through research and hypothesis-driven design.<br> <span class="accent-purple">I love clean &amp; clear interfaces</span> that are accessible by default and meet WCAG 2.2 AA.</p>
-          <p>Design systems are a core part of that work, built and evolved from the ground up to keep products consistent as they scale.<br> From problem discovery to delivery, I work directly with clients and stakeholders — presenting ideas, aligning on goals and justifying design decisions.</p>
-        </div>
+      <div class="about-bento">
 
-        <!-- Domains -->
-        <div class="about__block about__domains">
-          <h3 class="about__subtitle">Domains</h3>
-          <ul class="chips">
-            <li class="chip">SaaS</li>
-            <li class="chip">E-commerce</li>
-            <li class="chip">Marketplace</li>
-            <li class="chip">FinTech</li>
-            <li class="chip">GovTech</li>
-          </ul>
-        </div>
-      </div>
+        <!-- Intro text -->
+        <article class="about-card about-card--intro" style="--d: 100ms">
+          <p class="about-intro__lead">My focus is on improving user journeys and business metrics through research and hypothesis-driven design. I love <span class="about-mark"><svg class="about-mark__bg" viewBox="0 0 200 40" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M3 8 C 50 2, 130 5, 197 6 L 199 34 C 140 39, 60 36, 1 32 Z"/></svg><span class="about-mark__text">clean &amp; clear interfaces</span></span> that are accessible by default and meet <span class="about-loop">WCAG 2.2 AA<svg class="about-loop__line" viewBox="0 0 200 60" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path class="about-draw" style="--d: 1500ms" pathLength="1" d="M30 8 C 110 0, 196 10, 194 32 C 192 56, 60 60, 14 46 C -6 38, 6 12, 60 6"/></svg></span>.</p>
+          <p class="about-intro__more">Design systems are a core part of that work, built and evolved from the ground up to keep products consistent as they scale. From problem discovery to delivery, I work directly with clients and stakeholders — presenting ideas, aligning on goals and justifying design decisions.</p>
+        </article>
 
-      <!-- Right column: stats, How I use AI, skills -->
-      <div class="about__col">
-        <!-- Stats, circled 3 times with a purple brush line (drawn by script.js) -->
-        <div class="doodle-box about__stats">
-          <svg class="doodle-box__line" aria-hidden="true" focusable="false"></svg>
-          <dl class="stats">
-            <div><dt class="stats__label">Experience</dt><dd class="stats__value">6+ years</dd></div>
-            <div><dt class="stats__label">Based in</dt><dd class="stats__value">Kyiv, Ukraine</dd></div>
-            <div><dt class="stats__label">Projects</dt><dd class="stats__value">12+</dd></div>
-          </dl>
-        </div>
+        <!-- Experience (lime) -->
+        <article class="about-card about-card--lime about-card--exp" style="--d: 220ms">
+          <div class="about-card__top"><h3 class="about-card__label">Experience</h3><svg class="about-wiggle" width="28" height="28" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path d="M24 1C26 14 34 22 47 24C34 26 26 34 24 47C22 34 14 26 1 24C14 22 22 14 24 1Z"/></svg></div>
+          <p class="about-exp"><span class="about-exp__num">6+</span> <span class="about-exp__unit">years</span></p>
+        </article>
 
-        <!-- How I use AI -->
-        <div class="about__block about__ai">
-          <h3 class="about__subtitle">How I use AI?</h3>
-          <p>I use AI (Figma AI, ChatGPT and Claude) daily to explore ideas, support research, speed up prototyping and automate routine tasks, while the design decisions stay mine. This website was also built with Claude.</p>
-        </div>
+        <!-- Based in (violet) with a swinging pin -->
+        <article class="about-card about-card--violet about-card--city" style="--d: 320ms">
+          <div class="about-card__top"><h3 class="about-card__label">Based in</h3><svg class="about-pin" width="46" height="56" viewBox="0 0 46 56" aria-hidden="true" focusable="false"><path class="about-draw" style="--d: 900ms" pathLength="1" d="M23 52 C 14 40, 4 30, 5 19 C 6 9, 14 3, 23 3 C 33 3, 41 10, 41 20 C 41 31, 31 41, 23 52"/><path class="about-draw" style="--d: 1300ms" pathLength="1" d="M23 13 C 29 13, 31 18, 29 22 C 26 27, 18 26, 17 21 C 16 16, 20 13, 25 14"/></svg></div>
+          <p class="about-city">Kyiv,<br>Ukraine</p>
+        </article>
+
+        <!-- Photo with a sticker -->
+        <figure class="about-card about-card--photo" style="--d: 420ms">
+          <img src="assets/avatar.png" alt="Portrait of Anastasiia Sira" width="384" height="434" loading="lazy">
+          <figcaption class="about-photo__sticker" style="--d: 1300ms">hi, that’s me!</figcaption>
+        </figure>
 
         <!-- Core skills -->
-        <div class="about__block about__skills">
-          <h3 class="about__subtitle">Core skills</h3>
-          <ul class="skills">
-            <li>UX design</li>
-            <li>User research &amp; usability testing</li>
-            <li>Design systems</li>
-            <li>Visual &amp; UI design</li>
-            <li>Accessible design (WCAG 2.2 AA)</li>
+        <article class="about-card about-card--skills" style="--d: 520ms">
+          <h3 class="about-card__label about-card__label--title">Core skills</h3>
+          <ul class="about-skills">
+            <li style="--d: 1000ms">UX design</li>
+            <li style="--d: 1080ms">User research &amp; usability testing</li>
+            <li style="--d: 1160ms">Design systems</li>
+            <li style="--d: 1240ms">Visual &amp; UI design</li>
+            <li style="--d: 1320ms">Accessible design</li>
           </ul>
-        </div>
+        </article>
+
+        <!-- How I use AI -->
+        <article class="about-card about-card--ai" style="--d: 620ms">
+          <div class="about-ai__text">
+            <h3 class="about-card__label about-card__label--title">How I use AI?</h3>
+            <p>I use AI (Figma AI, ChatGPT and Claude) daily to explore ideas, support research, speed up prototyping and automate routine tasks, while the design decisions stay mine.</p>
+          </div>
+          <p class="about-ai__note"><span class="about-ink">this website was built with Claude</span></p>
+        </article>
+
+        <!-- Domains: a pale-yellow note; the chips drop in from the top and bounce -->
+        <article class="about-card about-card--note about-card--domains" style="--d: 720ms">
+          <h3 class="about-card__label">Domains</h3>
+          <ul class="about-chips">
+            <li style="--d: 1200ms; --tilt: -3deg">SaaS</li>
+            <li style="--d: 1450ms; --tilt: 2deg">E-commerce</li>
+            <li style="--d: 1700ms; --tilt: -1deg">Marketplace</li>
+            <li style="--d: 1950ms; --tilt: 3deg">FinTech</li>
+            <li class="is-dark" style="--d: 2200ms; --tilt: -2deg">GovTech</li>
+          </ul>
+        </article>
+
       </div>
     </section>
 
