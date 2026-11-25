@@ -10,7 +10,7 @@
    8. Active menu link for the section on screen
    9. Blocks and stickers appear as you scroll
   10. Custom "squish" cursor (mouse only)
-  11. Star burst on "Copy", "Download CV" and "View cases"
+  11. Star burst on every click on a link or button
    ========================================================= */
 
 /* ---------------------------------------------------------
@@ -399,8 +399,9 @@
 
 /* ---------------------------------------------------------
    11. STAR BURST
-   Clicking "Copy" (email), "Download CV" or "View cases" sends a
-   handful of little lime stars flying out of the click and fading.
+   Clicking anything clickable (links, buttons, the email copy button,
+   cards, menu items…) sends a handful of little lime stars flying out
+   of the click and fading.
    Purely decorative; nothing happens with "Reduce motion".
    --------------------------------------------------------- */
 (function () {
@@ -438,7 +439,7 @@
   }
 
   document.addEventListener("click", function (e) {
-    var target = e.target.closest('.copy-btn, a[href$="cv.pdf"], .hero__cta');
+    var target = e.target.closest('a[href], button, [role="button"], label, summary');
     if (!target) return;
     // From the mouse; from the middle of the button when pressed with the keyboard
     var x = e.clientX, y = e.clientY;
